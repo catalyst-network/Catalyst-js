@@ -1,0 +1,14 @@
+[package]
+name = "wasm-ed25519ph"
+version = "0.1.0"
+authors = ["fran <fran.sl@atlascity.io>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+wasm-bindgen = "0.2"
+curve25519-dalek = { git = "https://github.com/tarcieri/curve25519-dalek.git", branch = "zeroize", features = ["serde"] }
+ed25519-dalek = { version = "1.0.0-pre.1", features = ["nightly", "serde"] }
+
+[lib]
+crate-type = ["cdylib"]
