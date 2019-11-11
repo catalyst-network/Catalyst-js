@@ -10,6 +10,20 @@ Provides [ed25519](https://github.com/dalek-cryptography/ed25519-dalek) function
 
 ## Install
 
+First up make sure you have rustup nightly installed.
+
+If this is a fresh install and you have no rustup toolchain use the following:
+
+```
+curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
+```
+
+If you currently have the stable release do
+
+```
+rustup install nightly
+```
+
 You can build with:
 
 ```rustup run nightly wasm-pack build --release --target web```
