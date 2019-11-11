@@ -1,3 +1,4 @@
+// source: Transaction.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -13,7 +14,8 @@ goog.provide('proto.Catalyst.Protocol.Transaction.TransactionType');
  * @enum {number}
  */
 proto.Catalyst.Protocol.Transaction.TransactionType = {
-  NORMAL: 0,
-  CONFIDENTIAL: 1
+  TRANSACTION_TYPE_UNKNOWN: 0,
+  PUBLIC: 1,
+  CONFIDENTIAL: 2
 };
 

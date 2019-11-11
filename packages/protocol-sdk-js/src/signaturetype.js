@@ -1,3 +1,4 @@
+// source: Cryptography.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -7,12 +8,12 @@
  */
 // GENERATED CODE -- DO NOT EDIT!
 
-goog.provide('proto.Catalyst.Protocol.Common.SignatureType');
+goog.provide('proto.Catalyst.Protocol.Cryptography.SignatureType');
 
 /**
  * @enum {number}
  */
-proto.Catalyst.Protocol.Common.SignatureType = {
+proto.Catalyst.Protocol.Cryptography.SignatureType = {
   SIGNATURE_TYPE_UNKNOWN: 0,
   TRANSACTION_PUBLIC: 1,
   TRANSACTION_CONFIDENTIAL: 2,
