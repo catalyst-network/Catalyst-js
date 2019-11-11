@@ -9,6 +9,15 @@ edition = "2018"
 wasm-bindgen = "0.2"
 curve25519-dalek = { git = "https://github.com/tarcieri/curve25519-dalek.git", branch = "zeroize", features = ["serde"] }
 ed25519-dalek = { version = "1.0.0-pre.1", features = ["nightly", "serde"] }
+console_error_panic_hook = "0.1.6"
+wee_alloc = "0.4.5"
+protobuf = "2.8.1"
+
+[dependencies.web-sys]
+version = "0.3"
+features = [
+  "console",
+]
 
 [lib]
 crate-type = ["cdylib"]

@@ -6,7 +6,7 @@
 [![Discord](https://img.shields.io/discord/629667101774446593?color=blueviolet&label=discord)](https://discord.gg/anTP7xm)
 </div>
 
-Provides [ed25519](https://github.com/dalek-cryptography/ed25519-dalek) functionality.
+Provides [ed25519ph](https://github.com/dalek-cryptography/ed25519-dalek) functionality.
 
 ## Install
 
