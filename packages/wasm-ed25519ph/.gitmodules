@@ -1,3 +1,0 @@
-[submodule "submodules/protocol-sdk-rust"]
-	path = submodules/protocol-sdk-rust
-	url = git@github.com:catalyst-network/protocol-sdk-rust.git

@@ -24,13 +24,29 @@ If you currently have the stable release do
 rustup install nightly
 ```
 
+Since we are using nightly you need to override wasm-packs default tool chain by doing...
+
+```
+rustup override set nightly
+```
+
+Next you need to ensure you have node/npm installed. The easiest way is through node version manager (NVM)
+
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+nvm install lts/carbon
+nvm use lts/carbon
+```
+
+For further instructions on NVM refer to their repo https://github.com/nvm-sh/nvm
+
 You can build with:
 
-```rustup run nightly wasm-pack build --release --target web```
+```npm run build:prod```
 
 Then view using:
 
-```python3 -m http.server```
+```npm run start```
 
 ## Contribute
 
