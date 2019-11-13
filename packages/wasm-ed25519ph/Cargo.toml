@@ -11,7 +11,8 @@ curve25519-dalek = { git = "https://github.com/tarcieri/curve25519-dalek.git", b
 ed25519-dalek = { version = "1.0.0-pre.1", features = ["nightly", "serde"] }
 console_error_panic_hook = "0.1.6"
 wee_alloc = "0.4.5"
-protobuf = "2.8.1"
+catalyst-protocol-sdk-rust = "0.1.2"
+wasm-bindgen-test = "0.3.4"
 
 [dependencies.web-sys]
 version = "0.3"

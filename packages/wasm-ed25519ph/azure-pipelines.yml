@@ -14,14 +14,14 @@ steps:
           curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
       displayName: 'Install rustup toolchain'
 
-    - script: |
-          rustup override set nightly
-      displayName: 'Override wasm-pack default toolchain'
-
     - task: Npm@1
       displayName: 'Install NPM'
       inputs:
           command: 'install'
+
+    - script: |
+          rustup override set nightly
+      displayName: 'Override wasm-pack default toolchain'
 
     - task: Npm@1
       displayName: 'Build node'
@@ -36,7 +36,19 @@ steps:
           customCommand: 'run test:jest'
 
     - task: Npm@1
-      displayName: 'Build npm bundle'
+      displayName: 'wasm-pack test node'
       inputs:
           command: 'custom'
-          customCommand: 'run build:bundler'
+          customCommand: 'run test:cargo:node'
+
+    - task: Npm@1
+      displayName: 'wasm-pack test firefox'
+      inputs:
+          command: 'custom'
+          customCommand: 'run test:cargo:firefox'
+
+    - task: Npm@1
+      displayName: 'wasm-pack test chrome'
+      inputs:
+          command: 'custom'
+          customCommand: 'run test:cargo:chrome'

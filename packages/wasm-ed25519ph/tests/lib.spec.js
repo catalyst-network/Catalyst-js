@@ -5,6 +5,7 @@ import {
     public_key_from_private,
 } from '../pkg/index';
 import { bytesFromHexString, bytesFromString } from './utils.js';
+var assert = require('assert');
 
 describe('the library can produce and validate signatures', function() {
     it('should produce a valid signature when signing a message', function() {
@@ -22,7 +23,7 @@ describe('the library can produce and validate signatures', function() {
             context1,
             context1_length,
         );
-        console.log('sucessful result should be 418: ', result);
+        assert(result==418, "failed to create a signature");
     });
 
     it('should be able to validate a valid signature', function() {
@@ -48,7 +49,7 @@ describe('the library can produce and validate signatures', function() {
             context1,
             context1_length,
         );
-        console.log('sucessful verification indicated by 418:', verified);
+        assert(verified==418, "failed to validate a signature");
     });
 
     it('should not be able to validate an invalid signature', async function() {
@@ -76,13 +77,10 @@ describe('the library can produce and validate signatures', function() {
             context2,
             context2_length,
         );
-        console.log(
-            'verification should not succeed with error code 4:',
-            verified,
-        );
+        assert(verified==4, "validated an incorrect signature");
     });
 
-    it('should not be able to validate an with the incorrect public key', function() {
+    it('should not be able to validate with the incorrect public key', function() {
         const public_key = bytesFromHexString(
             '9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f',
         );
@@ -107,13 +105,10 @@ describe('the library can produce and validate signatures', function() {
             context1,
             context1_length,
         );
-        console.log(
-            'verification should not succeed with error code 2: ',
-            verified,
-        );
+        assert(verified==2, "validation succeeded using an invalid public key");
     });
 
-    it('should not be able to validate an with the incorrect private key', function() {
+    it('should not be able to validate with the incorrect private key', function() {
         const private_key = bytesFromHexString(
             '9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f',
         );
@@ -121,20 +116,17 @@ describe('the library can produce and validate signatures', function() {
         const context1 = bytesFromString('context');
         const context1_length = context1.length;
         const signature = new Uint8Array(64);
-        const sign_result = sign(
+        const result = sign(
             signature,
             private_key,
             message,
             context1,
             context1_length,
         );
-        console.log(
-            'signature should not succeed with error code 3: ',
-            sign_result,
-        );
+        assert(result==3, "validation succeeded using an invalid private key");
     });
 
-    it('should not be able to validate an with the incorrect context', function() {
+    it('should not be able to validate with the incorrect context', function() {
         const message = bytesFromString('hello');
         const context1 = bytesFromString(
             'context context context context context context context contextcontext context context contextcontext context context contextcontext context context contextcontext context context contextcontext context context contextcontext context context contextcontext context context contextcontext context context contextcontext context context contextcontext context context contextcontext context context context',
@@ -151,7 +143,7 @@ describe('the library can produce and validate signatures', function() {
             context1,
             context1_length,
         );
-        console.log('context length error should give 5: ', result);
+        assert(result==5, "validation succeeded using an invalid context length");
     });
 
     it('should be able to pass a known test vector', function() {
@@ -171,6 +163,6 @@ describe('the library can produce and validate signatures', function() {
             context1,
             context1_length,
         );
-        console.log('test vector working indicated by 418: ', verified);
+        assert(verified==418, "failed to validate using a known test vector");
     });
 });
