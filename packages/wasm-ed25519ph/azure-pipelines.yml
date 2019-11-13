@@ -10,9 +10,6 @@ pool:
     vmImage: 'ubuntu-latest'
 
 steps:
-    - script: echo Hello, world!
-      displayName: 'Run a one-line script'
-
     - script: |
           curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
       displayName: 'Install rustup toolchain'

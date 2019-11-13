@@ -3,7 +3,7 @@
 
   ### Wasm ed25519ph
 
-[![Discord](https://img.shields.io/discord/629667101774446593?color=blueviolet&label=discord)](https://discord.gg/anTP7xm)
+[![Build Status](https://dev.azure.com/catalyst-network/wasm-ed25519/_apis/build/status/catalyst-network.wasm-ed25519ph?branchName=master)](https://dev.azure.com/catalyst-network/wasm-ed25519/_build/latest?definitionId=18&branchName=master)[![Discord](https://img.shields.io/discord/629667101774446593?color=blueviolet&label=discord)](https://discord.gg/anTP7xm)
 </div>
 
 Provides [ed25519ph](https://github.com/dalek-cryptography/ed25519-dalek) functionality.
