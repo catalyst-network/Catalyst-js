@@ -1,6 +1,5 @@
 // Import dependencies.
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import WasmPackPlugin from '@wasm-tool/wasm-pack-plugin';
 import * as path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
@@ -34,18 +33,7 @@ const plugins = [
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
         path.resolve(__dirname, "../static")
-    ]),
-    new HtmlWebpackPlugin({
-        template: `${OUTPUT}/index.html`,
-        minify: {
-            collapseWhitespace: true,
-            removeComments: true,
-        },
-    }),
-    new WasmPackPlugin({
-        crateDirectory: path.resolve(__dirname, '..'),
-        extraArgs: "--scope catalyst --target nodejs"
-    }),
+    ])
 ];
 
 /**
@@ -54,14 +42,14 @@ const plugins = [
 const entry = [
     'core-js/stable',
     'regenerator-runtime/runtime',
-    path.resolve(__dirname, '../pkg/index.js'),
+    ENTRY,
 ];
 
 /**
  * Set output folder name for .js file for the dev server.
  */
 const output = {
-    path: DIST,
+    path: DIST + '/dist',
     filename: JSOUTPUT,
 };
 
@@ -82,7 +70,7 @@ const modules = {
  */
 const WebpackConfig = {
     node: {
-        fs: 'empty'
+        fs: 'empty',
     },
     entry,
     module: modules,

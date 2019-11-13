@@ -1,0 +1,45 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+    - master
+
+pool:
+    vmImage: 'ubuntu-latest'
+
+steps:
+    - script: echo Hello, world!
+      displayName: 'Run a one-line script'
+
+    - script: |
+          curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
+      displayName: 'Install rustup toolchain'
+
+    - script: |
+          rustup override set nightly
+      displayName: 'Override wasm-pack default toolchain'
+
+    - task: Npm@1
+      displayName: 'Install NPM'
+      inputs:
+          command: 'install'
+
+    - task: Npm@1
+      displayName: 'Build node'
+      inputs:
+          command: 'custom'
+          customCommand: 'run build:node'
+
+    - task: Npm@1
+      displayName: 'test node code'
+      inputs:
+          command: 'custom'
+          customCommand: 'run test:jest'
+
+    - task: Npm@1
+      displayName: 'Build npm bundle'
+      inputs:
+          command: 'custom'
+          customCommand: 'run build:bundler'

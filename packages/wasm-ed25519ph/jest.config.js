@@ -1,6 +1,5 @@
 module.exports = {
-  clearMocks: true,
-  coverageDirectory: 'coverage',
-  setupFiles: ['./__mocks__/client.js'],
-  verbose: true,
+    clearMocks: true,
+    coverageDirectory: 'coverage',
+    verbose: true,
 };

@@ -3,7 +3,7 @@ import {
     sign_sig_and_public_key,
     verify,
     public_key_from_private,
-} from '../pkg/index.js';
+} from '../pkg/index';
 import { bytesFromHexString, bytesFromString } from './utils.js';
 
 describe('the library can produce and validate signatures', function() {
@@ -51,14 +51,14 @@ describe('the library can produce and validate signatures', function() {
         console.log('sucessful verification indicated by 418:', verified);
     });
 
-    it('should not be able to validate an invalid signature', function() {
+    it('should not be able to validate an invalid signature', async function() {
         const message = bytesFromString('hello');
         const context1 = bytesFromString('context');
         const context2 = bytesFromString('different context');
         const private_key = bytesFromHexString(
             '9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60',
         );
-        const public_key = public_key_from_private(private_key);
+        const public_key = await public_key_from_private(private_key);
         const context1_length = context1.length;
         const context2_length = context2.length;
         const signature = new Uint8Array(64);
