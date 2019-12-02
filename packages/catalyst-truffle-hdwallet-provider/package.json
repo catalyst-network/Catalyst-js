@@ -1,13 +1,9 @@
 {
-  "name": "@truffle/hdwallet-provider",
+  "name": "catalyst=truffle-hdwallet-provider",
   "description": "HD Wallet-enabled Web3 provider",
-  "license": "MIT",
-  "author": "Tim Coulter <tim@trufflesuite.com>",
-  "homepage": "https://github.com/trufflesuite/truffle/tree/master/packages/hdwallet-provider#readme",
-  "repository": "https://github.com/trufflesuite/truffle/tree/master/packages/hdwallet-provider",
-  "bugs": {
-    "url": "https://github.com/trufflesuite/truffle/issues"
-  },
+  "license": "MIT",,
+  "homepage": "https://github.com/catalyst-network/catalyst-truffle-hdwallet-provider#readme",
+  "repository": "https://github.com/catalyst-network/catalyst-truffle-hdwallet-provider",
   "version": "1.0.26",
   "main": "dist/index.js",
   "scripts": {
@@ -43,7 +39,7 @@
     "typescript": "^3.6.3"
   },
   "keywords": [
-    "etheruem",
+    "catalyst",
     "hd",
     "mnemonic",
     "provider",
