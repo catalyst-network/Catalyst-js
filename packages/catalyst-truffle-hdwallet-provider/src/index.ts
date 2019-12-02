@@ -150,6 +150,7 @@ class HDWalletProvider {
         },
         signTransaction(txParams: any, cb: any) {
           let pkey;
+          console.log(txParams);
           const from = txParams.from.toLowerCase();
           if (tmp_wallets[from]) {
             pkey = tmp_wallets[from].privateKey;
