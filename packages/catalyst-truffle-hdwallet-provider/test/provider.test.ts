@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import assert from "assert";
 import Ganache from "ganache-core";
 import * as EthUtil from "ethereumjs-util";

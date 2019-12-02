@@ -13,7 +13,8 @@ import Web3 from "web3";
 import { JSONRPCRequestPayload, JSONRPCErrorCallback } from "ethereum-protocol";
 import { Callback, JsonRpcResponse } from "@truffle/provider";
 import {derivePath } from 'ed25519-hd-key';
-import nacl from 'tweetnacl'
+import nacl, { SignKeyPair } from 'tweetnacl'
+import { toHex } from "web3-utils";
 
 
 // Important: do not use debug module. Reason: https://github.com/trufflesuite/truffle/issues/2374#issuecomment-536109086
@@ -26,9 +27,8 @@ import nacl from 'tweetnacl'
 const singletonNonceSubProvider = new NonceSubProvider();
 
 class HDWalletProvider {
-  private hdwallet?: EthereumHDKey;
   private walletHdpath: string;
-  private wallets: { [address: string]: ethJSWallet };
+  private wallets: { [address: string]: any };
   private addresses: string[];
 
   public engine: ProviderEngine;
@@ -39,7 +39,7 @@ class HDWalletProvider {
     addressIndex: number = 0,
     numAddresses: number = 10,
     shareNonce: boolean = true,
-    walletHdpath: string = `m/44'/42069'/0'/0/`
+    walletHdpath: string = `m/44'/42069'/`
   ) {
     this.walletHdpath = walletHdpath;
     this.wallets = {};
@@ -56,19 +56,23 @@ class HDWalletProvider {
       );
     }
 
-    // function generatePrivateKeyFromSeed(seed: Uint8Array): Uint8Array {
-    //   const pair = nacl.sign.keyPair.fromSeed(seed)
-    //   return pair.secretKey
-    // }
+    function generateKeyFromSeed(seed: Uint8Array): SignKeyPair {
+      return nacl.sign.keyPair.fromSeed(seed)
+    };
 
-    // const createAccountsFromMnemonic = (mnemonic: string, quantity: number) => {
-    //   const seed = bip39.mnemonicToSeedHex(mnemonic)
-    //   const privateKeys = Array.from(Array(quantity).keys()).map(index => {
-    //     const data = derivePath(`m/44'/42069'/${index}'`, seed)
-    //     return generatePrivateKeyFromSeed(data.key)
-    //   })
-    //   this._engine.addAccounts(privateKeys)
-    // }
+    function generateKeyFromPrivateKey(key: Uint8Array): SignKeyPair {
+      return nacl.sign.keyPair.fromSecretKey(key)
+    };
+
+    function toHexString(byteArray: Uint8Array) {
+      return Array.prototype.map.call(byteArray, function(byte) {
+        return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+      }).join('');
+    }
+
+    function fromHexString(hexString: any): Uint8Array {
+      return new Uint8Array(hexString.match(/.{1,2}/g).map((byte: any) => parseInt(byte, 16)));
+    }
 
     // private helper to normalize given mnemonic
     const normalizePrivateKeys = (
@@ -82,22 +86,23 @@ class HDWalletProvider {
 
     // private helper to check if given mnemonic uses BIP39 passphrase protection
     const checkBIP39Mnemonic = (mnemonic: string) => {
-      this.hdwallet = EthereumHDKey.fromMasterSeed(
-        bip39.mnemonicToSeed(mnemonic)
-      );
-
       if (!bip39.validateMnemonic(mnemonic)) {
         throw new Error("Mnemonic invalid or undefined");
       }
 
+      const seed = bip39.mnemonicToSeedHex(mnemonic);
+
       // crank the addresses out
       for (let i = addressIndex; i < addressIndex + numAddresses; i++) {
-        const wallet = this.hdwallet
-          .derivePath(this.walletHdpath + i)
-          .getWallet();
-
-
-        const addr = `0x${wallet.getAddress().toString("hex")}`;
+        const data = derivePath(`${this.walletHdpath + i}\'`, seed)
+        const keypair = generateKeyFromSeed(data.key);
+            
+        const wallet = {
+          privateKey: keypair.secretKey,
+          privateKeyHex: toHexString(keypair.secretKey),
+        };
+        const address = EthUtil.keccak(Buffer.from(keypair.publicKey)).slice(-20);
+        const addr = EthUtil.bufferToHex(address);
         this.addresses.push(addr);
         this.wallets[addr] = wallet;
       }
@@ -107,13 +112,18 @@ class HDWalletProvider {
     const ethUtilValidation = (privateKeys: string[]) => {
       // crank the addresses out
       for (let i = addressIndex; i < privateKeys.length; i++) {
-        const privateKey = Buffer.from(privateKeys[i].replace("0x", ""), "hex");
-        if (EthUtil.isValidPrivate(privateKey)) {
-          const wallet = ethJSWallet.fromPrivateKey(privateKey);
-          const address = wallet.getAddressString();
-          this.addresses.push(address);
-          this.wallets[address] = wallet;
-        }
+          const key = fromHexString(privateKeys[i]);
+          const keypair = generateKeyFromPrivateKey(key);
+          
+          const wallet = {
+            privateKey: keypair.secretKey,
+            privateKeyHex: privateKeys[i]
+          }
+
+          const address = EthUtil.keccak(Buffer.from(keypair.publicKey)).slice(-20);
+          const addr = EthUtil.bufferToHex(address);
+          this.addresses.push(addr);
+          this.wallets[addr] = wallet;
       }
     };
 
@@ -134,14 +144,14 @@ class HDWalletProvider {
           if (!tmp_wallets[address]) {
             return cb("Account not found");
           } else {
-            cb(null, tmp_wallets[address].getPrivateKey().toString("hex"));
+            cb(null, tmp_wallets[address].privateKeyHex);
           }
         },
         signTransaction(txParams: any, cb: any) {
           let pkey;
           const from = txParams.from.toLowerCase();
           if (tmp_wallets[from]) {
-            pkey = tmp_wallets[from].getPrivateKey();
+            pkey = tmp_wallets[from].privateKey;
           } else {
             cb("Account not found");
           }
@@ -158,7 +168,7 @@ class HDWalletProvider {
           if (!tmp_wallets[from]) {
             cb("Account not found");
           }
-          let pkey = tmp_wallets[from].getPrivateKey();
+          let pkey = tmp_wallets[from].privateKey;
           const dataBuff = EthUtil.toBuffer(dataIfExists);
           const msgHashBuff = EthUtil.hashPersonalMessage(dataBuff);
           const sig = EthUtil.ecsign(msgHashBuff, pkey);
