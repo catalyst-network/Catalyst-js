@@ -2,6 +2,7 @@
 
 import assert from "assert";
 import Ganache from "ganache-core";
+import nacl, { SignKeyPair } from 'tweetnacl'
 import * as EthUtil from "ethereumjs-util";
 import Web3 from "web3";
 import WalletProvider from "../dist";
@@ -30,16 +31,16 @@ describe("HD Wallet Provider", function() {
 
   it("provides for a mnemonic", function(done) {
     const truffleDevAccounts = [
-      "0x627306090abab3a6e1400e9345bc60c78a8bef57",
-      "0xf17f52151ebef6c7334fad080c5704d77216b732",
-      "0xc5fdf4076b8f3a5357c5e395ab970b5b54098fef",
-      "0x821aea9a577a9b44299b9c15c88cf3087f3b5544",
-      "0x0d1d4e623d10f9fba5db95830f7d3839406c6af2",
-      "0x2932b7a2355d6fecc4b5c0b6bd44cc31df247a2e",
-      "0x2191ef87e392377ec08e7c08eb105ef5448eced5",
-      "0x0f4f2ac550a1b4e2280d04c21cea7ebd822934b5",
-      "0x6330a553fc93768f612722bb8c2ec78ac90b3bbc",
-      "0x5aeda56215b167893e80b4fe645ba6d5bab767de"
+      '0xeba062075dfc52393253e6a9df7a5da220d512da',
+      '0xab947e285d5ed19401361cdf41ca3a543b83b3fc',
+      '0xff185e4c770ce5be54f0d815b7f698012c82eb9a',
+      '0x88c17e02d67f9b68f7fcce1592c1dbd080b03e18',
+      '0x8a298b6672980979933a878183ae24b86b3b20f9',
+      '0xad4b26b516f2a43253ee6527ed6b4c4e6ffbff38',
+      '0xd65bbca5871ae12a983e468f41c24e5b1209a817',
+      '0x9e5ce40116e5039b2634f58a449ec78b6d15d59c',
+      '0x25cf081e6a693c39b64cd37b629d8841ce304ed0',
+      '0xef0329e8964810b73b70bbc2df4c066bcd5ac667',
     ];
 
     const mnemonic =
@@ -70,12 +71,12 @@ describe("HD Wallet Provider", function() {
 
   it("provides for a private key", function(done) {
     const privateKey =
-      "3f841bf589fdf83a521e55d51afddc34fa65351161eead24f064855fc29c9580"; //random valid private key generated with ethkey
+      "30329f1622aacd6093753a2b6d07e7d95f67bc511a2245008447772ba8b9c7225830bc0b616672c48077fc4e144b6c5700c66e8a15019da4d4ea74ccaeea5c1f"; //random valid private key generated with ethkey
     provider = new WalletProvider(privateKey, `http://localhost:${port}`);
     web3.setProvider(provider);
 
     const addresses = provider.getAddresses();
-    assert.equal(addresses[0], "0xc515db5834d8f110eee96c3036854dbf1d87de2b");
+    assert.equal(addresses[0], "0xeba062075dfc52393253e6a9df7a5da220d512da");
     addresses.forEach(address => {
       assert(EthUtil.isValidAddress(address), "invalid address");
     });
@@ -87,16 +88,23 @@ describe("HD Wallet Provider", function() {
   });
 
   it("provides for an array of private keys", function(done) {
+    function generateKeyFromPrivateKey(key: Uint8Array): SignKeyPair {
+      return nacl.sign.keyPair.fromSecretKey(key)
+    };
+
+    function fromHexString(hexString: any): Uint8Array {
+      return new Uint8Array(hexString.match(/.{1,2}/g).map((byte: any) => parseInt(byte, 16)));
+    };
     const privateKeys = [
-      "3f841bf589fdf83a521e55d51afddc34fa65351161eead24f064855fc29c9580",
-      "9549f39decea7b7504e15572b2c6a72766df0281cea22bd1a3bc87166b1ca290"
+      "ccfd141c3a94d3142acc64f5da01a2518e7c9fd56b9443f3098181217c049ab04091f8a67905f4c98550d2b8d406efd949787571c09578726ef2a1f6af21461d",
+      "3fd0f533db7abcd571af9bf80e884ec5693ac4ba3d70da468ba752c723aa2f1bcf4b0ef0205b3f2388dda975d69f7ec66e407ccf4f7bb2a6de712f5861374db2"
     ];
 
     const privateKeysByAddress: { [address: string]: string } = {
-      "0xc515db5834d8f110eee96c3036854dbf1d87de2b":
-        "3f841bf589fdf83a521e55d51afddc34fa65351161eead24f064855fc29c9580",
-      "0xbd3366a0e5d2fb52691e3e08fabe136b0d4e5929":
-        "9549f39decea7b7504e15572b2c6a72766df0281cea22bd1a3bc87166b1ca290"
+      '0x25cf081e6a693c39b64cd37b629d8841ce304ed0':
+        'ccfd141c3a94d3142acc64f5da01a2518e7c9fd56b9443f3098181217c049ab04091f8a67905f4c98550d2b8d406efd949787571c09578726ef2a1f6af21461d',
+      '0xef0329e8964810b73b70bbc2df4c066bcd5ac667':
+        '3fd0f533db7abcd571af9bf80e884ec5693ac4ba3d70da468ba752c723aa2f1bcf4b0ef0205b3f2388dda975d69f7ec66e407ccf4f7bb2a6de712f5861374db2',
     };
 
     provider = new WalletProvider(privateKeys, `http://localhost:${port}`);
@@ -109,11 +117,8 @@ describe("HD Wallet Provider", function() {
       "incorrect number of wallets derived"
     );
     addresses.forEach(address => {
-      assert(EthUtil.isValidAddress(address), "invalid address");
-      const privateKey = Buffer.from(privateKeysByAddress[address], "hex");
-      const expectedAddress = `0x${EthUtil.privateToAddress(
-        privateKey
-      ).toString("hex")}`;
+      const privateKey = generateKeyFromPrivateKey(fromHexString(privateKeysByAddress[address]));
+      const expectedAddress = EthUtil.bufferToHex(EthUtil.keccak(Buffer.from(privateKey.publicKey)).slice(-20));
       assert.equal(
         address,
         expectedAddress,

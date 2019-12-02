@@ -101,6 +101,7 @@ class HDWalletProvider {
           privateKey: keypair.secretKey,
           privateKeyHex: toHexString(keypair.secretKey),
         };
+      
         const address = EthUtil.keccak(Buffer.from(keypair.publicKey)).slice(-20);
         const addr = EthUtil.bufferToHex(address);
         this.addresses.push(addr);
