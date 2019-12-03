@@ -1,0 +1,3 @@
+[submodule "protocol-specification"]
+	path = protocol-specification
+	url = git@github.com:catalyst-network/protocol-specification.git
