@@ -5,8 +5,6 @@ import { NetworkType } from '../generated/Network_pb';
 import { TransactionBroadcast } from '../generated/Wire_pb';
 import { bytesFromHexString } from './utils/index';
 
-// import { sign } from './pkg/index';
-
 async function loadWasm() {
   return import('./pkg/index');
 }

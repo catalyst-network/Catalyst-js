@@ -8,12 +8,18 @@ import HookedSubprovider from 'web3-provider-engine/subproviders/hooked-wallet';
 import ProviderSubprovider from 'web3-provider-engine/subproviders/provider';
 import Url from 'url';
 import Web3 from 'web3';
-import { JSONRPCRequestPayload, JSONRPCErrorCallback } from 'ethereum-protocol';
-import { Callback, JsonRpcResponse } from '@truffle/provider';
+// import { JSONRPCRequestPayload, JSONRPCErrorCallback } from 'ethereum-protocol';
+// import { Callback, JsonRpcResponse } from '@truffle/provider';
 import { derivePath } from 'ed25519-hd-key';
 import blake2b from 'blake2b';
 import nacl from 'tweetnacl';
 import createTx, { signMessage } from './Transaction';
+import {
+  JSONRPCRequestPayload,
+  JSONRPCErrorCallback,
+  Callback,
+  JsonRpcResponse,
+  } from './index.d';
 
 // Important: do not use debug module. Reason: https://github.com/trufflesuite/truffle/issues/2374#issuecomment-536109086
 
