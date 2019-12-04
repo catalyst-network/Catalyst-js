@@ -1,3 +1,4 @@
+import nacl from 'tweetnacl';
 import { BaseEntry, PublicEntry } from '../generated/Transaction_pb';
 import { Signature, SigningContext, SignatureType } from '../generated/Cryptography_pb';
 import { NetworkType } from '../generated/Network_pb';
@@ -24,6 +25,10 @@ function signTx(tx: any, wallet: any, context: Uint8Array, wasm: typeof import('
     throw Error('Failed to sign');
   }
   return signature;
+}
+
+export function signMessage(message: any, pKey: any) {
+  return nacl.sign(message, pKey);
 }
 
 async function transaction(wallet: any, txParams: any): Promise<Uint8Array> {

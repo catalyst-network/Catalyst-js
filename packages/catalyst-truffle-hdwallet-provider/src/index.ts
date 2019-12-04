@@ -11,8 +11,9 @@ import Web3 from 'web3';
 import { JSONRPCRequestPayload, JSONRPCErrorCallback } from 'ethereum-protocol';
 import { Callback, JsonRpcResponse } from '@truffle/provider';
 import { derivePath } from 'ed25519-hd-key';
+import blake2b from 'blake2b';
 import nacl from 'tweetnacl';
-import createTx from './Transaction';
+import createTx, { signMessage } from './Transaction';
 
 // Important: do not use debug module. Reason: https://github.com/trufflesuite/truffle/issues/2374#issuecomment-536109086
 
@@ -160,7 +161,6 @@ class HDWalletProvider {
           // }
 
           let wallet;
-          console.log(txParams);
           const from = txParams.from.toLowerCase();
           if (tmpWallets[from]) {
             wallet = tmpWallets[from].privateKey;
@@ -170,8 +170,6 @@ class HDWalletProvider {
 
           const tx = createTx(wallet, txParams);
 
-          // tx.sign(pkey as Buffer);
-          // const rawTx = `0x${tx.serialize().toString('hex')}`;
           cb(null, tx);
         },
         signMessage({ data, from }: any, cb: any) {
@@ -184,10 +182,9 @@ class HDWalletProvider {
           }
           const pkey = tmpWallets[from].privateKey;
           const dataBuff = EthUtil.toBuffer(dataIfExists);
-          const msgHashBuff = EthUtil.hashPersonalMessage(dataBuff);
-          const sig = EthUtil.ecsign(msgHashBuff, pkey);
-          const rpcSig = EthUtil.toRpcSig(sig.v, sig.r, sig.s);
-          cb(null, rpcSig);
+          const msgHashBuff = blake2b(64).update(dataBuff).digest();
+          const sig = signMessage(msgHashBuff, pkey);
+          cb(null, sig);
         },
         signPersonalMessage(...args: any[]) {
           this.signMessage(...args);
