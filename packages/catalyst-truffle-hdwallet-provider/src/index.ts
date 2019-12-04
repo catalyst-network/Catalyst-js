@@ -64,7 +64,8 @@ class HDWalletProvider {
     }
 
     function toHexString(byteArray: Uint8Array) {
-      return Array.prototype.map.call(byteArray, (byte) => (`0${(byte && 0xFF).toString(16)}`).slice(-2)).join('');
+      // eslint-disable-next-line no-bitwise
+      return Array.prototype.map.call(byteArray, (byte) => (`0${(byte & 0xFF).toString(16)}`).slice(-2)).join('');
     }
 
     function fromHexString(hexString: any): Uint8Array {
@@ -254,4 +255,4 @@ class HDWalletProvider {
   }
 }
 
-export = HDWalletProvider;
+export default HDWalletProvider;

@@ -1,4 +1,4 @@
-export function bytesFromString(value: string) {
+export function bytesFromString(value: string): Uint8Array {
   const u8a = new Uint8Array(value.length);
 
   for (let i = 0; i < value.length; i += 1) {
@@ -8,13 +8,7 @@ export function bytesFromString(value: string) {
   return u8a;
 }
 
-// export function bytesFromHexString(hexString: string) {
-//   return new Uint8Array(
-//     hexString.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)),
-//   );
-// }
-
-export function bytesFromHexString(str: string) {
+export function bytesFromHexString(str: string): Uint8Array {
   if (!str) {
     return new Uint8Array();
   }
