@@ -14,7 +14,7 @@ function signTx(tx: any, wallet: any, context: Uint8Array, wasm: typeof import('
   const signature = new Uint8Array(64);
   const result = wasm.sign(
     signature,
-    wallet.publicKey,
+    wallet.privateKey,
     tx,
     context,
     contextLength,

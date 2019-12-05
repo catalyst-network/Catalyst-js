@@ -30,8 +30,9 @@ const txParams = {
 describe('Transaction builder', () => {
   it('can create a signed tx', async () => {
     const keypair = nacl.sign.keyPair();
+    
     const wallet = {
-      privateKey: keypair.secretKey,
+      privateKey: keypair.secretKey.slice(0, 32),
       privateKeyHex: toHexString(keypair.secretKey),
       publicKey: keypair.publicKey,
     };
@@ -42,9 +43,9 @@ describe('Transaction builder', () => {
   it('fails to sign with an invalid key', async () => {
     const keypair = nacl.sign.keyPair();
     const wallet = {
-      privateKey: keypair.secretKey,
+      privateKey: keypair.secretKey.slice(0, 31),
       privateKeyHex: toHexString(keypair.secretKey),
-      publicKey: keypair.secretKey,
+      publicKey: keypair.publicKey,
     };
     try {
       await transaction(wallet, txParams);

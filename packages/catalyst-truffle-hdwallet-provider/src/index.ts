@@ -1,6 +1,5 @@
 import * as bip39 from 'bip39';
 import * as EthUtil from 'ethereumjs-util';
-// import Transaction from 'ethereumjs-tx';
 import ProviderEngine from 'web3-provider-engine';
 import FiltersSubprovider from 'web3-provider-engine/subproviders/filters';
 import NonceSubProvider from 'web3-provider-engine/subproviders/nonce-tracker';
@@ -8,8 +7,6 @@ import HookedSubprovider from 'web3-provider-engine/subproviders/hooked-wallet';
 import ProviderSubprovider from 'web3-provider-engine/subproviders/provider';
 import Url from 'url';
 import Web3 from 'web3';
-// import { JSONRPCRequestPayload, JSONRPCErrorCallback } from 'ethereum-protocol';
-// import { Callback, JsonRpcResponse } from '@truffle/provider';
 import { derivePath } from 'ed25519-hd-key';
 import blake2b from 'blake2b';
 import nacl from 'tweetnacl';
@@ -103,8 +100,9 @@ class HDWalletProvider {
         const keypair = generateKeyFromSeed(data.key);
 
         const wallet = {
-          privateKey: keypair.secretKey,
-          privateKeyHex: toHexString(keypair.secretKey),
+          secretKey: keypair.secretKey,
+          privateKey: keypair.secretKey.slice(0, 32),
+          privateKeyHex: toHexString(keypair.secretKey.slice(0, 32)),
           publicKey: keypair.publicKey,
         };
 
@@ -123,7 +121,8 @@ class HDWalletProvider {
         const keypair = generateKeyFromPrivateKey(key);
 
         const wallet = {
-          privateKey: keypair.secretKey,
+          secretKey: keypair.secretKey,
+          privateKey: keypair.secretKey.slice(0, 32),
           privateKeyHex: privateKeys[i],
           publicKey: keypair.publicKey,
         };
@@ -186,7 +185,7 @@ class HDWalletProvider {
           if (!tmpWallets[from]) {
             cb('Account not found');
           }
-          const pkey = tmpWallets[from].privateKey;
+          const pkey = tmpWallets[from].secretKey;
           const dataBuff = EthUtil.toBuffer(dataIfExists);
           const msgHashBuff = blake2b(64).update(dataBuff).digest();
           const sig = signMessage(msgHashBuff, pkey);
