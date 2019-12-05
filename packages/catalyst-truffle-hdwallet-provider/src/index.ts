@@ -16,7 +16,7 @@ import {
   JSONRPCErrorCallback,
   Callback,
   JsonRpcResponse,
-  } from './index.d';
+  } from './types';
 
 // Important: do not use debug module. Reason: https://github.com/trufflesuite/truffle/issues/2374#issuecomment-536109086
 
@@ -153,13 +153,13 @@ class HDWalletProvider {
           }
           return cb(null, tmpWallets[address].privateKeyHex);
         },
-        signTransaction(txParams: any, cb: any) {
+        async signTransaction(txParams: any, cb: any) {
           // Example txParams
           // const txParams = {
           //   from: '0x0000000000000000000000000000000000000000',
           //   nonce: '0x00',
           //   gasPrice: '0x09184e72a000',
-          //   gasLimit: '0x2710',
+          //   gas: '0x2710',
           //   to: '0x0000000000000000000000000000000000000000',
           //   value: '0x00',
           //   data: '0x7f7465737432000000000000000000000000000000000000000000000000000000600057',
@@ -168,14 +168,14 @@ class HDWalletProvider {
           let wallet;
           const from = txParams.from.toLowerCase();
           if (tmpWallets[from]) {
-            wallet = tmpWallets[from].privateKey;
+            wallet = tmpWallets[from];
           } else {
             cb('Account not found');
           }
 
-          const tx = createTx(wallet, txParams);
+          const tx = await createTx(wallet, txParams);
 
-          cb(null, tx);
+          cb(null, toHexString(tx));
         },
         signMessage({ data, from }: any, cb: any) {
           const dataIfExists = data;

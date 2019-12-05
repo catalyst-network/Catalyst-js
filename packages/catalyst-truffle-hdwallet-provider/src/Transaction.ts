@@ -25,11 +25,19 @@ function signTx(tx: any, wallet: any, context: Uint8Array, wasm: typeof import('
   return signature;
 }
 
-export function signMessage(message: any, pKey: any) {
+export function signMessage(message: any, pKey: any): Uint8Array {
   return nacl.sign(message, pKey);
 }
 
 async function transaction(wallet: any, txParams: any): Promise<Uint8Array> {
+  if(!txParams.value) {
+    txParams.value = '0x0';
+  }
+
+  if(!txParams.to) {
+    txParams.to = '';
+  }
+
   const base = new BaseEntry();
   base.setNonce(parseInt(txParams.nonce, 16));
   base.setReceiverPublicKey(bytesFromHexString(txParams.to));
@@ -42,7 +50,7 @@ async function transaction(wallet: any, txParams: any): Promise<Uint8Array> {
   entry.setData(bytesFromHexString(txParams.data));
   entry.setTimestamp();
   entry.setGasPrice(bytesFromHexString(txParams.gasPrice));
-  entry.setGasLimit(parseInt(txParams.gasLimit, 16));
+  entry.setGasLimit(parseInt(txParams.gas, 16));
 
   const context = new SigningContext();
   context.setNetworkType(NetworkType.TESTNET);
@@ -59,7 +67,7 @@ async function transaction(wallet: any, txParams: any): Promise<Uint8Array> {
 
   const broadcast = new TransactionBroadcast();
   broadcast.setPublicEntry(entry);
-
+  
   return broadcast.serializeBinary();
 }
 
