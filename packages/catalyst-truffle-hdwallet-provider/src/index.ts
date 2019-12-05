@@ -154,17 +154,6 @@ class HDWalletProvider {
           return cb(null, tmpWallets[address].privateKeyHex);
         },
         async signTransaction(txParams: any, cb: any) {
-          // Example txParams
-          // const txParams = {
-          //   from: '0x0000000000000000000000000000000000000000',
-          //   nonce: '0x00',
-          //   gasPrice: '0x09184e72a000',
-          //   gas: '0x2710',
-          //   to: '0x0000000000000000000000000000000000000000',
-          //   value: '0x00',
-          //   data: '0x7f7465737432000000000000000000000000000000000000000000000000000000600057',
-          // }
-
           let wallet;
           const from = txParams.from.toLowerCase();
           if (tmpWallets[from]) {
@@ -189,7 +178,7 @@ class HDWalletProvider {
           const dataBuff = EthUtil.toBuffer(dataIfExists);
           const msgHashBuff = blake2b(64).update(dataBuff).digest();
           const sig = signMessage(msgHashBuff, pkey);
-          cb(null, sig);
+          cb(null, toHexString(sig));
         },
         signPersonalMessage(...args: any[]) {
           this.signMessage(...args);
@@ -257,4 +246,4 @@ class HDWalletProvider {
   }
 }
 
-export default HDWalletProvider;
+export = HDWalletProvider;
