@@ -2,7 +2,7 @@
 
 import assert from "assert";
 import Ganache from "ganache-core";
-import nacl, { SignKeyPair } from 'tweetnacl'
+import * as  nacl from 'tweetnacl'
 import * as EthUtil from "ethereumjs-util";
 import Web3 from "web3";
 import WalletProvider from "../dist";
@@ -88,7 +88,7 @@ describe("HD Wallet Provider", function() {
   });
 
   it("provides for an array of private keys", function(done) {
-    function generateKeyFromPrivateKey(key: Uint8Array): SignKeyPair {
+    function generateKeyFromPrivateKey(key: Uint8Array): nacl.SignKeyPair {
       return nacl.sign.keyPair.fromSecretKey(key)
     };
 

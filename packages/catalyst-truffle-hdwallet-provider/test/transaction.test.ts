@@ -52,5 +52,5 @@ describe('Transaction builder', () => {
     } catch (e) {
       assert.deepEqual(e.message, 'Failed to sign');
     }
-  });
+  });  
 });

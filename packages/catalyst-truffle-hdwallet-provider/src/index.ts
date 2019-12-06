@@ -5,11 +5,11 @@ import FiltersSubprovider from 'web3-provider-engine/subproviders/filters';
 import NonceSubProvider from 'web3-provider-engine/subproviders/nonce-tracker';
 import HookedSubprovider from 'web3-provider-engine/subproviders/hooked-wallet';
 import ProviderSubprovider from 'web3-provider-engine/subproviders/provider';
-import Url from 'url';
-import Web3 from 'web3';
+import * as Url from 'url';
+import * as Web3 from 'web3';
 import { derivePath } from 'ed25519-hd-key';
 import blake2b from 'blake2b';
-import nacl from 'tweetnacl';
+import * as nacl from 'tweetnacl';
 import createTx, { signMessage } from './Transaction';
 import {
   JSONRPCRequestPayload,
@@ -246,4 +246,4 @@ class HDWalletProvider {
   }
 }
 
-export = HDWalletProvider;
+export default HDWalletProvider;

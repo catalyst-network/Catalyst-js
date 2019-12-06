@@ -1,4 +1,4 @@
-import nacl from 'tweetnacl';
+import * as nacl from 'tweetnacl';
 import { BaseEntry, PublicEntry } from '../generated/Transaction_pb';
 import { Signature, SigningContext, SignatureType } from '../generated/Cryptography_pb';
 import { NetworkType } from '../generated/Network_pb';
@@ -6,7 +6,7 @@ import { TransactionBroadcast } from '../generated/Wire_pb';
 import { bytesFromHexString } from './utils/index';
 
 async function loadWasm() {
-  return import('./pkg/index');
+  return require('./pkg/index.js');
 }
 
 function signTx(tx: any, wallet: any, context: Uint8Array, wasm: typeof import('./pkg/index')) {
