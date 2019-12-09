@@ -6,7 +6,8 @@ import * as  nacl from 'tweetnacl'
 import * as EthUtil from "ethereumjs-util";
 import Web3 from "web3";
 import WalletProvider from "../dist";
-import { describe, it } from "mocha";
+import { describe, it } from 'mocha';
+
 
 describe("HD Wallet Provider", function() {
   // @ts-ignore

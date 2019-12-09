@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
     "module": "CommonJs",
-    "target": "es6",
+    "moduleResolution": "node",
+    "target": "es5",
     "noImplicitAny": true,
     "declaration": true,
     "sourceMap": true,
     "esModuleInterop": true,
     "strict": true,
     "lib": [
-      "es2017"
+      "dom",
+      "es5"
     ],
     "outDir": "dist",
     "baseUrl": ".",
@@ -25,5 +27,5 @@
   "include": [
     "./src/**/*.ts",
     "./typings/**/*.d.ts"
-  ]
+  ],
 }

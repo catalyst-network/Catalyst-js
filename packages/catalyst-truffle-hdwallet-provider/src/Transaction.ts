@@ -6,10 +6,10 @@ import { TransactionBroadcast } from '../generated/Wire_pb';
 import { bytesFromHexString } from './utils/index';
 
 async function loadWasm() {
-  return require('./pkg/index.js');
+  return import('../src/wasm');
 }
 
-function signTx(tx: any, wallet: any, context: Uint8Array, wasm: typeof import('./pkg/index')) {
+function signTx(tx: any, wallet: any, context: Uint8Array, wasm: typeof import('../src/wasm')) {
   const contextLength = context.length;
   const signature = new Uint8Array(64);
   const result = wasm.sign(
