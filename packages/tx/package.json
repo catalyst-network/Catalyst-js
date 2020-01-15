@@ -14,9 +14,16 @@
     "lib"
   ],
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
+    "compile": "tsc -b tsconfig.json"
   },
   "devDependencies": {
-    "eslint": "^6.8.0"
+    "eslint": "^6.8.0",
+    "typescript": "^3.7.4"
+  },
+  "dependencies": {
+    "tweetnacl": "^1.0.1",
+    "wasm-ed25519ph": "0.0.0"
   }
 }

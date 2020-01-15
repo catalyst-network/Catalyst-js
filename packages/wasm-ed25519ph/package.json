@@ -17,8 +17,8 @@
         "catalyst"
     ],
     "license": "MIT",
-    "name": "wasm-ed25519",
-    "version": "0.1.0",
+    "name": "wasm-ed25519ph",
+    "version": "0.0.0",
     "scripts": {
         "test:jest": "jest tests",
         "clean": "rimraf pkg dist",
