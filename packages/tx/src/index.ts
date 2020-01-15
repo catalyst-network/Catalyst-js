@@ -1,4 +1,4 @@
-// import * as nacl from 'tweetnacl';
+import * as nacl from 'tweetnacl';
 import { BaseEntry, PublicEntry } from './protobuffs/Transaction_pb';
 import { Signature, SigningContext, SignatureType } from './protobuffs/Cryptography_pb';
 import { NetworkType } from './protobuffs/Network_pb';
@@ -93,6 +93,11 @@ export default class Transaction {
     entry.setGasLimit(parseInt(tx.gas, 16));
     this.entries.push(entry);
     });
+  }
+
+  private _getPublicKey(privateKey: Uint8Array) {
+    const keypair = nacl.sign.keyPair.fromSecretKey(privateKey);
+    return keypair.publicKey;
   }
 
   async sign(privateKey: Buffer, opt?: object){
