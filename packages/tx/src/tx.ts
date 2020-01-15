@@ -1,8 +1,8 @@
 import * as nacl from 'tweetnacl';
-import { BaseEntry, PublicEntry } from '../generated/Transaction_pb';
-import { Signature, SigningContext, SignatureType } from '../generated/Cryptography_pb';
-import { NetworkType } from '../generated/Network_pb';
-import { TransactionBroadcast } from '../generated/Wire_pb';
+import { BaseEntry, PublicEntry } from './protobuffs/Transaction_pb';
+import { Signature, SigningContext, SignatureType } from './protobuffs/Cryptography_pb';
+import { NetworkType } from './protobuffs/Network_pb';
+import { TransactionBroadcast } from './protobuffs/Wire_pb';
 import { bytesFromHexString } from './utils/index';
 
 async function loadWasm() {
