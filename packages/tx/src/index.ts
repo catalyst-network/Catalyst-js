@@ -9,7 +9,7 @@ async function loadWasm() {
   return import('wasm-ed25519ph');
 }
 
-function signTx(tx: any, wallet: any, context: Uint8Array, wasm: typeof import('../src/wasm')) {
+function signTx(tx: any, wallet: any, context: Uint8Array, wasm: typeof import('wasm-ed25519ph')) {
   const contextLength = context.length;
   const signature = new Uint8Array(64);
   const result = wasm.sign(
