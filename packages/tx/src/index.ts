@@ -51,7 +51,7 @@ export default class Transaction {
 
   async sign(privateKey: Buffer, opt?: object){
     const broadcast = new TransactionBroadcast();
-
+    base.setSenderPublicKey(wallet.publicKey);
     const wasm = await loadWasm();
     const { entry } = this;
     const context = new SigningContext();
