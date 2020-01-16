@@ -1,5 +1,5 @@
 {
-  "name": "protobuffs",
+  "name": "protocol-sdk-js",
   "version": "0.0.0",
   "description": "Catalyst Protocol Js SDK",
   "main": "src/index.js",

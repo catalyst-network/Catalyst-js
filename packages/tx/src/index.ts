@@ -1,7 +1,7 @@
 import * as nacl from 'tweetnacl';
 import { bytesFromHexString } from './utils/index';
 import { TxData } from './types';
-import * as protos from 'protobuffs';
+import * as protos from 'protocol-sdk-js';
 
 async function loadWasm() {
   return import('wasm-ed25519ph');

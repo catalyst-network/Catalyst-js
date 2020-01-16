@@ -25,6 +25,6 @@
   "dependencies": {
     "tweetnacl": "^1.0.1",
     "wasm-ed25519ph": "0.0.0",
-    "protobuffs": "0.0.0"
+    "protocol-sdk-js": "0.0.0"
   }
 }
