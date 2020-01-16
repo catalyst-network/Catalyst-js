@@ -4,7 +4,7 @@
 export interface TransformableToBuffer {
     toBuffer(): Buffer
   }
-  
+
 /**
  * A hex string prefixed with `0x`.
  */
@@ -22,17 +22,17 @@ export interface TxData {
      * The transaction's gas limit.
      */
     gas?: string
-  
+
     /**
      * The transaction's gas price.
      */
     gasPrice?: string
-  
+
     /**
      * The transaction's the address is sent to.
      */
     to?: string
-  
+
     /**
      * The transaction's nonce.
      */
@@ -41,7 +41,7 @@ export interface TxData {
      * This will contain the data of the message or the init of a contract
      */
     data?: string
-  
+
     /**
      * The amount of Ether sent.
      */

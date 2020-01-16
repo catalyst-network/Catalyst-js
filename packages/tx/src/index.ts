@@ -49,7 +49,9 @@ export default class Transaction {
     const context = new protos.SigningContext();
     context.setNetworkType(protos.NetworkType.TESTNET);
     context.setSignatureType(protos.SignatureType.TRANSACTION_PUBLIC);
-    const sig = Transaction._signTx(entry.serializeBinary(), privateKey, context.serializeBinary(), wasm);
+    const sig = Transaction._signTx(
+      entry.serializeBinary(), privateKey, context.serializeBinary(), wasm,
+    );
     const signature = new protos.Signature();
     signature.setSigningContext(context);
     signature.setRawBytes(sig);
