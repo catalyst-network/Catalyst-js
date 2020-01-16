@@ -1,14 +1,13 @@
 {
-  "name": "catalyst-truffle-hdwallet-provider",
-  "description": "HD Wallet-enabled Web3 provider",
+  "name": "truffle-provider",
+  "description": "HD Wallet-enabled Catalyst Web3 provider",
   "license": "MIT",
-  "homepage": "https://github.com/catalyst-network/catalyst-truffle-hdwallet-provider#readme",
-  "repository": "https://github.com/catalyst-network/catalyst-truffle-hdwallet-provider",
-  "version": "1.0.26",
+  "homepage": "https://github.com/catalyst-js#readme",
+  "repository": "https://github.com/catalyst-js",
+  "version": "0.0.0",
   "module": "dist/index.js",
   "scripts": {
     "build": "tsc && webpack",
-    "prepare": "yarn build",
     "test": "yarn build && mocha --exit -r ts-node/register test/**/*.test.ts",
     "test:js": "mocha test/**/*.test.js"
   },
