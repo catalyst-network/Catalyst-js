@@ -6,10 +6,10 @@ import { TransactionBroadcast } from '../generated/Wire_pb';
 import { bytesFromHexString } from './utils/index';
 
 async function loadWasm() {
-  return import('../src/wasm');
+  return import('./wasm');
 }
 
-function signTx(tx: any, wallet: any, context: Uint8Array, wasm: typeof import('../src/wasm')) {
+function signTx(tx: any, wallet: any, context: Uint8Array, wasm: typeof import('./wasm')) {
   const contextLength = context.length;
   const signature = new Uint8Array(64);
   const result = wasm.sign(
@@ -67,7 +67,6 @@ async function transaction(wallet: any, txParams: any): Promise<Uint8Array> {
 
   const broadcast = new TransactionBroadcast();
   broadcast.setPublicEntry(entry);
-  
   return broadcast.serializeBinary();
 }
 
