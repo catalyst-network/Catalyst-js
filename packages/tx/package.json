@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "tweetnacl": "^1.0.1",
-    "wasm-ed25519ph": "0.0.0"
+    "wasm-ed25519ph": "0.0.0",
+    "protobuffs": "0.0.0"
   }
 }

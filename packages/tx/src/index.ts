@@ -1,10 +1,7 @@
 import * as nacl from 'tweetnacl';
-import { BaseEntry, PublicEntry } from './protobuffs/Transaction_pb';
-import { Signature, SigningContext, SignatureType } from './protobuffs/Cryptography_pb';
-import { NetworkType } from './protobuffs/Network_pb';
-import { TransactionBroadcast } from './protobuffs/Wire_pb';
 import { bytesFromHexString } from './utils/index';
 import { TxData } from './types';
+import * as protos from 'protobuffs';
 
 async function loadWasm() {
   return import('wasm-ed25519ph');
@@ -12,7 +9,7 @@ async function loadWasm() {
 
 export default class Transaction {
   tx: TxData
-  entry: PublicEntry
+  entry: protos.PublicEntry
 
   constructor(entry: TxData = {}) {
     this.tx = entry;
@@ -29,41 +26,36 @@ export default class Transaction {
         tx.to = '';
       }
 
-    const base = new BaseEntry();
-    base.setNonce(parseInt(tx.nonce, 16));
-    base.setReceiverPublicKey(bytesFromHexString(tx.to));
-    // base.setSenderPublicKey(wallet.publicKey);
-    base.setTransactionFees(new Uint8Array(8));
-
-    this.entry = new PublicEntry();
-    this.entry.setBase(base);
+    this.entry = new protos.PublicEntry();
+    this.entry.setReceiverAddress(bytesFromHexString(tx.to));
     this.entry.setAmount(bytesFromHexString(tx.value));
     this.entry.setData(bytesFromHexString(tx.data));
-    this.entry.setTimestamp();
     this.entry.setGasPrice(bytesFromHexString(tx.gasPrice));
     this.entry.setGasLimit(parseInt(tx.gas, 16));
+    this.entry.setTransactionFees(new Uint8Array(8));
+    this.entry.setNonce(parseInt(tx.nonce, 16));
   }
 
-  private _getPublicKey(privateKey: Uint8Array) {
+  private _getPublicKey(privateKey: Uint8Array): Uint8Array{
     const keypair = nacl.sign.keyPair.fromSecretKey(privateKey);
     return keypair.publicKey;
   }
 
   async sign(privateKey: Buffer, opt?: object){
-    const broadcast = new TransactionBroadcast();
-    base.setSenderPublicKey(wallet.publicKey);
+    this.entry.setSenderAddress(this._getPublicKey(privateKey));
     const wasm = await loadWasm();
     const { entry } = this;
-    const context = new SigningContext();
-    context.setNetworkType(NetworkType.TESTNET);
-    context.setSignatureType(SignatureType.TRANSACTION_PUBLIC);
+    const context = new protos.SigningContext();
+    context.setNetworkType(protos.NetworkType.TESTNET);
+    context.setSignatureType(protos.SignatureType.TRANSACTION_PUBLIC);
     const sig = this._signTx(entry.serializeBinary(), privateKey, context.serializeBinary(), wasm);
-    const signature = new Signature();
+    const signature = new protos.Signature();
     signature.setSigningContext(context);
     signature.setRawBytes(sig);
     entry.setSignature(signature);
-    broadcast.setPublicEntry(entry);
     
+    const broadcast = new protos.TransactionBroadcast();
+    broadcast.setPublicEntry(entry);
     return broadcast.serializeBinary();
   }
 
