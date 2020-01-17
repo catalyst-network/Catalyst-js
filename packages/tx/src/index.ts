@@ -1,6 +1,6 @@
 import * as nacl from 'tweetnacl';
 import * as protos from 'protocol-sdk-js';
-import { bytesFromHexString } from './utils/index';
+import { bytesFromHexString, removeHexPrefix } from './utils/index';
 import { TxData } from './types';
 
 async function loadWasm() {
@@ -34,9 +34,9 @@ export default class Transaction {
     this.entry.setAmount(bytesFromHexString(tx.value));
     this.entry.setData(bytesFromHexString(tx.data));
     this.entry.setGasPrice(bytesFromHexString(tx.gasPrice));
-    this.entry.setGasLimit(parseInt(tx.gas, 16));
+    this.entry.setGasLimit(parseInt(removeHexPrefix(tx.gas), 16));
     this.entry.setTransactionFees(new Uint8Array(8));
-    this.entry.setNonce(parseInt(tx.nonce, 16));
+    this.entry.setNonce(parseInt(removeHexPrefix(tx.gas), 16));
   }
 
   private static _getPublicKey(privateKey: Uint8Array): Uint8Array {

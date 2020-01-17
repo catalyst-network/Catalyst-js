@@ -13,5 +13,9 @@ describe('tx', () => {
     };
     const tx = new Transaction(txData);
     console.log(tx.entry.getAmount());
+    console.log(tx.entry.getGasPrice());
+    console.log(tx.entry.getGasLimit());
+    console.log(tx.entry.getReceiverAddress());
+    console.log(tx.entry.getNonce());
   });
 });
