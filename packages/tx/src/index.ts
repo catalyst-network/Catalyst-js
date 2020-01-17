@@ -17,8 +17,10 @@ export default class Transaction {
     this._createTxEntry();
   }
 
+
   private _createTxEntry() {
     const { tx } = this;
+
     if (!tx.value) {
       tx.value = '0x0';
     }
