@@ -34,9 +34,9 @@ export default class Transaction {
     this.entry.setAmount(bytesFromHexString(tx.value));
     this.entry.setData(bytesFromHexString(tx.data));
     this.entry.setGasPrice(bytesFromHexString(tx.gasPrice));
-    this.entry.setGasLimit(parseInt(removeHexPrefix(tx.gas), 16));
+    this.entry.setGasLimit(Number(tx.gasLimit));
     this.entry.setTransactionFees(new Uint8Array(8));
-    this.entry.setNonce(parseInt(removeHexPrefix(tx.gas), 16));
+    this.entry.setNonce(Number(tx.nonce));
   }
 
   private static _getPublicKey(privateKey: Uint8Array): Uint8Array {
