@@ -1,6 +1,6 @@
 import * as nacl from 'tweetnacl';
 import * as protos from 'protocol-sdk-js';
-import { bytesFromHexString, removeHexPrefix } from './utils/index';
+import { bytesFromHexString, bytesFromBase32String } from './utils/index';
 import { TxData } from './types';
 
 async function loadWasm() {
@@ -44,23 +44,34 @@ export default class Transaction {
     return keypair.publicKey;
   }
 
-  async sign(privateKey: Buffer) {
-    this.entry.setSenderAddress(Transaction._getPublicKey(privateKey));
-    const wasm = await loadWasm();
+  private static _getKeypair(privateKey : Uint8Array | string) : any {
+    const secret = typeof privateKey === 'string' ? bytesFromBase32String(privateKey) : privateKey;
+    return {
+      publicKey: Transaction._getPublicKey(secret),
+      secretKey: secret.slice(0, 32),
+    };
+  }
+
+  async sign(privateKey: Uint8Array | string) {
     const { entry } = this;
+    const keypair = Transaction._getKeypair(privateKey);
+    entry.setSenderAddress(keypair.publicKey);
+    const wasm = await loadWasm();
     const context = new protos.SigningContext();
     context.setNetworkType(protos.NetworkType.TESTNET);
     context.setSignatureType(protos.SignatureType.TRANSACTION_PUBLIC);
     const sig = Transaction._signTx(
-      entry.serializeBinary(), privateKey, context.serializeBinary(), wasm,
+      entry.serializeBinary(), keypair.secretKey, context.serializeBinary(), wasm,
     );
     const signature = new protos.Signature();
     signature.setSigningContext(context);
     signature.setRawBytes(sig);
     entry.setSignature(signature);
+  }
 
+  serialize() {
     const broadcast = new protos.TransactionBroadcast();
-    broadcast.setPublicEntry(entry);
+    broadcast.setPublicEntry(this.entry);
     return broadcast.serializeBinary();
   }
 

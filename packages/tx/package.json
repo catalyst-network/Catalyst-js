@@ -30,6 +30,8 @@
     "typescript": "^3.7.4"
   },
   "dependencies": {
+    "base32-decode": "^1.0.0",
+    "base32-encode": "^1.1.1",
     "ethjs-util": "^0.1.6",
     "protocol-sdk-js": "0.0.0",
     "tweetnacl": "^1.0.1",
