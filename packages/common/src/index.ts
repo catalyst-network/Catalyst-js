@@ -1,5 +1,6 @@
 import encode from 'base32-encode';
 import decode from 'base32-decode';
+import * as nacl from 'tweetnacl';
 
 const ethjsUtil = require('ethjs-util');
 
@@ -58,4 +59,13 @@ export function bytesFromBase32String(str: string) : Uint8Array {
  */
 export function base32StringFromBytes(bytes: Uint8Array) : string {
   return encode(bytes, 'RFC4648', { padding: false });
+}
+
+/**
+ * returns the public key of a ed25519 private key
+ * @param privateKey ed25519 private key
+ */
+export function getPublicKeyFromPrivate(privateKey: Uint8Array): Uint8Array {
+  const keypair = nacl.sign.keyPair.fromSecretKey(privateKey);
+  return keypair.publicKey;
 }

@@ -1,6 +1,6 @@
 
+import { base32StringFromBytes } from 'common';
 import Transaction from '../src';
-import { base32StringFromBytes } from '../src/utils';
 
 const txData = {
   nonce: '0x00',

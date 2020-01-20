@@ -36,6 +36,7 @@
     "ethjs-util": "^0.1.6",
     "protocol-sdk-js": "0.0.0",
     "tweetnacl": "^1.0.1",
-    "wasm-ed25519ph": "0.0.0"
+    "wasm-ed25519ph": "0.0.0",
+    "common": "0.0.0"
   }
 }
