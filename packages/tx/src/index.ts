@@ -7,6 +7,7 @@ async function loadWasm() {
   return import('wasm-ed25519ph');
 }
 
+
 export default class Transaction {
   tx: TxData
 

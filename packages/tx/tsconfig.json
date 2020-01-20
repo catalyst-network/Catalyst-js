@@ -2,11 +2,11 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
       "outDir": "./dist",
-      "rootDir": "./src"
+      "rootDir": "./",
     },
-    "references": [
-      { "path": "../wasm-ed25519ph" }
-    ],
+    // "references": [
+    //   { "path": "../wasm-ed25519ph" }
+    // ],
     "exclude": [
       "node_modules",
       "dist"
