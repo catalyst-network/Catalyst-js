@@ -85,8 +85,4 @@ export default class Wallet {
     // eslint-disable-next-line no-bitwise
     return Array.prototype.map.call(byteArray, (byte: any) => (`0${(byte & 0xFF).toString(16)}`).slice(-2)).join('');
   }
-
-  private static _fromHexString(hexString: any): Uint8Array {
-    return new Uint8Array(hexString.match(/.{1,2}/g).map((byte: any) => parseInt(byte, 16)));
-  }
 }
