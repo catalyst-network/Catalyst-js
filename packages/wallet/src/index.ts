@@ -1,5 +1,10 @@
 import * as nacl from 'tweetnacl';
-import { base32StringFromBytes, getPublicKeyFromPrivate } from 'common';
+import {
+  base32StringFromBytes,
+  getPublicKeyFromPrivate,
+  isValidPrivate,
+  isValidPublic,
+} from 'common';
 
 export default class Wallet {
   constructor(
@@ -10,11 +15,11 @@ export default class Wallet {
       throw new Error('Cannot supply both a private and a public key to the constructor');
     }
 
-    if (privateKey && !ethUtil.isValidPrivate(privateKey)) {
+    if (privateKey && !isValidPrivate(privateKey)) {
       throw new Error('Private key does not satisfy the curve requirements (ie. it is invalid)');
     }
 
-    if (publicKey && !ethUtil.isValidPublic(publicKey)) {
+    if (publicKey && !isValidPublic(publicKey)) {
       throw new Error('Invalid public key');
     }
   }
@@ -36,17 +41,16 @@ export default class Wallet {
     return new Wallet(keypair.secretKey);
   }
 
-
   // private getters
   private get pubKey(): Uint8Array {
-    if (!keyExists(this.publicKey)) {
+    if (!this.publicKey) {
       this.publicKey = getPublicKeyFromPrivate(this.privateKey);
     }
     return this.publicKey;
   }
 
   private get privKey(): Uint8Array {
-    if (!keyExists(this.privateKey)) {
+    if (!this.privateKey) {
       throw new Error('This is a public key only wallet');
     }
     return this.privateKey;
@@ -61,7 +65,6 @@ export default class Wallet {
     return base32StringFromBytes(this.privKey);
   }
 
-  // tslint:disable-next-line
   public getPublicKey(): Uint8Array {
     return this.pubKey;
   }
@@ -78,13 +81,12 @@ export default class Wallet {
     return Wallet._toHexString(this.getAddress());
   }
 
-
-  static _toHexString(byteArray: Uint8Array) {
+  private static _toHexString(byteArray: Uint8Array) {
     // eslint-disable-next-line no-bitwise
     return Array.prototype.map.call(byteArray, (byte: any) => (`0${(byte & 0xFF).toString(16)}`).slice(-2)).join('');
   }
 
-  static _fromHexString(hexString: any): Uint8Array {
+  private static _fromHexString(hexString: any): Uint8Array {
     return new Uint8Array(hexString.match(/.{1,2}/g).map((byte: any) => parseInt(byte, 16)));
   }
 }
