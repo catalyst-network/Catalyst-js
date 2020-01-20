@@ -78,7 +78,7 @@ export default class Wallet {
   }
 
   public getAddressString(): string {
-    return Wallet._toHexString(this.getAddress());
+    return `0x${Wallet._toHexString(this.getAddress())}`;
   }
 
   private static _toHexString(byteArray: Uint8Array) {
