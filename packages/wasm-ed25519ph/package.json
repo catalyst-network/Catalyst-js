@@ -19,7 +19,7 @@
     "license": "MIT",
     "name": "wasm-ed25519ph",
     "main": "pkg/index",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "scripts": {
         "test:jest": "jest tests",
         "clean": "rimraf pkg dist",
