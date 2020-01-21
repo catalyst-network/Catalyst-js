@@ -10,7 +10,10 @@ import * as Web3 from 'web3';
 import { derivePath } from 'ed25519-hd-key';
 import blake2b from 'blake2b';
 import * as nacl from 'tweetnacl';
-import createTx, { signMessage } from './Transaction';
+import Transaction from 'tx';
+import Wallet from 'wallet';
+// import { JSONRPCRequestPayload, JSONRPCErrorCallback } from 'ethereum-protocol';
+// import { Callback, JsonRPCResponse } from '@truffle/provider';
 import {
   JSONRPCRequestPayload,
   JSONRPCErrorCallback,
@@ -59,14 +62,6 @@ class HDWalletProvider {
       );
     }
 
-    function generateKeyFromSeed(seed: Uint8Array) {
-      return nacl.sign.keyPair.fromSeed(seed);
-    }
-
-    function generateKeyFromPrivateKey(key: Uint8Array) {
-      return nacl.sign.keyPair.fromSecretKey(key);
-    }
-
     function toHexString(byteArray: Uint8Array) {
       // eslint-disable-next-line no-bitwise
       return Array.prototype.map.call(byteArray, (byte) => (`0${(byte & 0xFF).toString(16)}`).slice(-2)).join('');
@@ -74,6 +69,10 @@ class HDWalletProvider {
 
     function fromHexString(hexString: any): Uint8Array {
       return new Uint8Array(hexString.match(/.{1,2}/g).map((byte: any) => parseInt(byte, 16)));
+    }
+
+    function signMessage(message: any, pKey: any): Uint8Array {
+      return nacl.sign(message, pKey);
     }
 
     // private helper to normalize given mnemonic
@@ -97,16 +96,9 @@ class HDWalletProvider {
       // crank the addresses out
       for (let i = addressIndex; i < addressIndex + numAddresses; i += 1) {
         const data = derivePath(`${this.walletHdpath + i}'`, seed);
-        const keypair = generateKeyFromSeed(data.key);
+        const wallet = Wallet.generateFromSeed(data.key);
 
-        const wallet = {
-          secretKey: keypair.secretKey,
-          privateKey: keypair.secretKey.slice(0, 32),
-          privateKeyHex: toHexString(keypair.secretKey.slice(0, 32)),
-          publicKey: keypair.publicKey,
-        };
-
-        const address = EthUtil.keccak(Buffer.from(keypair.publicKey)).slice(-20);
+        const address = EthUtil.keccak(Buffer.from(wallet.getPublicKey())).slice(-20);
         const addr = EthUtil.bufferToHex(address);
         this.addresses.push(addr);
         this.wallets[addr] = wallet;
@@ -118,16 +110,9 @@ class HDWalletProvider {
       // crank the addresses out
       for (let i = addressIndex; i < privateKeys.length; i += 1) {
         const key = fromHexString(privateKeys[i]);
-        const keypair = generateKeyFromPrivateKey(key);
+        const wallet = Wallet.generateFromPrivateKey(key);
 
-        const wallet = {
-          secretKey: keypair.secretKey,
-          privateKey: keypair.secretKey.slice(0, 32),
-          privateKeyHex: privateKeys[i],
-          publicKey: keypair.publicKey,
-        };
-
-        const address = EthUtil.keccak(Buffer.from(keypair.publicKey)).slice(-20);
+        const address = EthUtil.keccak(Buffer.from(wallet.getPublicKey())).slice(-20);
         const addr = EthUtil.bufferToHex(address);
         this.addresses.push(addr);
         this.wallets[addr] = wallet;
@@ -151,7 +136,7 @@ class HDWalletProvider {
           if (!tmpWallets[address]) {
             return cb('Account not found');
           }
-          return cb(null, tmpWallets[address].privateKeyHex);
+          return cb(null, tmpWallets[address].getPrivateKeyString());
         },
         async signTransaction(txParams: any, cb: any) {
           let wallet;
@@ -161,10 +146,12 @@ class HDWalletProvider {
           } else {
             cb('Account not found');
           }
+          // const tx = await createTx(wallet, txParams);
 
-          const tx = await createTx(wallet, txParams);
+          const tx = new Transaction(txParams);
+          await tx.sign(wallet.getPrivateKey());
 
-          cb(null, toHexString(tx));
+          cb(null, toHexString(tx.serialize()));
         },
         signMessage({ data, from }: any, cb: any) {
           const dataIfExists = data;
