@@ -20,7 +20,8 @@
 const HDWalletProvider = require('./node_modules/truffle-provider/dist');
 
 const mnemonic = 'sight bag rate family outdoor veteran other clock asset olive screen industry develop smile crowd';
-console.log(HDWalletProvider);
+const provider = new HDWalletProvider.default(mnemonic, 'http://127.0.0.1:7545');
+console.log(provider);
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -58,7 +59,7 @@ module.exports = {
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
     ropsten: {
-      provider: () => new HDWalletProvider(mnemonic, 'http://127.0.0.1:7545'),
+      provider: () => new HDWalletProvider.default(mnemonic, 'http://127.0.0.1:7545'),
       network_id: 5777, // Ropsten's id
       gas: 5500000, // Ropsten has a lower block limit than mainnet
       confirmations: 2, // # of confs to wait between deployments. (default: 0)

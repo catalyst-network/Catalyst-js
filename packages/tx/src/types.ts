@@ -22,6 +22,7 @@ export interface TxData {
      * The transaction's gas limit.
      */
     gasLimit?: string
+    gas?: string
 
     /**
      * The transaction's gas price.

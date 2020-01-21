@@ -5,6 +5,7 @@
   "homepage": "https://github.com/catalyst-js#readme",
   "repository": "https://github.com/catalyst-js",
   "version": "0.0.1",
+  "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
     "build": "tsc && webpack",
