@@ -5,7 +5,7 @@
   "author": "stephenhorsfall <stephen.horsfall@atlascity.io>",
   "homepage": "",
   "license": "ISC",
-  "main": "lib/wallet.js",
+  "main": "dist/src/",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
