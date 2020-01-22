@@ -30,6 +30,9 @@ export default class Transaction {
       tx.to = '';
     }
 
+    if (!tx.gasLimit) {
+      tx.gasLimit = tx.gas;
+    }
     this.entry = new protos.PublicEntry();
     this.entry.setReceiverAddress(bytesFromHexString(tx.to));
     this.entry.setAmount(bytesFromHexString(tx.value));
