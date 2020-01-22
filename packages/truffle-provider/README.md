@@ -3,6 +3,7 @@
 
   ### Catalyst-js/truffle-provider
 HD Wallet-enabled Web3 provider for Catalyst. Use it to sign transactions for addresses derived from a 12 or 24 word mnemonic.
+
 [![Discord](https://img.shields.io/discord/629667101774446593?color=blueviolet&label=discord)](https://discord.gg/anTP7xm)
 [![Twitter Follow](https://img.shields.io/twitter/follow/catalystnetorg?style=social)](https://twitter.com/catalystnetorg)
 </div>
