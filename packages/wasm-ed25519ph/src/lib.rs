@@ -110,8 +110,11 @@ pub fn sign_sig_and_public_key(
         .to_bytes()
         .to_vec();
 
-    //pair.clone_from_slice(&sig);						fix this!
-    //pair.extend_from_slice(&public.to_bytes());
+    let mut ret = vec![];
+
+    ret.extend_from_slice(&sig);
+    ret.extend_from_slice(&public.to_bytes());
+    pair.copy_from_slice(&ret);
 
     ErrorCode::NO_ERROR.value()
 }
