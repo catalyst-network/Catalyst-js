@@ -29,13 +29,13 @@ const wallet = Wallet.generateFromSeed(seed);
 #### Instance methods
 ```javascript
 // return the private key
-const privateKey = wallet.getPrivateKey() 
+const privateKey = wallet.getPrivateKey(); 
 // return the private key as a base32 string
-const privateKeyString = wallet.getPrivateKeyString() 
+const privateKeyString = wallet.getPrivateKeyString(); 
 // return the private key
-const privateKey = wallet.getPublicKey() 
+const privateKey = wallet.getPublicKey(); 
 // return the private key as a base32 string
-const privateKeyString = wallet.getPublicKeyString() 
+const privateKeyString = wallet.getPublicKeyString(); 
 ```
 ## License
 
