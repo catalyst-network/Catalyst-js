@@ -25,6 +25,7 @@
     "@babel/preset-typescript": "^7.8.3",
     "@babel/types": "^7.8.3",
     "@types/jest": "^24.9.0",
+    "@types/node": "^13.1.8",
     "@wasm-tool/wasm-pack-plugin": "^1.1.0",
     "eslint": "^6.8.0",
     "jest": "^24.9.0",

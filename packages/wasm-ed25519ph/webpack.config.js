@@ -1,19 +1,18 @@
 const path = require('path');
 const WasmPackPlugin = require('@wasm-tool/wasm-pack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'production',
     entry: './js/index.ts',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js',
+        filename: 'index.js',
     },
     plugins: [
-        new HtmlWebpackPlugin(),
         new WasmPackPlugin({
             crateDirectory: path.resolve(__dirname, '.'),
             withTypeScript: true, // this is new
+            extraArgs: '--scope catalyst --target nodejs',
         }),
     ],
     resolve: {
