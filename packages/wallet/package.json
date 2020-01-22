@@ -1,6 +1,6 @@
 {
   "name": "wallet",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "> TODO: description",
   "author": "stephenhorsfall <stephen.horsfall@atlascity.io>",
   "homepage": "",
@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "bip39": "^3.0.2",
-    "common": "0.0.0",
+    "common": "^0.0.1",
     "ed25519-hd-key": "^1.1.0",
     "tweetnacl": "^1.0.1"
   }
