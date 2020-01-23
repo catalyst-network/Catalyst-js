@@ -1,5 +1,5 @@
 {
-  "name": "protocol-sdk-js",
+  "name": "@catalyst-net-js/protocol-sdk-js",
   "version": "0.0.1",
   "description": "Catalyst Protocol Js SDK",
   "main": "dist/index.js",
