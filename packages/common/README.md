@@ -11,7 +11,7 @@ A collection of utility functions for catalyst-js
 
 Status: **Active development.** This repository is being actively worked on, mostly in feature branches. 
 ## Install
-`npm install @catalyst-js/common`
+`npm install @catalyst-net-js/common`
 ## Usage
 #### Available functions
 

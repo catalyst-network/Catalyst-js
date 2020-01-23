@@ -10,11 +10,11 @@ A lightweight wallet implementation.
 
 Status: **Active development.** This repository is being actively worked on, mostly in feature branches. 
 ## Install
-`npm install @catalyst-js/wallet`
+`npm install @catalyst-net-js/wallet`
 ## Usage
 #### Constructors
 ```javascript
-import Wallet from '@catalyst-js/wallet'
+import Wallet from '@catalyst-net-js/wallet'
 
 // create an instance based on a new random key
 const wallet = Wallet.generate();

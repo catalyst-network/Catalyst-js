@@ -9,10 +9,10 @@
 
 Status: **Active development.** This repository is being actively worked on, mostly in feature branches. 
 ## Install
-`npm install @catalyst-js/tx`
+`npm install @catalyst-net-js/tx`
 ## Usage
 ```javascript
-import Tx from '@catalyst-js/tx'
+import Tx from '@catalyst-net-js/tx'
 const privateKey = Buffer.from(
   'e331b6d69882b4cb4ea581d88e0b604039a3de5967688d3dcffdd2270c0fd109',
   'hex',
