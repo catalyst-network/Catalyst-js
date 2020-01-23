@@ -19,7 +19,7 @@
     "license": "MIT",
     "name": "@catalyst-net-js/wasm-ed25519ph",
     "main": "pkg/index",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "scripts": {
         "test:jest": "jest tests",
         "clean": "rimraf pkg dist",
