@@ -1,5 +1,5 @@
 {
-  "name": "truffle-provider",
+  "name": "@catalyst-net-js/truffle-provider",
   "description": "HD Wallet-enabled Catalyst Web3 provider",
   "license": "MIT",
   "homepage": "https://github.com/catalyst-js#readme",
