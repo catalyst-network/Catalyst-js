@@ -3,6 +3,9 @@
   "version": "0.0.2",
   "description": "Catalyst Protocol Js SDK",
   "main": "dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "protoc --plugin=\"protoc-gen-ts=\"./node_modules/.bin/protoc-gen-ts\"\" --proto_path Protocol/src/ --js_out=import_style=commonjs,binary:src --ts_out=\"src\" Protocol/src/*.proto && babel src -d lib"
   },
@@ -33,5 +36,6 @@
   },
   "dependencies": {
     "@types/google-protobuf": "^3.7.2"
-  }
+  },
+  "gitHead": "738a9f7c72ee92d37d741a4c99c2f1003b2a2254"
 }

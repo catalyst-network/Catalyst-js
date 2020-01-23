@@ -20,6 +20,9 @@
     "name": "@catalyst-net-js/wasm-ed25519ph",
     "main": "pkg/index",
     "version": "0.0.2",
+    "publishConfig": {
+        "access": "public"
+      },
     "scripts": {
         "test:jest": "jest tests",
         "clean": "rimraf pkg dist",
@@ -82,5 +85,6 @@
         "webpack-cli": "^3.3.4",
         "webpack-dev-server": "^3.7.2",
         "webpack-merge": "^4.2.1"
-    }
+    },
+    "gitHead": "738a9f7c72ee92d37d741a4c99c2f1003b2a2254"
 }
