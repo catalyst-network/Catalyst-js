@@ -1,5 +1,5 @@
 
-import { base32StringFromBytes } from 'common';
+import { base32StringFromBytes } from '@catalyst-net-js/common';
 import Transaction from '../src';
 
 const txData = {

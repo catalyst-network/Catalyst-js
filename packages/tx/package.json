@@ -40,11 +40,11 @@
   "dependencies": {
     "base32-decode": "^1.0.0",
     "base32-encode": "^1.1.1",
-    "common": "^0.0.1",
+    "@catalyst-net-js/common": "0.0.3",
     "ethjs-util": "^0.1.6",
-    "protocol-sdk-js": "^0.0.1",
+    "@catalyst-net-js/protocol-sdk-js": "0.0.3",
     "tweetnacl": "^1.0.1",
-    "wasm-ed25519ph": "^0.0.1"
+    "@catalyst-net-js/wasm-ed25519ph": "0.0.3"
   },
   "gitHead": "738a9f7c72ee92d37d741a4c99c2f1003b2a2254"
 }

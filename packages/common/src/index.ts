@@ -91,3 +91,30 @@ export function isValidPublic(publicKey: Uint8Array): boolean {
   }
   return true;
 }
+
+/**
+ * checks an object against a schema
+ * @param obj object with the properties to validate
+ * @param schema
+ */
+export function validateProperties(obj: any, schema: object) {
+  return Object
+    .entries(schema)
+    .map(([key, validate]) => [
+      key,
+      !validate.required || (key in obj),
+      validate(obj[key]),
+    ])
+    .filter(([_, ...tests]) => !tests.every(Boolean))
+    .map(([key, invalid]) => new Error(`${key} is ${invalid ? 'invalid' : 'required'}.`));
+
+  // const errors = validate(info, schema);
+
+  // if (errors.length > 0) {
+  //   for (const { message } of errors) {
+  //     console.log(message);
+  //   }
+  // } else {
+  //   console.log('info is valid');
+  // }
+}
