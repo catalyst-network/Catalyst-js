@@ -34,4 +34,4 @@ const serializedTx = tx.serialize()
 
 ## License
 
-[MIT](LICENSE)
+[GPLv3](LICENSE)

@@ -37,4 +37,4 @@ Please note that we have a [Code of Conduct](CODE_OF_CONDUCT.md), and that all a
 
 ## License
 
-[MIT](LICENSE) © 2019 Catalyst Network
+[GPLv3](LICENSE) © 2019 Catalyst Network

@@ -39,4 +39,4 @@ const privateKeyString = wallet.getPublicKeyString();
 ```
 ## License
 
-[MIT](LICENSE)
+[GPLv3](LICENSE)
