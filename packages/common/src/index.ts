@@ -107,14 +107,4 @@ export function validateProperties(obj: any, schema: object) {
     ])
     .filter(([_, ...tests]) => !tests.every(Boolean))
     .map(([key, invalid]) => new Error(`${key} is ${invalid ? 'invalid' : 'required'}.`));
-
-  // const errors = validate(info, schema);
-
-  // if (errors.length > 0) {
-  //   for (const { message } of errors) {
-  //     console.log(message);
-  //   }
-  // } else {
-  //   console.log('info is valid');
-  // }
 }
