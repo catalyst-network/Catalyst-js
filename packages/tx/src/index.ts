@@ -1,4 +1,3 @@
-/* eslint-disable radix */
 import * as nacl from 'tweetnacl';
 import * as protos from '@catalyst-net-js/protocol-sdk-js';
 import { bytesFromHexString, bytesFromBase32String, validateProperties } from '@catalyst-net-js/common';
@@ -10,7 +9,7 @@ async function loadWasm() {
 
 const isHex = (value: numOrString) => /0[xX][0-9a-fA-F]+/.test(value.toString());
 const isString = (value: string) => typeof value === 'string';
-const isNumber = (value: numOrString) => parseInt(value.toString()) === Number(value);
+const isNumber = (value: numOrString, radix: number) => parseInt(value.toString(), radix) === Number(value);
 
 
 export default class Transaction {
@@ -19,11 +18,11 @@ export default class Transaction {
   entry: protos.PublicEntry
 
   schema = {
-    nonce: (value: string) => isHex(value) && isNumber(value),
-    gasPrice: (value: string) => isHex(value) && isNumber(value),
-    gasLimit: (value: string) => isHex(value) && isNumber(value),
+    nonce: (value: string) => isHex(value) && (isNumber(value, 10) || isNumber(value, 16)),
+    gasPrice: (value: string) => isHex(value) && (isNumber(value, 10) || isNumber(value, 16)),
+    gasLimit: (value: string) => isHex(value) && (isNumber(value, 10) || isNumber(value, 16)),
     to: (value: string) => isString(value) && isHex(value) && value.length === 42,
-    value: (value: numOrString) => isNumber(value),
+    value: (value: numOrString) => isNumber(value, 10) || isNumber(value, 16),
     data: (value: string) => isString(value) && isHex(value),
   }
 
