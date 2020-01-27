@@ -149,7 +149,6 @@ class HDWalletProvider {
 
           const tx = new Transaction(txParams);
           await tx.sign(wallet.getPrivateKey());
-          console.log('Serialized tx: ',tx.serialize());
           cb(null, toHexString(tx.serialize()));
         },
         signMessage({ data, from }: any, cb: any) {
