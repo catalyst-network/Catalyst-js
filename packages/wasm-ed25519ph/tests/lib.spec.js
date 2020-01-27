@@ -4,6 +4,7 @@ import {
     verify,
     public_key_from_private,
 } from '../pkg/index';
+import from '../../protocol-sdk-js/src/Cryptography_pb.js'
 import { bytesFromHexString, bytesFromString } from './utils.js';
 var assert = require('assert');
 

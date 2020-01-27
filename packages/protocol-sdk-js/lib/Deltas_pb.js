@@ -316,7 +316,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       timeStamp: (f = msg.getTimeStamp()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
       publicEntriesList: jspb.Message.toObjectList(msg.getPublicEntriesList(), Transaction_pb.PublicEntry.toObject, includeInstance),
       confidentialEntriesList: jspb.Message.toObjectList(msg.getConfidentialEntriesList(), Transaction_pb.ConfidentialEntry.toObject, includeInstance),
-      coinbaseEntriesList: jspb.Message.toObjectList(msg.getCoinbaseEntriesList(), Transaction_pb.CoinbaseEntry.toObject, includeInstance)
+      coinbaseEntriesList: jspb.Message.toObjectList(msg.getCoinbaseEntriesList(), Transaction_pb.CoinbaseEntry.toObject, includeInstance),
+      stateRoot: msg.getStateRoot_asB64()
     };
 
     if (includeInstance) {
@@ -401,6 +402,13 @@ proto.Catalyst.Protocol.Deltas.Delta.deserializeBinaryFromReader = function (msg
         msg.addCoinbaseEntries(value);
         break;
 
+      case 8:
+        var value =
+        /** @type {!Uint8Array} */
+        reader.readBytes();
+        msg.setStateRoot(value);
+        break;
+
       default:
         reader.skipField();
         break;
@@ -471,6 +479,12 @@ proto.Catalyst.Protocol.Deltas.Delta.serializeBinaryToWriter = function (message
 
   if (f.length > 0) {
     writer.writeRepeatedMessage(7, f, Transaction_pb.CoinbaseEntry.serializeBinaryToWriter);
+  }
+
+  f = message.getStateRoot_asU8();
+
+  if (f.length > 0) {
+    writer.writeBytes(8, f);
   }
 };
 /**
@@ -778,6 +792,55 @@ proto.Catalyst.Protocol.Deltas.Delta.prototype.addCoinbaseEntries = function (op
 
 proto.Catalyst.Protocol.Deltas.Delta.prototype.clearCoinbaseEntriesList = function () {
   return this.setCoinbaseEntriesList([]);
+};
+/**
+ * optional bytes state_root = 8;
+ * @return {!(string|Uint8Array)}
+ */
+
+
+proto.Catalyst.Protocol.Deltas.Delta.prototype.getStateRoot = function () {
+  return (
+    /** @type {!(string|Uint8Array)} */
+    jspb.Message.getFieldWithDefault(this, 8, "")
+  );
+};
+/**
+ * optional bytes state_root = 8;
+ * This is a type-conversion wrapper around `getStateRoot()`
+ * @return {string}
+ */
+
+
+proto.Catalyst.Protocol.Deltas.Delta.prototype.getStateRoot_asB64 = function () {
+  return (
+    /** @type {string} */
+    jspb.Message.bytesAsB64(this.getStateRoot())
+  );
+};
+/**
+ * optional bytes state_root = 8;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getStateRoot()`
+ * @return {!Uint8Array}
+ */
+
+
+proto.Catalyst.Protocol.Deltas.Delta.prototype.getStateRoot_asU8 = function () {
+  return (
+    /** @type {!Uint8Array} */
+    jspb.Message.bytesAsU8(this.getStateRoot())
+  );
+};
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.Catalyst.Protocol.Deltas.Delta} returns this
+ */
+
+
+proto.Catalyst.Protocol.Deltas.Delta.prototype.setStateRoot = function (value) {
+  return jspb.Message.setProto3BytesField(this, 8, value);
 };
 
 goog.object.extend(exports, proto.Catalyst.Protocol.Deltas);
