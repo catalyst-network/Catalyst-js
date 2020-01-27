@@ -2,7 +2,7 @@
 import { base32StringFromBytes } from '@catalyst-net-js/common';
 import Transaction from '../src';
 
-const txData = {
+const txData: any = {
   nonce: '0x00',
   gasPrice: '0x09184e72a000',
   gasLimit: '0x2710',
@@ -29,6 +29,25 @@ describe('tx', () => {
     expect(JSON.stringify(receiver)).toBe(JSON.stringify(new Uint8Array(
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     )));
+  });
+
+  it('throws an error if the tx contains an invalid input', () => {
+    const invalidTxData: any = {
+      nonce: '0x00',
+      gasPrice: '0x09184e72a000',
+      gasLimit: '0x2710',
+      to: '0x0000000000000000000000000000000000000000',
+      value: '0x00',
+      data: '0x7f7465737432000000000000000000000000000000000000000000000000000000600057',
+    };
+
+    const invalidString = 'invalid';
+
+    Object.keys(invalidTxData).forEach((key) => {
+      invalidTxData[key] = invalidString;
+      expect(() => new Transaction(invalidTxData)).toThrowError(`${key} is invalid`);
+      invalidTxData[key] = txData[key];
+    });
   });
 
   it('signs a tx', async (done) => {
