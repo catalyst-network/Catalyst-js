@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "bip39": "^3.0.2",
-    "common": "^0.0.1",
+    "@catalyst-net-js/common": "0.0.3",
     "ed25519-hd-key": "^1.1.0",
     "tweetnacl": "^1.0.1"
   },

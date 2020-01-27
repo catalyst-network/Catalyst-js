@@ -10,10 +10,9 @@ import * as Web3 from 'web3';
 import { derivePath } from 'ed25519-hd-key';
 import blake2b from 'blake2b';
 import * as nacl from 'tweetnacl';
-import Transaction from 'tx';
-import Wallet from 'wallet';
-// import { JSONRPCRequestPayload, JSONRPCErrorCallback } from 'ethereum-protocol';
-// import { Callback, JsonRPCResponse } from '@truffle/provider';
+import Transaction from '@catalyst-net-js/tx';
+import Wallet from '@catalyst-net-js/wallet';
+
 import {
   JSONRPCRequestPayload,
   JSONRPCErrorCallback,
@@ -150,7 +149,6 @@ class HDWalletProvider {
 
           const tx = new Transaction(txParams);
           await tx.sign(wallet.getPrivateKey());
-
           cb(null, toHexString(tx.serialize()));
         },
         signMessage({ data, from }: any, cb: any) {

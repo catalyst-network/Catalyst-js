@@ -1,19 +1,3 @@
-/**
- * Any object that can be transformed into a `Buffer`
- */
-export interface TransformableToBuffer {
-    toBuffer(): Buffer
-  }
-
-/**
- * A hex string prefixed with `0x`.
- */
-export type PrefixedHexString = string
-
-/**
- * A Buffer, hex string prefixed with `0x`, Number, or an object with a toBuffer method such as BN.
- */
-export type BufferLike = Buffer | TransformableToBuffer | PrefixedHexString | number
 
 export type numOrString = string | number
 
@@ -21,13 +5,13 @@ export interface TxData {
     /**
      * The transaction's gas limit.
      */
-    gasLimit?: string
-    gas?: string
+    gasLimit?: numOrString
+    gas?: numOrString
 
     /**
      * The transaction's gas price.
      */
-    gasPrice?: string
+    gasPrice?: numOrString
 
     /**
      * The transaction's the address is sent to.
@@ -37,7 +21,7 @@ export interface TxData {
     /**
      * The transaction's nonce.
      */
-    nonce?: string
+    nonce?: numOrString
     /**
      * This will contain the data of the message or the init of a contract
      */
