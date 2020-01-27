@@ -1,11 +1,15 @@
 import * as nacl from 'tweetnacl';
-import * as protos from 'protocol-sdk-js';
-import { bytesFromHexString, bytesFromBase32String } from 'common';
-import { TxData } from './types';
+import * as protos from '@catalyst-net-js/protocol-sdk-js';
+import { bytesFromHexString, bytesFromBase32String, validateProperties } from '@catalyst-net-js/common';
+import { TxData, numOrString } from './types';
 
 async function loadWasm() {
-  return import('wasm-ed25519ph');
+  return import('@catalyst-net-js/wasm-ed25519ph');
 }
+
+const isHex = (value: numOrString) => /0[xX][0-9a-fA-F]+/.test(value.toString());
+const isString = (value: string) => typeof value === 'string';
+const isNumber = (value: numOrString, radix: number) => parseInt(value.toString(), radix) === Number(value);
 
 
 export default class Transaction {
@@ -13,32 +17,33 @@ export default class Transaction {
 
   entry: protos.PublicEntry
 
+  schema = {
+    nonce: (value: string) => isHex(value) && (isNumber(value, 10) || isNumber(value, 16)),
+    gasPrice: (value: string) => isHex(value) && (isNumber(value, 10) || isNumber(value, 16)),
+    gasLimit: (value: string) => isHex(value) && (isNumber(value, 10) || isNumber(value, 16)),
+    to: (value: string) => isString(value) && isHex(value) && value.length === 42,
+    value: (value: numOrString) => isNumber(value, 10) || isNumber(value, 16),
+    data: (value: string) => isString(value) && isHex(value),
+  }
+
   constructor(entry: TxData = {}) {
     this.tx = entry;
     this._createTxEntry();
   }
 
-
   private _createTxEntry() {
     const { tx } = this;
 
-    if (!tx.value) {
-      tx.value = '0x0';
-    }
+    const errors = validateProperties(this.tx, this.schema);
 
-    if (!tx.to) {
-      tx.to = '';
-    }
+    errors.forEach(({ message }) => { throw new Error(message); });
 
-    if (!tx.gasLimit) {
-      tx.gasLimit = tx.gas;
-    }
     this.entry = new protos.PublicEntry();
-    this.entry.setReceiverAddress(bytesFromHexString(tx.to));
-    this.entry.setAmount(bytesFromHexString(tx.value));
+    this.entry.setReceiverAddress(bytesFromHexString(!tx.to ? '' : tx.to));
+    this.entry.setAmount(bytesFromHexString(!tx.value ? '0x0' : tx.value));
     this.entry.setData(bytesFromHexString(tx.data));
-    this.entry.setGasPrice(bytesFromHexString(tx.gasPrice));
-    this.entry.setGasLimit(Number(tx.gasLimit));
+    this.entry.setGasPrice(bytesFromHexString(tx.gasPrice.toString()));
+    this.entry.setGasLimit(Number(!tx.gasLimit ? tx.gas : tx.gasLimit));
     this.entry.setTransactionFees(new Uint8Array(8));
     this.entry.setNonce(Number(tx.nonce));
   }

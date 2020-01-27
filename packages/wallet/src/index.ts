@@ -4,7 +4,7 @@ import {
   getPublicKeyFromPrivate,
   isValidPrivate,
   isValidPublic,
-} from 'common';
+} from '@catalyst-net-js/common';
 
 export default class Wallet {
   constructor(
