@@ -33,17 +33,20 @@ export default class Transaction {
 
   private _createTxEntry() {
     const { tx } = this;
+    if (!tx.gasLimit) tx.gasLimit = tx.gas;
+    if (!tx.to) tx.to = '';
+    if (!tx.value) tx.value = '0x0';
 
     const errors = validateProperties(this.tx, this.schema);
 
     errors.forEach(({ message }) => { throw new Error(message); });
 
     this.entry = new protos.PublicEntry();
-    this.entry.setReceiverAddress(bytesFromHexString(!tx.to ? '' : tx.to));
-    this.entry.setAmount(bytesFromHexString(!tx.value ? '0x0' : tx.value));
+    this.entry.setReceiverAddress(bytesFromHexString(tx.to));
+    this.entry.setAmount(bytesFromHexString(tx.value));
     this.entry.setData(bytesFromHexString(tx.data));
     this.entry.setGasPrice(bytesFromHexString(tx.gasPrice.toString()));
-    this.entry.setGasLimit(Number(!tx.gasLimit ? tx.gas : tx.gasLimit));
+    this.entry.setGasLimit(Number(tx.gasLimit));
     this.entry.setTransactionFees(new Uint8Array(8));
     this.entry.setNonce(Number(tx.nonce));
   }
