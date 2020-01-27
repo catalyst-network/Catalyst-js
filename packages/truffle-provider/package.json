@@ -4,7 +4,7 @@
   "license": "MIT",
   "homepage": "https://github.com/catalyst-js#readme",
   "repository": "https://github.com/catalyst-js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
@@ -14,8 +14,8 @@
   },
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@catalyst-net-js/tx": "^0.0.4",
-    "@catalyst-net-js/wallet": "^0.0.4",
+    "@catalyst-net-js/tx": "^0.0.5",
+    "@catalyst-net-js/wallet": "^0.0.5",
     "@truffle/provider": "^0.2.3",
     "@types/google-protobuf": "^3.7.2",
     "@types/web3": "^1.2.2",
