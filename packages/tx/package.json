@@ -14,7 +14,8 @@
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "dist",
+    "src"
   ],
   "scripts": {
     "build": "npm run clean && npm run compile",
