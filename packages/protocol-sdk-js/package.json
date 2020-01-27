@@ -2,7 +2,7 @@
   "name": "@catalyst-net-js/protocol-sdk-js",
   "version": "0.0.3",
   "description": "Catalyst Protocol Js SDK",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "publishConfig": {
     "access": "public"
   },
