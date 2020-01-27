@@ -9,7 +9,8 @@
   "module": "dist/index.js",
   "scripts": {
     "build": "tsc && webpack",
-    "test:js": "mocha test/**/*.test.js"
+    "test:js": "mocha test/**/*.test.js",
+    "test": "yarn build && mocha --exit -r ts-node/register test/**/*.test.ts"
   },
   "types": "dist/index.d.ts",
   "dependencies": {
