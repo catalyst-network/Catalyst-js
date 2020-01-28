@@ -21,7 +21,7 @@ export default class Transaction {
     nonce: (value: string) => isHex(value) && (isNumber(value, 10) || isNumber(value, 16)),
     gasPrice: (value: string) => isHex(value) && (isNumber(value, 10) || isNumber(value, 16)),
     gasLimit: (value: string) => isHex(value) && (isNumber(value, 10) || isNumber(value, 16)),
-    to: (value: string) => isString(value) && isHex(value) && value.length === 42,
+    to: (value: string) => isString(value) && isHex(value),
     value: (value: numOrString) => isNumber(value, 10) || isNumber(value, 16),
     data: (value: string) => isString(value) && isHex(value),
   }
@@ -33,17 +33,20 @@ export default class Transaction {
 
   private _createTxEntry() {
     const { tx } = this;
+    if (!tx.gasLimit) tx.gasLimit = tx.gas;
+    if (!tx.to) tx.to = '0x0';
+    if (!tx.value) tx.value = '0x0';
 
     const errors = validateProperties(this.tx, this.schema);
 
     errors.forEach(({ message }) => { throw new Error(message); });
 
     this.entry = new protos.PublicEntry();
-    this.entry.setReceiverAddress(bytesFromHexString(!tx.to ? '' : tx.to));
-    this.entry.setAmount(bytesFromHexString(!tx.value ? '0x0' : tx.value));
+    this.entry.setReceiverAddress(bytesFromHexString(tx.to));
+    this.entry.setAmount(bytesFromHexString(tx.value));
     this.entry.setData(bytesFromHexString(tx.data));
     this.entry.setGasPrice(bytesFromHexString(tx.gasPrice.toString()));
-    this.entry.setGasLimit(Number(!tx.gasLimit ? tx.gas : tx.gasLimit));
+    this.entry.setGasLimit(Number(tx.gasLimit));
     this.entry.setTransactionFees(new Uint8Array(8));
     this.entry.setNonce(Number(tx.nonce));
   }

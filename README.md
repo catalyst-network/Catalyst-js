@@ -11,4 +11,4 @@ Status: **Active development.** This repository is being actively worked on, mos
 
 ## License
 
-[MIT](LICENSE)
+[GPLv3](LICENSE)

@@ -1,6 +1,6 @@
 {
   "name": "@catalyst-net-js/wallet",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "description": "> TODO: description",
   "author": "stephenhorsfall <stephen.horsfall@atlascity.io>",
   "homepage": "",
@@ -14,7 +14,8 @@
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "dist",
+    "src"
   ],
   "scripts": {
     "build": "npm run clean && npm run compile",
@@ -33,8 +34,8 @@
     "typescript": "^3.7.4"
   },
   "dependencies": {
+    "@catalyst-net-js/common": "^0.0.6",
     "bip39": "^3.0.2",
-    "@catalyst-net-js/common": "0.0.3",
     "ed25519-hd-key": "^1.1.0",
     "tweetnacl": "^1.0.1"
   },
