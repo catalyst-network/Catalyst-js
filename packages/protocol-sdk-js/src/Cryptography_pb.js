@@ -1,4 +1,7 @@
+"use strict";
+
 // source: Cryptography.proto
+
 /**
  * @fileoverview
  * @enhanceable
@@ -7,12 +10,13 @@
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
-
 var jspb = require('google-protobuf');
+
 var goog = jspb;
 var global = Function('return this')();
 
 var Network_pb = require('./Network_pb.js');
+
 goog.object.extend(proto, Network_pb);
 goog.exportSymbol('proto.Catalyst.Protocol.Cryptography.ErrorCode', null, global);
 goog.exportSymbol('proto.Catalyst.Protocol.Cryptography.Signature', null, global);
@@ -29,10 +33,13 @@ goog.exportSymbol('proto.Catalyst.Protocol.Cryptography.SigningContext', null, g
  * @extends {jspb.Message}
  * @constructor
  */
-proto.Catalyst.Protocol.Cryptography.Signature = function(opt_data) {
+
+proto.Catalyst.Protocol.Cryptography.Signature = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
+
 goog.inherits(proto.Catalyst.Protocol.Cryptography.Signature, jspb.Message);
+
 if (goog.DEBUG && !COMPILED) {
   /**
    * @public
@@ -50,10 +57,14 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.Catalyst.Protocol.Cryptography.SigningContext = function(opt_data) {
+
+
+proto.Catalyst.Protocol.Cryptography.SigningContext = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
+
 goog.inherits(proto.Catalyst.Protocol.Cryptography.SigningContext, jspb.Message);
+
 if (goog.DEBUG && !COMPILED) {
   /**
    * @public
@@ -71,10 +82,14 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch = function(opt_data) {
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, proto.Catalyst.Protocol.Cryptography.SignatureBatch.repeatedFields_, null);
 };
+
 goog.inherits(proto.Catalyst.Protocol.Cryptography.SignatureBatch, jspb.Message);
+
 if (goog.DEBUG && !COMPILED) {
   /**
    * @public
@@ -83,61 +98,59 @@ if (goog.DEBUG && !COMPILED) {
   proto.Catalyst.Protocol.Cryptography.SignatureBatch.displayName = 'proto.Catalyst.Protocol.Cryptography.SignatureBatch';
 }
 
-
-
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.Catalyst.Protocol.Cryptography.Signature.prototype.toObject = function(opt_includeInstance) {
-  return proto.Catalyst.Protocol.Cryptography.Signature.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.Catalyst.Protocol.Cryptography.Signature} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.Catalyst.Protocol.Cryptography.Signature.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    signingContext: (f = msg.getSigningContext()) && proto.Catalyst.Protocol.Cryptography.SigningContext.toObject(includeInstance, f),
-    rawBytes: msg.getRawBytes_asB64()
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.Catalyst.Protocol.Cryptography.Signature.prototype.toObject = function (opt_includeInstance) {
+    return proto.Catalyst.Protocol.Cryptography.Signature.toObject(opt_includeInstance, this);
   };
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.Catalyst.Protocol.Cryptography.Signature} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  proto.Catalyst.Protocol.Cryptography.Signature.toObject = function (includeInstance, msg) {
+    var f,
+        obj = {
+      signingContext: (f = msg.getSigningContext()) && proto.Catalyst.Protocol.Cryptography.SigningContext.toObject(includeInstance, f),
+      rawBytes: msg.getRawBytes_asB64()
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+
+    return obj;
+  };
 }
-
-
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.Catalyst.Protocol.Cryptography.Signature}
  */
-proto.Catalyst.Protocol.Cryptography.Signature.deserializeBinary = function(bytes) {
+
+
+proto.Catalyst.Protocol.Cryptography.Signature.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.Catalyst.Protocol.Cryptography.Signature;
+  var msg = new proto.Catalyst.Protocol.Cryptography.Signature();
   return proto.Catalyst.Protocol.Cryptography.Signature.deserializeBinaryFromReader(msg, reader);
 };
-
-
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
@@ -145,42 +158,49 @@ proto.Catalyst.Protocol.Cryptography.Signature.deserializeBinary = function(byte
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.Catalyst.Protocol.Cryptography.Signature}
  */
-proto.Catalyst.Protocol.Cryptography.Signature.deserializeBinaryFromReader = function(msg, reader) {
+
+
+proto.Catalyst.Protocol.Cryptography.Signature.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
+
     var field = reader.getFieldNumber();
+
     switch (field) {
-    case 1:
-      var value = new proto.Catalyst.Protocol.Cryptography.SigningContext;
-      reader.readMessage(value,proto.Catalyst.Protocol.Cryptography.SigningContext.deserializeBinaryFromReader);
-      msg.setSigningContext(value);
-      break;
-    case 2:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setRawBytes(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value = new proto.Catalyst.Protocol.Cryptography.SigningContext();
+        reader.readMessage(value, proto.Catalyst.Protocol.Cryptography.SigningContext.deserializeBinaryFromReader);
+        msg.setSigningContext(value);
+        break;
+
+      case 2:
+        var value =
+        /** @type {!Uint8Array} */
+        reader.readBytes();
+        msg.setRawBytes(value);
+        break;
+
+      default:
+        reader.skipField();
+        break;
     }
   }
+
   return msg;
 };
-
-
 /**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.Catalyst.Protocol.Cryptography.Signature.prototype.serializeBinary = function() {
+
+
+proto.Catalyst.Protocol.Cryptography.Signature.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.Catalyst.Protocol.Cryptography.Signature.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
-
-
 /**
  * Serializes the given message to binary data (in protobuf wire
  * format), writing to the given BinaryWriter.
@@ -188,83 +208,86 @@ proto.Catalyst.Protocol.Cryptography.Signature.prototype.serializeBinary = funct
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.Catalyst.Protocol.Cryptography.Signature.serializeBinaryToWriter = function(message, writer) {
+
+
+proto.Catalyst.Protocol.Cryptography.Signature.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getSigningContext();
+
   if (f != null) {
-    writer.writeMessage(
-      1,
-      f,
-      proto.Catalyst.Protocol.Cryptography.SigningContext.serializeBinaryToWriter
-    );
+    writer.writeMessage(1, f, proto.Catalyst.Protocol.Cryptography.SigningContext.serializeBinaryToWriter);
   }
+
   f = message.getRawBytes_asU8();
+
   if (f.length > 0) {
-    writer.writeBytes(
-      2,
-      f
-    );
+    writer.writeBytes(2, f);
   }
 };
-
-
 /**
  * optional SigningContext signing_context = 1;
  * @return {?proto.Catalyst.Protocol.Cryptography.SigningContext}
  */
-proto.Catalyst.Protocol.Cryptography.Signature.prototype.getSigningContext = function() {
-  return /** @type{?proto.Catalyst.Protocol.Cryptography.SigningContext} */ (
-    jspb.Message.getWrapperField(this, proto.Catalyst.Protocol.Cryptography.SigningContext, 1));
+
+
+proto.Catalyst.Protocol.Cryptography.Signature.prototype.getSigningContext = function () {
+  return (
+    /** @type{?proto.Catalyst.Protocol.Cryptography.SigningContext} */
+    jspb.Message.getWrapperField(this, proto.Catalyst.Protocol.Cryptography.SigningContext, 1)
+  );
 };
-
-
 /**
  * @param {?proto.Catalyst.Protocol.Cryptography.SigningContext|undefined} value
  * @return {!proto.Catalyst.Protocol.Cryptography.Signature} returns this
 */
-proto.Catalyst.Protocol.Cryptography.Signature.prototype.setSigningContext = function(value) {
+
+
+proto.Catalyst.Protocol.Cryptography.Signature.prototype.setSigningContext = function (value) {
   return jspb.Message.setWrapperField(this, 1, value);
 };
-
-
 /**
  * Clears the message field making it undefined.
  * @return {!proto.Catalyst.Protocol.Cryptography.Signature} returns this
  */
-proto.Catalyst.Protocol.Cryptography.Signature.prototype.clearSigningContext = function() {
+
+
+proto.Catalyst.Protocol.Cryptography.Signature.prototype.clearSigningContext = function () {
   return this.setSigningContext(undefined);
 };
-
-
 /**
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.Catalyst.Protocol.Cryptography.Signature.prototype.hasSigningContext = function() {
+
+
+proto.Catalyst.Protocol.Cryptography.Signature.prototype.hasSigningContext = function () {
   return jspb.Message.getField(this, 1) != null;
 };
-
-
 /**
  * optional bytes raw_bytes = 2;
  * @return {!(string|Uint8Array)}
  */
-proto.Catalyst.Protocol.Cryptography.Signature.prototype.getRawBytes = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+
+
+proto.Catalyst.Protocol.Cryptography.Signature.prototype.getRawBytes = function () {
+  return (
+    /** @type {!(string|Uint8Array)} */
+    jspb.Message.getFieldWithDefault(this, 2, "")
+  );
 };
-
-
 /**
  * optional bytes raw_bytes = 2;
  * This is a type-conversion wrapper around `getRawBytes()`
  * @return {string}
  */
-proto.Catalyst.Protocol.Cryptography.Signature.prototype.getRawBytes_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getRawBytes()));
+
+
+proto.Catalyst.Protocol.Cryptography.Signature.prototype.getRawBytes_asB64 = function () {
+  return (
+    /** @type {string} */
+    jspb.Message.bytesAsB64(this.getRawBytes())
+  );
 };
-
-
 /**
  * optional bytes raw_bytes = 2;
  * Note that Uint8Array is not supported on all browsers.
@@ -272,77 +295,77 @@ proto.Catalyst.Protocol.Cryptography.Signature.prototype.getRawBytes_asB64 = fun
  * This is a type-conversion wrapper around `getRawBytes()`
  * @return {!Uint8Array}
  */
-proto.Catalyst.Protocol.Cryptography.Signature.prototype.getRawBytes_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getRawBytes()));
+
+
+proto.Catalyst.Protocol.Cryptography.Signature.prototype.getRawBytes_asU8 = function () {
+  return (
+    /** @type {!Uint8Array} */
+    jspb.Message.bytesAsU8(this.getRawBytes())
+  );
 };
-
-
 /**
  * @param {!(string|Uint8Array)} value
  * @return {!proto.Catalyst.Protocol.Cryptography.Signature} returns this
  */
-proto.Catalyst.Protocol.Cryptography.Signature.prototype.setRawBytes = function(value) {
+
+
+proto.Catalyst.Protocol.Cryptography.Signature.prototype.setRawBytes = function (value) {
   return jspb.Message.setProto3BytesField(this, 2, value);
 };
 
-
-
-
-
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.Catalyst.Protocol.Cryptography.SigningContext.prototype.toObject = function(opt_includeInstance) {
-  return proto.Catalyst.Protocol.Cryptography.SigningContext.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.Catalyst.Protocol.Cryptography.SigningContext} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.Catalyst.Protocol.Cryptography.SigningContext.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    networkType: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    signatureType: jspb.Message.getFieldWithDefault(msg, 2, 0)
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.Catalyst.Protocol.Cryptography.SigningContext.prototype.toObject = function (opt_includeInstance) {
+    return proto.Catalyst.Protocol.Cryptography.SigningContext.toObject(opt_includeInstance, this);
   };
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.Catalyst.Protocol.Cryptography.SigningContext} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  proto.Catalyst.Protocol.Cryptography.SigningContext.toObject = function (includeInstance, msg) {
+    var f,
+        obj = {
+      networkType: jspb.Message.getFieldWithDefault(msg, 1, 0),
+      signatureType: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+
+    return obj;
+  };
 }
-
-
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.Catalyst.Protocol.Cryptography.SigningContext}
  */
-proto.Catalyst.Protocol.Cryptography.SigningContext.deserializeBinary = function(bytes) {
+
+
+proto.Catalyst.Protocol.Cryptography.SigningContext.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.Catalyst.Protocol.Cryptography.SigningContext;
+  var msg = new proto.Catalyst.Protocol.Cryptography.SigningContext();
   return proto.Catalyst.Protocol.Cryptography.SigningContext.deserializeBinaryFromReader(msg, reader);
 };
-
-
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
@@ -350,41 +373,50 @@ proto.Catalyst.Protocol.Cryptography.SigningContext.deserializeBinary = function
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.Catalyst.Protocol.Cryptography.SigningContext}
  */
-proto.Catalyst.Protocol.Cryptography.SigningContext.deserializeBinaryFromReader = function(msg, reader) {
+
+
+proto.Catalyst.Protocol.Cryptography.SigningContext.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
+
     var field = reader.getFieldNumber();
+
     switch (field) {
-    case 1:
-      var value = /** @type {!proto.Catalyst.Protocol.Network.NetworkType} */ (reader.readEnum());
-      msg.setNetworkType(value);
-      break;
-    case 2:
-      var value = /** @type {!proto.Catalyst.Protocol.Cryptography.SignatureType} */ (reader.readEnum());
-      msg.setSignatureType(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value =
+        /** @type {!proto.Catalyst.Protocol.Network.NetworkType} */
+        reader.readEnum();
+        msg.setNetworkType(value);
+        break;
+
+      case 2:
+        var value =
+        /** @type {!proto.Catalyst.Protocol.Cryptography.SignatureType} */
+        reader.readEnum();
+        msg.setSignatureType(value);
+        break;
+
+      default:
+        reader.skipField();
+        break;
     }
   }
+
   return msg;
 };
-
-
 /**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.Catalyst.Protocol.Cryptography.SigningContext.prototype.serializeBinary = function() {
+
+
+proto.Catalyst.Protocol.Cryptography.SigningContext.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.Catalyst.Protocol.Cryptography.SigningContext.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
-
-
 /**
  * Serializes the given message to binary data (in protobuf wire
  * format), writing to the given BinaryWriter.
@@ -392,126 +424,128 @@ proto.Catalyst.Protocol.Cryptography.SigningContext.prototype.serializeBinary = 
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.Catalyst.Protocol.Cryptography.SigningContext.serializeBinaryToWriter = function(message, writer) {
+
+
+proto.Catalyst.Protocol.Cryptography.SigningContext.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getNetworkType();
+
   if (f !== 0.0) {
-    writer.writeEnum(
-      1,
-      f
-    );
+    writer.writeEnum(1, f);
   }
+
   f = message.getSignatureType();
+
   if (f !== 0.0) {
-    writer.writeEnum(
-      2,
-      f
-    );
+    writer.writeEnum(2, f);
   }
 };
-
-
 /**
  * optional Catalyst.Protocol.Network.NetworkType network_type = 1;
  * @return {!proto.Catalyst.Protocol.Network.NetworkType}
  */
-proto.Catalyst.Protocol.Cryptography.SigningContext.prototype.getNetworkType = function() {
-  return /** @type {!proto.Catalyst.Protocol.Network.NetworkType} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+
+
+proto.Catalyst.Protocol.Cryptography.SigningContext.prototype.getNetworkType = function () {
+  return (
+    /** @type {!proto.Catalyst.Protocol.Network.NetworkType} */
+    jspb.Message.getFieldWithDefault(this, 1, 0)
+  );
 };
-
-
 /**
  * @param {!proto.Catalyst.Protocol.Network.NetworkType} value
  * @return {!proto.Catalyst.Protocol.Cryptography.SigningContext} returns this
  */
-proto.Catalyst.Protocol.Cryptography.SigningContext.prototype.setNetworkType = function(value) {
+
+
+proto.Catalyst.Protocol.Cryptography.SigningContext.prototype.setNetworkType = function (value) {
   return jspb.Message.setProto3EnumField(this, 1, value);
 };
-
-
 /**
  * optional SignatureType signature_type = 2;
  * @return {!proto.Catalyst.Protocol.Cryptography.SignatureType}
  */
-proto.Catalyst.Protocol.Cryptography.SigningContext.prototype.getSignatureType = function() {
-  return /** @type {!proto.Catalyst.Protocol.Cryptography.SignatureType} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+
+
+proto.Catalyst.Protocol.Cryptography.SigningContext.prototype.getSignatureType = function () {
+  return (
+    /** @type {!proto.Catalyst.Protocol.Cryptography.SignatureType} */
+    jspb.Message.getFieldWithDefault(this, 2, 0)
+  );
 };
-
-
 /**
  * @param {!proto.Catalyst.Protocol.Cryptography.SignatureType} value
  * @return {!proto.Catalyst.Protocol.Cryptography.SigningContext} returns this
  */
-proto.Catalyst.Protocol.Cryptography.SigningContext.prototype.setSignatureType = function(value) {
+
+
+proto.Catalyst.Protocol.Cryptography.SigningContext.prototype.setSignatureType = function (value) {
   return jspb.Message.setProto3EnumField(this, 2, value);
 };
-
-
-
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
  * @const
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.repeatedFields_ = [1,2,3];
 
 
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.repeatedFields_ = [1, 2, 3];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.toObject = function(opt_includeInstance) {
-  return proto.Catalyst.Protocol.Cryptography.SignatureBatch.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.Catalyst.Protocol.Cryptography.SignatureBatch} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    signaturesList: msg.getSignaturesList_asB64(),
-    publicKeysList: msg.getPublicKeysList_asB64(),
-    messagesList: msg.getMessagesList_asB64(),
-    context: msg.getContext_asB64()
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.toObject = function (opt_includeInstance) {
+    return proto.Catalyst.Protocol.Cryptography.SignatureBatch.toObject(opt_includeInstance, this);
   };
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.Catalyst.Protocol.Cryptography.SignatureBatch} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  proto.Catalyst.Protocol.Cryptography.SignatureBatch.toObject = function (includeInstance, msg) {
+    var f,
+        obj = {
+      signaturesList: msg.getSignaturesList_asB64(),
+      publicKeysList: msg.getPublicKeysList_asB64(),
+      messagesList: msg.getMessagesList_asB64(),
+      context: msg.getContext_asB64()
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+
+    return obj;
+  };
 }
-
-
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.Catalyst.Protocol.Cryptography.SignatureBatch}
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.deserializeBinary = function(bytes) {
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.Catalyst.Protocol.Cryptography.SignatureBatch;
+  var msg = new proto.Catalyst.Protocol.Cryptography.SignatureBatch();
   return proto.Catalyst.Protocol.Cryptography.SignatureBatch.deserializeBinaryFromReader(msg, reader);
 };
-
-
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
@@ -519,49 +553,64 @@ proto.Catalyst.Protocol.Cryptography.SignatureBatch.deserializeBinary = function
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.Catalyst.Protocol.Cryptography.SignatureBatch}
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.deserializeBinaryFromReader = function(msg, reader) {
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
+
     var field = reader.getFieldNumber();
+
     switch (field) {
-    case 1:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.addSignatures(value);
-      break;
-    case 2:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.addPublicKeys(value);
-      break;
-    case 3:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.addMessages(value);
-      break;
-    case 4:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setContext(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value =
+        /** @type {!Uint8Array} */
+        reader.readBytes();
+        msg.addSignatures(value);
+        break;
+
+      case 2:
+        var value =
+        /** @type {!Uint8Array} */
+        reader.readBytes();
+        msg.addPublicKeys(value);
+        break;
+
+      case 3:
+        var value =
+        /** @type {!Uint8Array} */
+        reader.readBytes();
+        msg.addMessages(value);
+        break;
+
+      case 4:
+        var value =
+        /** @type {!Uint8Array} */
+        reader.readBytes();
+        msg.setContext(value);
+        break;
+
+      default:
+        reader.skipField();
+        break;
     }
   }
+
   return msg;
 };
-
-
 /**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.serializeBinary = function() {
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.Catalyst.Protocol.Cryptography.SignatureBatch.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
-
-
 /**
  * Serializes the given message to binary data (in protobuf wire
  * format), writing to the given BinaryWriter.
@@ -569,59 +618,59 @@ proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.serializeBinary = 
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.serializeBinaryToWriter = function(message, writer) {
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getSignaturesList_asU8();
+
   if (f.length > 0) {
-    writer.writeRepeatedBytes(
-      1,
-      f
-    );
+    writer.writeRepeatedBytes(1, f);
   }
+
   f = message.getPublicKeysList_asU8();
+
   if (f.length > 0) {
-    writer.writeRepeatedBytes(
-      2,
-      f
-    );
+    writer.writeRepeatedBytes(2, f);
   }
+
   f = message.getMessagesList_asU8();
+
   if (f.length > 0) {
-    writer.writeRepeatedBytes(
-      3,
-      f
-    );
+    writer.writeRepeatedBytes(3, f);
   }
+
   f = message.getContext_asU8();
+
   if (f.length > 0) {
-    writer.writeBytes(
-      4,
-      f
-    );
+    writer.writeBytes(4, f);
   }
 };
-
-
 /**
  * repeated bytes signatures = 1;
  * @return {!(Array<!Uint8Array>|Array<string>)}
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getSignaturesList = function() {
-  return /** @type {!(Array<!Uint8Array>|Array<string>)} */ (jspb.Message.getRepeatedField(this, 1));
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getSignaturesList = function () {
+  return (
+    /** @type {!(Array<!Uint8Array>|Array<string>)} */
+    jspb.Message.getRepeatedField(this, 1)
+  );
 };
-
-
 /**
  * repeated bytes signatures = 1;
  * This is a type-conversion wrapper around `getSignaturesList()`
  * @return {!Array<string>}
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getSignaturesList_asB64 = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.bytesListAsB64(
-      this.getSignaturesList()));
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getSignaturesList_asB64 = function () {
+  return (
+    /** @type {!Array<string>} */
+    jspb.Message.bytesListAsB64(this.getSignaturesList())
+  );
 };
-
-
 /**
  * repeated bytes signatures = 1;
  * Note that Uint8Array is not supported on all browsers.
@@ -629,60 +678,67 @@ proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getSignaturesList_
  * This is a type-conversion wrapper around `getSignaturesList()`
  * @return {!Array<!Uint8Array>}
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getSignaturesList_asU8 = function() {
-  return /** @type {!Array<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
-      this.getSignaturesList()));
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getSignaturesList_asU8 = function () {
+  return (
+    /** @type {!Array<!Uint8Array>} */
+    jspb.Message.bytesListAsU8(this.getSignaturesList())
+  );
 };
-
-
 /**
  * @param {!(Array<!Uint8Array>|Array<string>)} value
  * @return {!proto.Catalyst.Protocol.Cryptography.SignatureBatch} returns this
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.setSignaturesList = function(value) {
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.setSignaturesList = function (value) {
   return jspb.Message.setField(this, 1, value || []);
 };
-
-
 /**
  * @param {!(string|Uint8Array)} value
  * @param {number=} opt_index
  * @return {!proto.Catalyst.Protocol.Cryptography.SignatureBatch} returns this
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.addSignatures = function(value, opt_index) {
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.addSignatures = function (value, opt_index) {
   return jspb.Message.addToRepeatedField(this, 1, value, opt_index);
 };
-
-
 /**
  * Clears the list making it empty but non-null.
  * @return {!proto.Catalyst.Protocol.Cryptography.SignatureBatch} returns this
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.clearSignaturesList = function() {
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.clearSignaturesList = function () {
   return this.setSignaturesList([]);
 };
-
-
 /**
  * repeated bytes public_keys = 2;
  * @return {!(Array<!Uint8Array>|Array<string>)}
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getPublicKeysList = function() {
-  return /** @type {!(Array<!Uint8Array>|Array<string>)} */ (jspb.Message.getRepeatedField(this, 2));
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getPublicKeysList = function () {
+  return (
+    /** @type {!(Array<!Uint8Array>|Array<string>)} */
+    jspb.Message.getRepeatedField(this, 2)
+  );
 };
-
-
 /**
  * repeated bytes public_keys = 2;
  * This is a type-conversion wrapper around `getPublicKeysList()`
  * @return {!Array<string>}
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getPublicKeysList_asB64 = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.bytesListAsB64(
-      this.getPublicKeysList()));
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getPublicKeysList_asB64 = function () {
+  return (
+    /** @type {!Array<string>} */
+    jspb.Message.bytesListAsB64(this.getPublicKeysList())
+  );
 };
-
-
 /**
  * repeated bytes public_keys = 2;
  * Note that Uint8Array is not supported on all browsers.
@@ -690,60 +746,67 @@ proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getPublicKeysList_
  * This is a type-conversion wrapper around `getPublicKeysList()`
  * @return {!Array<!Uint8Array>}
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getPublicKeysList_asU8 = function() {
-  return /** @type {!Array<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
-      this.getPublicKeysList()));
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getPublicKeysList_asU8 = function () {
+  return (
+    /** @type {!Array<!Uint8Array>} */
+    jspb.Message.bytesListAsU8(this.getPublicKeysList())
+  );
 };
-
-
 /**
  * @param {!(Array<!Uint8Array>|Array<string>)} value
  * @return {!proto.Catalyst.Protocol.Cryptography.SignatureBatch} returns this
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.setPublicKeysList = function(value) {
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.setPublicKeysList = function (value) {
   return jspb.Message.setField(this, 2, value || []);
 };
-
-
 /**
  * @param {!(string|Uint8Array)} value
  * @param {number=} opt_index
  * @return {!proto.Catalyst.Protocol.Cryptography.SignatureBatch} returns this
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.addPublicKeys = function(value, opt_index) {
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.addPublicKeys = function (value, opt_index) {
   return jspb.Message.addToRepeatedField(this, 2, value, opt_index);
 };
-
-
 /**
  * Clears the list making it empty but non-null.
  * @return {!proto.Catalyst.Protocol.Cryptography.SignatureBatch} returns this
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.clearPublicKeysList = function() {
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.clearPublicKeysList = function () {
   return this.setPublicKeysList([]);
 };
-
-
 /**
  * repeated bytes messages = 3;
  * @return {!(Array<!Uint8Array>|Array<string>)}
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getMessagesList = function() {
-  return /** @type {!(Array<!Uint8Array>|Array<string>)} */ (jspb.Message.getRepeatedField(this, 3));
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getMessagesList = function () {
+  return (
+    /** @type {!(Array<!Uint8Array>|Array<string>)} */
+    jspb.Message.getRepeatedField(this, 3)
+  );
 };
-
-
 /**
  * repeated bytes messages = 3;
  * This is a type-conversion wrapper around `getMessagesList()`
  * @return {!Array<string>}
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getMessagesList_asB64 = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.bytesListAsB64(
-      this.getMessagesList()));
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getMessagesList_asB64 = function () {
+  return (
+    /** @type {!Array<string>} */
+    jspb.Message.bytesListAsB64(this.getMessagesList())
+  );
 };
-
-
 /**
  * repeated bytes messages = 3;
  * Note that Uint8Array is not supported on all browsers.
@@ -751,60 +814,67 @@ proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getMessagesList_as
  * This is a type-conversion wrapper around `getMessagesList()`
  * @return {!Array<!Uint8Array>}
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getMessagesList_asU8 = function() {
-  return /** @type {!Array<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
-      this.getMessagesList()));
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getMessagesList_asU8 = function () {
+  return (
+    /** @type {!Array<!Uint8Array>} */
+    jspb.Message.bytesListAsU8(this.getMessagesList())
+  );
 };
-
-
 /**
  * @param {!(Array<!Uint8Array>|Array<string>)} value
  * @return {!proto.Catalyst.Protocol.Cryptography.SignatureBatch} returns this
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.setMessagesList = function(value) {
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.setMessagesList = function (value) {
   return jspb.Message.setField(this, 3, value || []);
 };
-
-
 /**
  * @param {!(string|Uint8Array)} value
  * @param {number=} opt_index
  * @return {!proto.Catalyst.Protocol.Cryptography.SignatureBatch} returns this
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.addMessages = function(value, opt_index) {
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.addMessages = function (value, opt_index) {
   return jspb.Message.addToRepeatedField(this, 3, value, opt_index);
 };
-
-
 /**
  * Clears the list making it empty but non-null.
  * @return {!proto.Catalyst.Protocol.Cryptography.SignatureBatch} returns this
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.clearMessagesList = function() {
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.clearMessagesList = function () {
   return this.setMessagesList([]);
 };
-
-
 /**
  * optional bytes context = 4;
  * @return {!(string|Uint8Array)}
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getContext = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getContext = function () {
+  return (
+    /** @type {!(string|Uint8Array)} */
+    jspb.Message.getFieldWithDefault(this, 4, "")
+  );
 };
-
-
 /**
  * optional bytes context = 4;
  * This is a type-conversion wrapper around `getContext()`
  * @return {string}
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getContext_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getContext()));
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getContext_asB64 = function () {
+  return (
+    /** @type {string} */
+    jspb.Message.bytesAsB64(this.getContext())
+  );
 };
-
-
 /**
  * optional bytes context = 4;
  * Note that Uint8Array is not supported on all browsers.
@@ -812,24 +882,28 @@ proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getContext_asB64 =
  * This is a type-conversion wrapper around `getContext()`
  * @return {!Uint8Array}
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getContext_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getContext()));
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.getContext_asU8 = function () {
+  return (
+    /** @type {!Uint8Array} */
+    jspb.Message.bytesAsU8(this.getContext())
+  );
 };
-
-
 /**
  * @param {!(string|Uint8Array)} value
  * @return {!proto.Catalyst.Protocol.Cryptography.SignatureBatch} returns this
  */
-proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.setContext = function(value) {
+
+
+proto.Catalyst.Protocol.Cryptography.SignatureBatch.prototype.setContext = function (value) {
   return jspb.Message.setProto3BytesField(this, 4, value);
 };
-
-
 /**
  * @enum {number}
  */
+
+
 proto.Catalyst.Protocol.Cryptography.SignatureType = {
   SIGNATURE_TYPE_UNKNOWN: 0,
   TRANSACTION_PUBLIC: 1,
@@ -837,10 +911,10 @@ proto.Catalyst.Protocol.Cryptography.SignatureType = {
   PROTOCOL_RPC: 3,
   PROTOCOL_PEER: 4
 };
-
 /**
  * @enum {number}
  */
+
 proto.Catalyst.Protocol.Cryptography.ErrorCode = {
   ERROR_CODE_UNKNOWN: 0,
   INVALID_SIGNATURE: 1,
@@ -853,5 +927,4 @@ proto.Catalyst.Protocol.Cryptography.ErrorCode = {
   BATCH_VERIFICATION_FAILURE: 8,
   NO_ERROR: 418
 };
-
 goog.object.extend(exports, proto.Catalyst.Protocol.Cryptography);

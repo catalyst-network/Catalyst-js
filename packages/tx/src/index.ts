@@ -97,7 +97,7 @@ export default class Transaction {
       context,
       contextLength,
     );
-    if (result !== 418) {
+    if (result !== protos.ErrorCode.NO_ERROR) {
       throw Error('Failed to sign');
     }
     return signature;
