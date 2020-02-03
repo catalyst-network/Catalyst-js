@@ -16,8 +16,6 @@
   "dependencies": {
     "@catalyst-net-js/tx": "^0.0.6",
     "@catalyst-net-js/wallet": "^0.0.6",
-    "@catalyst-net-js/protocol-sdk-js": "^0.0.6",
-    "@catalyst-net-js/common": "^0.0.6",
     "@truffle/provider": "^0.2.3",
     "@types/google-protobuf": "^3.7.2",
     "@types/web3": "^1.2.2",

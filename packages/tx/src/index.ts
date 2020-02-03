@@ -1,7 +1,7 @@
 import * as nacl from 'tweetnacl';
 import * as protos from '@catalyst-net-js/protocol-sdk-js';
 import { bytesFromHexString, bytesFromBase32String, validateProperties } from '@catalyst-net-js/common';
-import { TxData, numOrString } from './types';
+import { TxData, numOrString, txEntry } from './types';
 
 async function loadWasm() {
   return import('@catalyst-net-js/wasm-ed25519ph');
@@ -17,6 +17,8 @@ export default class Transaction {
 
   entry: protos.PublicEntry
 
+  serialized: Uint8Array
+
   schema = {
     nonce: (value: string) => isHex(value) && (isNumber(value, 10) || isNumber(value, 16)),
     gasPrice: (value: string) => isHex(value) && (isNumber(value, 10) || isNumber(value, 16)),
@@ -26,9 +28,13 @@ export default class Transaction {
     data: (value: string) => isString(value) && isHex(value),
   }
 
-  constructor(entry: TxData = {}) {
-    this.tx = entry;
-    this._createTxEntry();
+  constructor(entry: txEntry = {}) {
+    if (typeof entry === 'object' && !(entry instanceof Uint8Array)) {
+      this.tx = entry;
+      this._createTxEntry();
+    } else if (entry instanceof String && !(entry instanceof Uint8Array)) {
+      this.serialized = bytesFromHexString(entry);
+    } else if (entry instanceof Uint8Array) this.serialized = entry;
   }
 
   private _createTxEntry() {
@@ -82,10 +88,19 @@ export default class Transaction {
   }
 
   serialize() {
+    let { serialized } = this;
     const broadcast = new protos.TransactionBroadcast();
     broadcast.setPublicEntry(this.entry);
-    return broadcast.serializeBinary();
+    serialized = broadcast.serializeBinary();
+    return serialized;
   }
+
+  deserialize() {
+    const { serialized } = this;
+    if (serialized) return protos.TransactionBroadcast.deserializeBinary(serialized).getPublicEntry();
+    throw Error('Transaction has not been serialized');
+  }
+
 
   private static _signTx(tx: any, privateKey: any, context: Uint8Array, wasm: typeof import('@catalyst-net-js/wasm-ed25519ph')) {
     const contextLength = context.length;
