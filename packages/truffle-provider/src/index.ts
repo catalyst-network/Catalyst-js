@@ -2,7 +2,6 @@ import * as bip39 from 'bip39';
 import * as EthUtil from 'ethereumjs-util';
 import ProviderEngine from 'web3-provider-engine';
 import FiltersSubprovider from 'web3-provider-engine/subproviders/filters';
-import NonceSubProvider from 'web3-provider-engine/subproviders/nonce-tracker';
 import HookedSubprovider from 'web3-provider-engine/subproviders/hooked-wallet';
 import ProviderSubprovider from 'web3-provider-engine/subproviders/provider';
 import * as Url from 'url';
@@ -12,13 +11,14 @@ import blake2b from 'blake2b';
 import * as nacl from 'tweetnacl';
 import Transaction from '@catalyst-net-js/tx';
 import Wallet from '@catalyst-net-js/wallet';
+import NonceSubProvider from './subproviders/nonce-tracker';
 
 import {
   JSONRPCRequestPayload,
   JSONRPCErrorCallback,
   Callback,
   JsonRpcResponse,
-  } from './types';
+} from './types.d';
 
 // Important: do not use debug module. Reason: https://github.com/trufflesuite/truffle/issues/2374#issuecomment-536109086
 

@@ -26,6 +26,7 @@
   },
   "include": [
     "./src/**/*.ts",
-    "./typings/**/*.d.ts"
+    "./typings/**/*.d.ts",
+    "src/subproviders/nonce-tracker.js"
   ],
 }
