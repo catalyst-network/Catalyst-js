@@ -1,5 +1,7 @@
 
-export type numOrString = string | number
+export type numOrString = string | number | Uint8Array
+
+export type txEntry = string | TxData | Uint8Array
 
 export interface TxData {
     /**

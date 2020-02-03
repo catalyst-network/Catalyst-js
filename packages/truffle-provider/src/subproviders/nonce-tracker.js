@@ -56,22 +56,18 @@ NonceTrackerSubprovider.prototype.handleRequest = function handleRequest(payload
     case 'eth_sendRawTransaction':
       // allow the request to continue normally
       next((err, result, cb) => {
-        console.log('result', result, 'error: ', err);
         // only update local nonce if tx was submitted correctly
         if (err) return cb();
         // parse raw tx
-        console.log(payload.params[0]);
         const rawTx = bytesFromHexString(payload.params[0]);
         const tx = protos.TransactionBroadcast.deserializeBinary(rawTx);
         let nonce = tx.getPublicEntry().getNonce();
         const sender = tx.getPublicEntry().getSenderAddress();
 
-        console.log('nonce: ', nonce);
         // var tx = new Transaction(new Buffer(ethUtil.stripHexPrefix(rawTx), 'hex'))
         // extract address
         const addressBuffer = ethUtil.keccak(Buffer.from(sender)).slice(-20);
         const ethAddress = ethUtil.bufferToHex(addressBuffer);
-        console.log('address: ', address);
         // extract nonce and increment
         // var nonce = ethUtil.bufferToInt(tx.nonce)
         nonce += 1;
