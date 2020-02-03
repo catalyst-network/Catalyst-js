@@ -87,7 +87,7 @@ export default class Transaction {
     return broadcast.serializeBinary();
   }
 
-  private static _signTx(tx: any, privateKey: any, context: Uint8Array, wasm: typeof import('wasm-ed25519ph')) {
+  private static _signTx(tx: any, privateKey: any, context: Uint8Array, wasm: typeof import('@catalyst-net-js/wasm-ed25519ph')) {
     const contextLength = context.length;
     const signature = new Uint8Array(64);
     const result = wasm.sign(

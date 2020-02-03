@@ -5,8 +5,7 @@ module.exports = {
     node: true,
   },
   extends: {
-    plugin: 'airbnb-base',
-    plugin: 'typescript',
+    plugin: ['airbnb-base', 'typescript'],
   },
   globals: {
     Atomics: 'readonly',
