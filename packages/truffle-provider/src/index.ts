@@ -231,4 +231,4 @@ class HDWalletProvider {
   }
 }
 
-module.exports = HDWalletProvider;
+export default HDWalletProvider;
