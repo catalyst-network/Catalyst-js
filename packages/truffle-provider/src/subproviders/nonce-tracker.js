@@ -3,8 +3,7 @@
 /* eslint-disable no-unused-vars */
 const { inherits } = require('util');
 const ethUtil = require('ethereumjs-util');
-const { bytesFromHexString } = require('@catalyst-net-js/common');
-const protos = require('@catalyst-net-js/protocol-sdk-js');
+const Transaction = require('@catalyst-net-js/tx');
 const Subprovider = require('./subprovider.js');
 const { blockTagForPayload } = require('./utils/rpc-cache-utils');
 
@@ -59,10 +58,10 @@ NonceTrackerSubprovider.prototype.handleRequest = function handleRequest(payload
         // only update local nonce if tx was submitted correctly
         if (err) return cb();
         // parse raw tx
-        const rawTx = bytesFromHexString(payload.params[0]);
-        const tx = protos.TransactionBroadcast.deserializeBinary(rawTx);
-        let nonce = tx.getPublicEntry().getNonce();
-        const sender = tx.getPublicEntry().getSenderAddress();
+        const tx = new Transaction(payload.params[0]);
+        const entry = tx.deserialize();
+        let nonce = entry.getNonce();
+        const sender = entry.getSenderAddress();
 
         // var tx = new Transaction(new Buffer(ethUtil.stripHexPrefix(rawTx), 'hex'))
         // extract address
