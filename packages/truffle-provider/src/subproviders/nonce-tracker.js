@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-unused-vars */
 const { inherits } = require('util');
@@ -13,6 +14,9 @@ const { blockTagForPayload } = require('./utils/rpc-cache-utils');
 // observes the following RPC methods:
 //   eth_sendRawTransaction
 
+module.exports = NonceTrackerSubprovider;
+
+inherits(NonceTrackerSubprovider, Subprovider);
 
 function NonceTrackerSubprovider(opts) {
   const self = this;
@@ -20,7 +24,6 @@ function NonceTrackerSubprovider(opts) {
   self.nonceCache = {};
 }
 
-inherits(NonceTrackerSubprovider, Subprovider);
 
 NonceTrackerSubprovider.prototype.handleRequest = function handleRequest(payload, next, end) {
   const self = this;
@@ -42,7 +45,7 @@ NonceTrackerSubprovider.prototype.handleRequest = function handleRequest(payload
             if (self.nonceCache[address] === undefined) {
               self.nonceCache[address] = result;
             }
-            cb();
+            return cb();
           });
         }
       } else {
@@ -87,5 +90,3 @@ NonceTrackerSubprovider.prototype.handleRequest = function handleRequest(payload
       next();
   }
 };
-
-module.exports = NonceTrackerSubprovider;
