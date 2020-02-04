@@ -32,7 +32,7 @@ export default class Transaction {
     if (typeof entry === 'object' && !(entry instanceof Uint8Array)) {
       this.tx = entry;
       this._createTxEntry();
-    } else if (entry instanceof String && !(entry instanceof Uint8Array)) {
+    } else if (typeof entry === 'string' && !(entry instanceof Uint8Array)) {
       this.serialized = bytesFromHexString(entry);
     } else if (entry instanceof Uint8Array) this.serialized = entry;
   }
