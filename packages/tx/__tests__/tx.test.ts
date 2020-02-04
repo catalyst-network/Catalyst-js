@@ -85,7 +85,11 @@ describe('tx', () => {
     expect(JSON.stringify(amount)).toBe(JSON.stringify(new Uint8Array([0])));
     expect(JSON.stringify(gasPrice)).toBe(JSON.stringify(new Uint8Array([74, 129, 124, 128, 0])));
     expect(JSON.stringify(receiver)).toBe(JSON.stringify(new Uint8Array(
-      [0, 0],
+      [0],
     )));
+  });
+
+  it('throws an error when trying to deserialize an unserialized tx', () => {
+    expect(() => tx.deserialize()).toThrow();
   });
 });
