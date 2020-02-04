@@ -1,6 +1,6 @@
 {
   "name": "@catalyst-net-js/protocol-sdk-js",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Catalyst Protocol Js SDK",
   "main": "src/index.js",
   "publishConfig": {
