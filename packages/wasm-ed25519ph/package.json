@@ -19,7 +19,7 @@
     "license": "MIT",
     "name": "@catalyst-net-js/wasm-ed25519ph",
     "main": "pkg/index",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "publishConfig": {
         "access": "public"
     },
