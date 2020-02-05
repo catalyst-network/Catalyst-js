@@ -3,7 +3,7 @@
 /* eslint-disable no-unused-vars */
 const { inherits } = require('util');
 const ethUtil = require('ethereumjs-util');
-const Transaction = require('@catalyst-net-js/tx');
+const { Transaction } = require('@catalyst-net-js/tx');
 const Subprovider = require('./subprovider.js');
 const { blockTagForPayload } = require('./utils/rpc-cache-utils');
 

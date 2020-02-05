@@ -12,7 +12,7 @@ const isString = (value: string) => typeof value === 'string';
 const isNumber = (value: numOrString, radix: number) => parseInt(value.toString(), radix) === Number(value);
 
 
-export default class Transaction {
+export class Transaction {
   tx: TxData
 
   entry: protos.PublicEntry
@@ -118,3 +118,5 @@ export default class Transaction {
     return signature;
   }
 }
+
+export default Transaction;

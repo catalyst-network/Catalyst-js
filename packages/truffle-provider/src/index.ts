@@ -29,7 +29,7 @@ import {
 // See issue #65 for more
 const singletonNonceSubProvider = new NonceSubProvider();
 
-class HDWalletProvider {
+export class HDWalletProvider {
   private walletHdpath: string;
 
   private wallets: { [address: string]: any };
