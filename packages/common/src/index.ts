@@ -4,6 +4,7 @@ import * as nacl from 'tweetnacl';
 
 const ethjsUtil = require('ethjs-util');
 
+
 /**
  * converts string to bytes
  * @param value string

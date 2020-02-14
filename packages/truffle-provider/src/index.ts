@@ -1,3 +1,6 @@
+import Transaction from '@catalyst-net-js/tx';
+import Wallet from '@catalyst-net-js/wallet';
+import * as protos from '@catalyst-net-js/protocol-sdk-js';
 import * as bip39 from 'bip39';
 import * as EthUtil from 'ethereumjs-util';
 import ProviderEngine from 'web3-provider-engine';
@@ -8,9 +11,6 @@ import * as Url from 'url';
 import * as Web3 from 'web3';
 import { derivePath } from 'ed25519-hd-key';
 import blake2b from 'blake2b';
-import * as nacl from 'tweetnacl';
-import Transaction from '@catalyst-net-js/tx';
-import Wallet from '@catalyst-net-js/wallet';
 import NonceSubProvider from './subproviders/nonce-tracker';
 
 import {
@@ -20,6 +20,11 @@ import {
   JsonRpcResponse,
 } from './types.d';
 
+async function loadWasm() {
+  return import('@catalyst-net-js/wasm-ed25519ph');
+}
+
+
 // Important: do not use debug module. Reason: https://github.com/trufflesuite/truffle/issues/2374#issuecomment-536109086
 
 // This line shares nonce state across multiple provider instances. Necessary
@@ -28,6 +33,7 @@ import {
 // of this behavior by passing `shareNonce=false` to the constructor.
 // See issue #65 for more
 const singletonNonceSubProvider = new NonceSubProvider();
+
 
 export class HDWalletProvider {
   private walletHdpath: string;
@@ -70,8 +76,25 @@ export class HDWalletProvider {
       return new Uint8Array(hexString.match(/.{1,2}/g).map((byte: any) => parseInt(byte, 16)));
     }
 
-    function signMessage(message: any, pKey: any): Uint8Array {
-      return nacl.sign(message, pKey);
+    async function signMessage(message: any, pKey: any): Promise<Uint8Array> {
+      const signatureLib = await loadWasm();
+      const context = new protos.SigningContext();
+      context.setNetworkType(protos.NetworkType.TESTNET);
+      context.setSignatureType(protos.SignatureType.WEB3_MESSAGE);
+      const ctx = context.serializeBinary();
+      const contextLength = ctx.length;
+      const signature = new Uint8Array(64);
+      const result = signatureLib.sign(
+        signature,
+        pKey,
+        message,
+        ctx,
+        contextLength,
+      );
+      if (result !== protos.ErrorCode.NO_ERROR) {
+        throw Error('Failed to sign');
+      }
+      return signature;
     }
 
     // private helper to normalize given mnemonic
@@ -151,7 +174,7 @@ export class HDWalletProvider {
           await tx.sign(wallet.getPrivateKey());
           cb(null, toHexString(tx.serialize()));
         },
-        signMessage({ data, from }: any, cb: any) {
+        async signMessage({ data, from }: any, cb: any) {
           const dataIfExists = data;
           if (!dataIfExists) {
             cb('No data to sign');
@@ -162,11 +185,11 @@ export class HDWalletProvider {
           const pkey = tmpWallets[from].secretKey;
           const dataBuff = EthUtil.toBuffer(dataIfExists);
           const msgHashBuff = blake2b(64).update(dataBuff).digest();
-          const sig = signMessage(msgHashBuff, pkey);
+          const sig = await signMessage(msgHashBuff, pkey);
           cb(null, toHexString(sig));
         },
-        signPersonalMessage(...args: any[]) {
-          this.signMessage(...args);
+        async signPersonalMessage(...args: any[]) {
+          await this.signMessage(...args);
         },
       }),
     );
