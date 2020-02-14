@@ -909,7 +909,8 @@ proto.Catalyst.Protocol.Cryptography.SignatureType = {
   TRANSACTION_PUBLIC: 1,
   TRANSACTION_CONFIDENTIAL: 2,
   PROTOCOL_RPC: 3,
-  PROTOCOL_PEER: 4
+  PROTOCOL_PEER: 4,
+  WEB3_MESSAGE: 5
 };
 /**
  * @enum {number}
