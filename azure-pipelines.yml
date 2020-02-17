@@ -18,12 +18,12 @@ jobs:
   - script: sudo chown root /usr/local/bin/protoc && sudo chown -R root /usr/local/include/google && ls -la /usr/local/bin
     displayName: 'Set permissions'
     condition: succeeded()
-- job: install Rust
+- job: installRust
   steps:
   - script: |
           curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
     displayName: 'Install rustup toolchain'
-- job: setup with lerna
+- job: setupLerna
   steps:
   - script: npm install lerna
     displayName: 'Install lerna'
