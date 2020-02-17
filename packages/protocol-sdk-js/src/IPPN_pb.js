@@ -821,7 +821,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.Catalyst.Protocol.IPPN.LatestDeltaHashResponse.toObject = function (includeInstance, msg) {
     var f,
         obj = {
-      deltaHash: msg.getDeltaHash_asB64()
+      result: (f = msg.getResult()) && Deltas_pb.DeltaIndex.toObject(includeInstance, f)
     };
 
     if (includeInstance) {
@@ -862,10 +862,9 @@ proto.Catalyst.Protocol.IPPN.LatestDeltaHashResponse.deserializeBinaryFromReader
 
     switch (field) {
       case 1:
-        var value =
-        /** @type {!Uint8Array} */
-        reader.readBytes();
-        msg.setDeltaHash(value);
+        var value = new Deltas_pb.DeltaIndex();
+        reader.readMessage(value, Deltas_pb.DeltaIndex.deserializeBinaryFromReader);
+        msg.setResult(value);
         break;
 
       default:
@@ -898,60 +897,50 @@ proto.Catalyst.Protocol.IPPN.LatestDeltaHashResponse.prototype.serializeBinary =
 
 proto.Catalyst.Protocol.IPPN.LatestDeltaHashResponse.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
-  f = message.getDeltaHash_asU8();
+  f = message.getResult();
 
-  if (f.length > 0) {
-    writer.writeBytes(1, f);
+  if (f != null) {
+    writer.writeMessage(1, f, Deltas_pb.DeltaIndex.serializeBinaryToWriter);
   }
 };
 /**
- * optional bytes delta_hash = 1;
- * @return {!(string|Uint8Array)}
+ * optional Catalyst.Protocol.Deltas.DeltaIndex result = 1;
+ * @return {?proto.Catalyst.Protocol.Deltas.DeltaIndex}
  */
 
 
-proto.Catalyst.Protocol.IPPN.LatestDeltaHashResponse.prototype.getDeltaHash = function () {
+proto.Catalyst.Protocol.IPPN.LatestDeltaHashResponse.prototype.getResult = function () {
   return (
-    /** @type {!(string|Uint8Array)} */
-    jspb.Message.getFieldWithDefault(this, 1, "")
+    /** @type{?proto.Catalyst.Protocol.Deltas.DeltaIndex} */
+    jspb.Message.getWrapperField(this, Deltas_pb.DeltaIndex, 1)
   );
 };
 /**
- * optional bytes delta_hash = 1;
- * This is a type-conversion wrapper around `getDeltaHash()`
- * @return {string}
- */
+ * @param {?proto.Catalyst.Protocol.Deltas.DeltaIndex|undefined} value
+ * @return {!proto.Catalyst.Protocol.IPPN.LatestDeltaHashResponse} returns this
+*/
 
 
-proto.Catalyst.Protocol.IPPN.LatestDeltaHashResponse.prototype.getDeltaHash_asB64 = function () {
-  return (
-    /** @type {string} */
-    jspb.Message.bytesAsB64(this.getDeltaHash())
-  );
+proto.Catalyst.Protocol.IPPN.LatestDeltaHashResponse.prototype.setResult = function (value) {
+  return jspb.Message.setWrapperField(this, 1, value);
 };
 /**
- * optional bytes delta_hash = 1;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getDeltaHash()`
- * @return {!Uint8Array}
- */
-
-
-proto.Catalyst.Protocol.IPPN.LatestDeltaHashResponse.prototype.getDeltaHash_asU8 = function () {
-  return (
-    /** @type {!Uint8Array} */
-    jspb.Message.bytesAsU8(this.getDeltaHash())
-  );
-};
-/**
- * @param {!(string|Uint8Array)} value
+ * Clears the message field making it undefined.
  * @return {!proto.Catalyst.Protocol.IPPN.LatestDeltaHashResponse} returns this
  */
 
 
-proto.Catalyst.Protocol.IPPN.LatestDeltaHashResponse.prototype.setDeltaHash = function (value) {
-  return jspb.Message.setProto3BytesField(this, 1, value);
+proto.Catalyst.Protocol.IPPN.LatestDeltaHashResponse.prototype.clearResult = function () {
+  return this.setResult(undefined);
+};
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+
+
+proto.Catalyst.Protocol.IPPN.LatestDeltaHashResponse.prototype.hasResult = function () {
+  return jspb.Message.getField(this, 1) != null;
 };
 
 if (jspb.Message.GENERATE_TO_OBJECT) {

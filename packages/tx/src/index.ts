@@ -12,7 +12,7 @@ const isString = (value: string) => typeof value === 'string';
 const isNumber = (value: numOrString, radix: number) => parseInt(value.toString(), radix) === Number(value);
 
 
-export default class Transaction {
+export class Transaction {
   tx: TxData
 
   entry: protos.PublicEntry
@@ -32,7 +32,7 @@ export default class Transaction {
     if (typeof entry === 'object' && !(entry instanceof Uint8Array)) {
       this.tx = entry;
       this._createTxEntry();
-    } else if (entry instanceof String && !(entry instanceof Uint8Array)) {
+    } else if (!(entry instanceof Uint8Array) && typeof entry === 'string') {
       this.serialized = bytesFromHexString(entry);
     } else if (entry instanceof Uint8Array) this.serialized = entry;
   }
@@ -118,3 +118,5 @@ export default class Transaction {
     return signature;
   }
 }
+
+export default Transaction;
