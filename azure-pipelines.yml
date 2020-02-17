@@ -9,7 +9,7 @@ steps:
           curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
       displayName: 'Install rustup toolchain'
 
-     - task: Npm@1
+    - task: Npm@1
       displayName: 'Install lerna'
       inputs:
           command: 'i -D lerna'
