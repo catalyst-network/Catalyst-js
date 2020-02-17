@@ -33,7 +33,7 @@ steps:
       displayName: 'test node code'
       inputs:
           command: 'custom'
-          customCommand: 'run test:jest'
+          customCommand: 'run test'
 
     - task: Npm@1
       displayName: 'wasm-pack test node'

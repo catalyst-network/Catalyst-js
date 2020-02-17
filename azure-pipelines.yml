@@ -1,0 +1,23 @@
+trigger:
+    - master
+
+pool:
+    vmImage: 'ubuntu-latest'
+
+steps:
+    - script: |
+          curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
+      displayName: 'Install rustup toolchain'
+
+     - task: Npm@1
+      displayName: 'Install lerna'
+      inputs:
+          command: 'i -D lerna'
+    
+    - script: |
+          lerna bootstrap
+      displayName: 'Run lerna bootstrap'
+
+    - script: |
+          lerna run build
+      displayName: 'Run lerna build'
