@@ -25,7 +25,7 @@ jobs:
     displayName: 'Install rustup toolchain'
 - job: setupLerna
   steps:
-  - script: npm i -g lerna
+  - script: sudo npm i -g lerna
     displayName: 'Install lerna'
 
   - script: lerna bootstrap
