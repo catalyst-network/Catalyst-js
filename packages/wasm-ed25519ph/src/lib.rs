@@ -86,6 +86,11 @@ mod tests {
     }
 
     #[wasm_bindgen_test]
+    fn can_generate_random_number() {
+        rand::thread_rng();
+    }
+
+    #[wasm_bindgen_test]
     fn can_create_signature() {
         let mut sig = [0u8; constants::SIGNATURE_LENGTH];
         let mut public_key = [0u8; constants::PUBLIC_KEY_LENGTH];

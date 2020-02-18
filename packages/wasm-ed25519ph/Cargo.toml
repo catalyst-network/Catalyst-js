@@ -11,6 +11,7 @@ catalyst-common = { git = "https://github.com/catalyst-network/Catalyst-rs", bra
 console_error_panic_hook = "0.1.6"
 wee_alloc = "0.4.5"
 wasm-bindgen-test = "0.3.4"
+rand = { version = "0.7.3", features = ["wasm-bindgen"]}
 
 [dependencies.web-sys]
 version = "0.3"
