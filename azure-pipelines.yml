@@ -6,9 +6,6 @@ pool:
 
 steps:
 
-- bash: git submodule update --init --force --recursive
-  displayName: 'Clone submodules'
-
 - script: curl -OL https://github.com/google/protobuf/releases/download/v3.2.0/protoc-3.2.0-linux-x86_64.zip && unzip protoc-3.2.0-linux-x86_64.zip -d protoc3
   displayName: 'Get Protobuffs'
   condition: succeeded()
@@ -33,3 +30,6 @@ steps:
 
 - script: lerna run build
   displayName: 'Run lerna build'
+  
+- script: lerna run test
+  displayName: 'Run tests'
