@@ -22,6 +22,10 @@ steps:
         curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
   displayName: 'Install rustup toolchain'
 
+- script: |
+        rustup override set nightly
+  displayName: 'Override wasm-pack default toolchain'
+
 - script: sudo npm i -g lerna
   displayName: 'Install lerna'
 
