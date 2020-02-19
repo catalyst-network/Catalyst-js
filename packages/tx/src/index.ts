@@ -1,5 +1,5 @@
 import * as nacl from 'tweetnacl';
-import * as protos from '@catalyst-net-js/protocol-sdk-js';
+import * as protos from '@catalystnetwork/protocol-sdk';
 import { bytesFromHexString, bytesFromBase32String, validateProperties } from '@catalyst-net-js/common';
 import { TxData, numOrString, txEntry } from './types';
 
@@ -53,7 +53,7 @@ export class Transaction {
     this.entry.setData(bytesFromHexString(tx.data));
     this.entry.setGasPrice(bytesFromHexString(tx.gasPrice.toString()));
     this.entry.setGasLimit(Number(tx.gasLimit));
-    this.entry.setTransactionFees(new Uint8Array(8));
+    //this.entry.setTransactionFees(new Uint8Array(8));
     this.entry.setNonce(Number(tx.nonce));
   }
 
