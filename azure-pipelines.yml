@@ -23,6 +23,10 @@ steps:
   displayName: 'Install rustup toolchain'
 
 - script: |
+    curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+  displayName: 'Install wasm-pack'
+
+- script: |
         rustup override set nightly
   displayName: 'Override wasm-pack default toolchain'
 
