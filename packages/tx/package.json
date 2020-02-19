@@ -43,7 +43,7 @@
     "base32-decode": "^1.0.0",
     "base32-encode": "^1.1.1",
     "ethjs-util": "^0.1.6",
-    "@catalystnetwork/protocol-sdk": "^0.0.3",
+    "@catalystnetwork/protocol-sdk": "^0.0.4",
     "tweetnacl": "^1.0.1"
   },
   "gitHead": "738a9f7c72ee92d37d741a4c99c2f1003b2a2254"
