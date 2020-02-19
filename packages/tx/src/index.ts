@@ -53,7 +53,6 @@ export class Transaction {
     this.entry.setData(bytesFromHexString(tx.data));
     this.entry.setGasPrice(bytesFromHexString(tx.gasPrice.toString()));
     this.entry.setGasLimit(Number(tx.gasLimit));
-    //this.entry.setTransactionFees(new Uint8Array(8));
     this.entry.setNonce(Number(tx.nonce));
   }
 
