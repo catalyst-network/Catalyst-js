@@ -15,7 +15,7 @@ steps:
   displayName: 'Install wasm-pack'
 
 - script: |
-        rustup override set nightly
+        rustup override set nightly-2020-02-07
   displayName: 'Override wasm-pack default toolchain'
 
 - script: sudo npm i -g lerna
