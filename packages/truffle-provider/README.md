@@ -15,7 +15,7 @@ Status: **Active development.** This repository is being actively worked on, mos
 ## Usage
 truffle-config.js
 ```javascript
-const { HDWalletProvider } = require("@catalyst-js/truffle-provider");
+const { HDWalletProvider } = require("@catalyst-net-js/truffle-provider");
 
 const mnemonic = "mountains supernatural bird ...";
 

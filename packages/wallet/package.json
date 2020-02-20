@@ -2,8 +2,9 @@
   "name": "@catalyst-net-js/wallet",
   "version": "0.0.8",
   "description": "> TODO: description",
-  "author": "stephenhorsfall <stephen.horsfall@atlascity.io>",
-  "homepage": "",
+  "author": "Stephen Horsfall <stephen.horsfall@atlascity.io>",
+  "homepage": "https://github.com/catalyst-network/Catalyst-js/tree/master/packages/wallet#readme",
+  "repository": "https://github.com/catalyst-network/Catalyst-js",
   "license": "ISC",
   "main": "dist/src/",
   "publishConfig": {
