@@ -6,21 +6,17 @@ pool:
 
 steps:
 
-- script: curl -OL https://github.com/google/protobuf/releases/download/v3.2.0/protoc-3.2.0-linux-x86_64.zip && unzip protoc-3.2.0-linux-x86_64.zip -d protoc3
-  displayName: 'Get Protobuffs'
-  condition: succeeded()
-
-- script: sudo mv protoc3/bin/* /usr/local/bin/ && sudo mv protoc3/include/* /usr/local/include/ && ls -la /usr/local/bin
-  displayName: 'Install Protobuffs'
-  condition: succeeded()
-
-- script: sudo chown root /usr/local/bin/protoc && sudo chown -R root /usr/local/include/google && ls -la /usr/local/bin
-  displayName: 'Set permissions'
-  condition: succeeded()
-
 - script: |
         curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
   displayName: 'Install rustup toolchain'
+
+- script: |
+    curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+  displayName: 'Install wasm-pack'
+
+- script: |
+        rustup override set nightly
+  displayName: 'Override wasm-pack default toolchain'
 
 - script: sudo npm i -g lerna
   displayName: 'Install lerna'
