@@ -45,7 +45,6 @@
     "@types/ethereumjs-tx": "^1.0.1",
     "@types/ethereumjs-util": "^5.2.0",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^13.1.8",
     "@types/web3-provider-engine": "^14.0.0",
     "@typescript-eslint/eslint-plugin": "^2.9.0",
     "@typescript-eslint/parser": "^2.9.0",
@@ -63,6 +62,9 @@
     "typescript": "^3.6.3",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
+  },
+  "peerDependencies": {
+    "@types/node": "^13.1.8"
   },
   "keywords": [
     "catalyst",
