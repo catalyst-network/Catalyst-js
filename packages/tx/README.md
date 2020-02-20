@@ -9,7 +9,7 @@
 
 Status: **Active development.** This repository is being actively worked on, mostly in feature branches. 
 ## Install
-`npm install @catalyst-js/tx`
+`npm install @catalyst-net-js/tx`
 ## Usage
 ```javascript
 import Tx from '@catalyst-js/tx'

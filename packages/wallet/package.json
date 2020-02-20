@@ -1,9 +1,10 @@
 {
   "name": "@catalyst-net-js/wallet",
   "version": "0.0.8",
-  "description": "> TODO: description",
-  "author": "stephenhorsfall <stephen.horsfall@atlascity.io>",
-  "homepage": "",
+  "description": "Utilities for handling Catalyst keys",
+  "author": "Stephen Horsfall <stephen.horsfall@atlascity.io>",
+  "homepage": "https://github.com/catalyst-network/Catalyst-js/tree/master/packages/wallet#readme",
+  "repository": "https://github.com/catalyst-network/Catalyst-js",
   "license": "ISC",
   "main": "dist/src/",
   "publishConfig": {
@@ -21,7 +22,7 @@
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
     "compile": "tsc -b tsconfig.json",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
