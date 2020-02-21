@@ -12,7 +12,7 @@ Status: **Active development.** This repository is being actively worked on, mos
 `npm install @catalyst-js/tx`
 ## Usage
 ```javascript
-import Tx from '@catalyst-js/tx'
+import Tx from '@catalyst-net-js/tx'
 const privateKey = Buffer.from(
   'e331b6d69882b4cb4ea581d88e0b604039a3de5967688d3dcffdd2270c0fd109',
   'hex',
