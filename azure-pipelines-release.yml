@@ -27,7 +27,7 @@ steps:
 - script: lerna run build
   displayName: 'Run lerna build'
   
-- script: lerna publish --yes
+- script: |
+    echo "//registry.npmjs.org/:_authToken=$(NPM_TOKEN)" > ~/.npmrc
+    lerna publish --yes
   displayName: 'Run lerna publish'
-  inputs:
-    azureSubscription: 'npmConnection'
