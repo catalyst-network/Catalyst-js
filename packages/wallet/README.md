@@ -14,7 +14,7 @@ Status: **Active development.** This repository is being actively worked on, mos
 ## Usage
 #### Constructors
 ```javascript
-import Wallet from '@catalyst-js/wallet'
+import Wallet from '@catalyst-net-js/wallet'
 
 // create an instance based on a new random key
 const wallet = Wallet.generate();

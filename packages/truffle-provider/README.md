@@ -11,11 +11,11 @@ HD Wallet-enabled Web3 provider for Catalyst. Use it to sign transactions for ad
 
 Status: **Active development.** This repository is being actively worked on, mostly in feature branches. 
 ## Install
-`npm install @catalyst-js/truffle-provider`
+`npm install @catalyst-net-js/truffle-provider`
 ## Usage
 truffle-config.js
 ```javascript
-const HDWalletProvider = require("@catalyst-js/truffle-provider");
+const { HDWalletProvider } = require("@catalyst-net-js/truffle-provider");
 
 const mnemonic = "mountains supernatural bird ...";
 
