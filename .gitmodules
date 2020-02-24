@@ -1,6 +1,0 @@
-[submodule "packages/protocol-sdk-js/protocol-sdk-js"]
-	path = packages/protocol-sdk-js/protocol-sdk-js
-	url = git@github.com:catalyst-network/protocol-sdk-js.git
-[submodule "packages/protocol-sdk-js/Protocol"]
-	path = packages/protocol-sdk-js/Protocol
-	url = git@github.com:catalyst-network/Protocol.git

@@ -22,7 +22,7 @@
     "url": "git+https://github.com/catalyst-network/catalyst-js.git"
   },
   "scripts": {
-    "compile": "tsc -b tsconfig.json"
+    "build": "tsc -b tsconfig.json"
   },
   "bugs": {
     "url": "https://github.com/catalyst-network/catalyst-js/issues"

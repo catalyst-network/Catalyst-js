@@ -1,5 +1,5 @@
 import * as nacl from 'tweetnacl';
-import * as protos from '@catalyst-net-js/protocol-sdk-js';
+import * as protos from '@catalystnetwork/protocol-sdk';
 import { bytesFromHexString, bytesFromBase32String, validateProperties } from '@catalyst-net-js/common';
 import { TxData, numOrString, txEntry } from './types';
 
