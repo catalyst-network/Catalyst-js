@@ -28,6 +28,7 @@ steps:
   displayName: 'Run lerna build'
   
 - script: |
+    git checkout master  
     echo "//registry.npmjs.org/:_authToken=$(NPM_TOKEN)" > ~/.npmrc
-    lerna publish --yes --skip-git
+    lerna publish --yes
   displayName: 'Run lerna publish'
