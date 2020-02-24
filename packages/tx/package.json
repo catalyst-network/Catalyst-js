@@ -40,7 +40,6 @@
   },
   "dependencies": {
     "@catalyst-net-js/common": "^0.0.9",
-    "@catalyst-net-js/protocol-sdk-js": "^0.0.9",
     "@catalyst-net-js/wasm-ed25519ph": "^0.0.9",
     "base32-decode": "^1.0.0",
     "base32-encode": "^1.1.1",
