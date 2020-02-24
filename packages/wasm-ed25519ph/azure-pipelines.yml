@@ -11,7 +11,7 @@ pool:
 
 steps:
     - script: |
-          curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
+          curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly-2020-02-07
       displayName: 'Install rustup toolchain'
 
     - task: Npm@1
@@ -33,7 +33,7 @@ steps:
       displayName: 'test node code'
       inputs:
           command: 'custom'
-          customCommand: 'run test:jest'
+          customCommand: 'run test'
 
     - task: Npm@1
       displayName: 'wasm-pack test node'

@@ -1,6 +1,6 @@
 import Transaction from '@catalyst-net-js/tx';
 import Wallet from '@catalyst-net-js/wallet';
-import * as protos from '@catalyst-net-js/protocol-sdk-js';
+import * as protos from '@catalystnetwork/protocol-sdk';
 import * as bip39 from 'bip39';
 import * as EthUtil from 'ethereumjs-util';
 import ProviderEngine from 'web3-provider-engine';

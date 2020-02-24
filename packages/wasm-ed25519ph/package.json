@@ -6,9 +6,9 @@
         "Richard Littauer <richard+github@burntfen.com>"
     ],
     "description": "WASM build of Rust bulletproof cryptography",
-    "bugs": "https://github.com/catalyst-network/wasm-ed25519ph/issues",
-    "homepage": "https://github.com/catalyst-network/wasm-ed25519ph/",
-    "repository": "catalyst-network/wasm-ed25519ph",
+    "bugs": "https://github.com/catalyst-network/Catalyst-js/issues",
+    "homepage": "https://github.com/catalyst-network/Catalyst-js/tree/master/packages/wasm-ed25519ph#readme",
+    "repository": "https://github.com/catalyst-network/Catalyst-js",
     "keywords": [
         "wasm",
         "rust",
@@ -19,14 +19,14 @@
     "license": "MIT",
     "name": "@catalyst-net-js/wasm-ed25519ph",
     "main": "pkg/index",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "publishConfig": {
         "access": "public"
     },
     "scripts": {
         "test": "jest",
         "clean": "rimraf pkg dist",
-        "build": "rustup run nightly wasm-pack build --out-name index --target nodejs",
+        "build": "rustup run nightly-2020-01-30 wasm-pack build --out-name index --target nodejs",
         "build:publish": "wasm-pack publish",
         "clean:target": "rimraf pkg dist target",
         "test:cargo:node": "wasm-pack test --node",

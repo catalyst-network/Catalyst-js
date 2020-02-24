@@ -2,22 +2,21 @@
   "name": "@catalyst-net-js/truffle-provider",
   "description": "HD Wallet-enabled Catalyst Web3 provider",
   "license": "MIT",
-  "homepage": "https://github.com/catalyst-js#readme",
-  "repository": "https://github.com/catalyst-js",
-  "version": "0.0.8",
+  "homepage": "https://github.com/catalyst-network/Catalyst-js/tree/master/packages/truffle-provider#readme",
+  "repository": "https://github.com/catalyst-network/Catalyst-js",
+  "version": "0.0.9",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
     "build": "tsc && webpack",
     "test:js": "mocha test/**/*.test.js",
-    "test": "yarn build && mocha --exit -r ts-node/register test/**/*.test.ts"
+    "test": "mocha --exit -r ts-node/register test/**/*.test.ts"
   },
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@catalyst-net-js/tx": "0.0.8",
-    "@catalyst-net-js/wallet": "0.0.8",
-    "@catalyst-net-js/wasm-ed25519ph": "0.0.8",
-    "@catalyst-net-js/protocol-sdk-js": "0.0.8",
+    "@catalyst-net-js/tx": "^0.0.9",
+    "@catalyst-net-js/wallet": "^0.0.9",
+    "@catalyst-net-js/wasm-ed25519ph": "^0.0.9",
     "@truffle/provider": "^0.2.3",
     "@types/google-protobuf": "^3.7.2",
     "@types/web3": "^1.2.2",
@@ -37,7 +36,8 @@
     "tweetnacl": "^1.0.1",
     "web3": "1.2.1",
     "web3-provider-engine": "https://github.com/trufflesuite/provider-engine#web3-one",
-    "xtend": "^4.0.2"
+    "xtend": "^4.0.2",
+    "@catalystnetwork/protocol-sdk": "^0.0.4"
   },
   "devDependencies": {
     "@types/bip39": "^2.4.2",
@@ -45,7 +45,6 @@
     "@types/ethereumjs-tx": "^1.0.1",
     "@types/ethereumjs-util": "^5.2.0",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^13.1.8",
     "@types/web3-provider-engine": "^14.0.0",
     "@typescript-eslint/eslint-plugin": "^2.9.0",
     "@typescript-eslint/parser": "^2.9.0",
@@ -63,6 +62,9 @@
     "typescript": "^3.6.3",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
+  },
+  "peerDependencies": {
+    "@types/node": "13.7.0"
   },
   "keywords": [
     "catalyst",

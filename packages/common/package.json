@@ -1,9 +1,9 @@
 {
   "name": "@catalyst-net-js/common",
-  "version": "0.0.8",
-  "description": "> TODO: description",
-  "author": "stephenhorsfall <stephen.horsfall@atlascity.io>",
-  "homepage": "https://github.com/catalyst-network/catalyst-js#readme",
+  "version": "0.0.9",
+  "description": "> A collection of utility functions for Catalyst",
+  "author": "Stephen Horsfall <stephen.horsfall@atlascity.io>",
+  "homepage": "https://github.com/catalyst-network/Catalyst-js/tree/master/packages/common#readme",
   "license": "ISC",
   "main": "dist/src",
   "publishConfig": {
