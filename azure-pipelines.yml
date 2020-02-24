@@ -7,7 +7,7 @@ pool:
 steps:
 
 - script: |
-        curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
+        curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly-2020-01-30
   displayName: 'Install rustup toolchain'
 
 - script: |
@@ -15,7 +15,7 @@ steps:
   displayName: 'Install wasm-pack'
 
 - script: |
-        rustup override set nightly
+        rustup override set nightly-2020-01-30
   displayName: 'Override wasm-pack default toolchain'
 
 - script: sudo npm i -g lerna

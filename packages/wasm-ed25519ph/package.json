@@ -26,7 +26,7 @@
     "scripts": {
         "test:jest": "jest tests",
         "clean": "rimraf pkg dist",
-        "build": "rustup run nightly wasm-pack build --out-name index --target nodejs",
+        "build": "rustup run nightly-2020-01-30 wasm-pack build --out-name index --target nodejs",
         "build:publish": "wasm-pack publish",
         "clean:target": "rimraf pkg dist target",
         "test:cargo:node": "wasm-pack test --node",
