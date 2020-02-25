@@ -24,7 +24,7 @@
         "access": "public"
     },
     "scripts": {
-        "test:jest": "jest tests",
+        "test": "jest",
         "clean": "rimraf pkg dist",
         "build": "rustup run nightly-2020-01-30 wasm-pack build --out-name index --target nodejs",
         "build:publish": "wasm-pack publish",

@@ -104,8 +104,10 @@ export class Transaction {
   private static _signTx(tx: any, privateKey: any, context: Uint8Array, wasm: typeof import('@catalyst-net-js/wasm-ed25519ph')) {
     const contextLength = context.length;
     const signature = new Uint8Array(64);
+    const publicKey = new Uint8Array(32);
     const result = wasm.sign(
       signature,
+      publicKey,
       privateKey,
       tx,
       context,
