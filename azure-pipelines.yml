@@ -26,6 +26,12 @@ steps:
 
 - script: lerna run build
   displayName: 'Run lerna build'
+
+- script: lerna run test:cargo:node
+  displayName: 'run wasm tests on node'
+
+- script: lerna run test:cargo:chrome
+  displayName: 'run wasm tests on chrome'
   
 - script: lerna run test
   displayName: 'Run tests'
