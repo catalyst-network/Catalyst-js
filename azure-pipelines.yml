@@ -1,0 +1,37 @@
+trigger:
+    - master
+
+pool:
+    vmImage: 'ubuntu-latest'
+
+steps:
+
+- script: |
+        curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly-2020-01-30
+  displayName: 'Install rustup toolchain'
+
+- script: |
+    curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+  displayName: 'Install wasm-pack'
+
+- script: |
+        rustup override set nightly-2020-01-30
+  displayName: 'Override wasm-pack default toolchain'
+
+- script: sudo npm i -g lerna
+  displayName: 'Install lerna'
+
+- script: lerna bootstrap
+  displayName: 'Run lerna bootstrap'
+
+- script: lerna run build
+  displayName: 'Run lerna build'
+
+- script: lerna run test:cargo:node
+  displayName: 'run wasm tests on node'
+
+- script: lerna run test:cargo:chrome
+  displayName: 'run wasm tests on chrome'
+  
+- script: lerna run test
+  displayName: 'Run tests'
