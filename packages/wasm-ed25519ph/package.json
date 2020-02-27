@@ -84,7 +84,8 @@
         "webpack": "^4.35.0",
         "webpack-cli": "^3.3.4",
         "webpack-dev-server": "^3.7.2",
-        "webpack-merge": "^4.2.1"
+        "webpack-merge": "^4.2.1",
+        "@catalystnetwork/protocol-sdk": "^0.0.4"
     },
     "gitHead": "738a9f7c72ee92d37d741a4c99c2f1003b2a2254"
 }

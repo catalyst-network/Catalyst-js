@@ -1,11 +1,10 @@
 import {
     sign,
-    sign_sig_and_public_key,
     verify,
-    public_key_from_private,
+    verify_batch,
 } from '../pkg/index';
 import { bytesFromHexString, bytesFromString } from './utils.js';
-import { constants } from 'buffer';
+import * as protos from '@catalystnetwork/protocol-sdk';
 var assert = require('assert');
 
 describe('the library can produce and validate signatures', function() {
@@ -27,7 +26,7 @@ describe('the library can produce and validate signatures', function() {
             context1,
             context1_length,
         );
-        assert(result==418, "failed to create a signature");
+        assert(result==protos.ErrorCode.NO_ERROR, "failed to create a signature");
     });
 
     it('should be able to validate a valid signature', function() {
@@ -55,7 +54,7 @@ describe('the library can produce and validate signatures', function() {
             context1,
             context1_length,
         );
-        assert(verified==418, "failed to validate a signature");
+        assert(verified==protos.ErrorCode.NO_ERROR, "failed to validate a signature");
     });
 
     it('should not be able to validate an invalid signature', async function() {
@@ -84,7 +83,7 @@ describe('the library can produce and validate signatures', function() {
             context2,
             context2_length,
         );
-        assert(verified==4, "validated an incorrect signature");
+        assert(verified==protos.ErrorCode.SIGNATURE_VERIFICATION_FAILURE, "validated an incorrect signature");
     });
 
     it('should not be able to validate with the incorrect public key', function() {
@@ -114,7 +113,7 @@ describe('the library can produce and validate signatures', function() {
             context1,
             context1_length,
         );
-        assert(verified==2, "validation succeeded using an invalid public key");
+        assert(verified==protos.ErrorCode.INVALID_PUBLIC_KEY, "validation succeeded using an invalid public key");
     });
 
     it('should not be able to validate with the incorrect private key', function() {
@@ -157,7 +156,7 @@ describe('the library can produce and validate signatures', function() {
             context1,
             context1_length,
         );
-        assert(result==5, "validation succeeded using an invalid context length");
+        assert(result==protos.ErrorCode.INVALID_CONTEXT_LENGTH, "validation succeeded using an invalid context length");
     });
 
     it('should be able to pass a known test vector', function() {
@@ -178,6 +177,22 @@ describe('the library can produce and validate signatures', function() {
             context1,
             context1_length,
         );
-        assert(verified==418, "failed to validate using a known test vector");
+        assert(verified==protos.ErrorCode.NO_ERROR, "failed to validate using a known test vector");
+    });
+});
+
+describe('the library can batch verify signatures', function() {
+    it('batch_verify_validates_multiple_correct_signatures', function() {
+        const signature = new Uint8Array(64);
+        const public_key = new Uint8Array(32);
+        const private_key = new Uint8Array(32);
+        const message = bytesFromString('hello');
+
+        const batch = new protos.SignatureBatch();
+        batch.setContext("context");
+        batch.addMessages("flaaah");
+
+        const verified = verify_batch(batch.serializeBinary());
+        assert(verified==protos.ErrorCode.NO_ERROR, "failed to validate using a known test vector");
     });
 });

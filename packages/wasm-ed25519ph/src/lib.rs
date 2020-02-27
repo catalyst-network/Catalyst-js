@@ -12,6 +12,15 @@ use wasm_bindgen::prelude::*;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
+pub fn generate_private_key(private_key: &mut [u8]) -> i32 {
+    let private_key = match private_key.try_into(){
+        Ok(private_key) => private_key,
+        Err(_) => return ErrorCode::INVALID_PRIVATE_KEY.value()
+    };
+    keys::generate_private_key(private_key, &mut rand::thread_rng())
+}
+
+#[wasm_bindgen]
 pub fn public_key_from_private(public_key: &mut [u8], private_key: &[u8]) -> i32 {
     let private_key = match private_key.try_into(){
         Ok(private_key) => private_key,
@@ -55,6 +64,14 @@ pub fn sign(
 }
 
 #[wasm_bindgen]
+#[allow(unused_must_use)]
+pub fn verify_batch(bytes: &[u8]) -> i32{
+    let mut batch_sigs = SignatureBatch::new();
+    batch_sigs.merge_from_bytes(bytes);
+    batch::verify_batch(&mut batch_sigs, &mut rand::thread_rng())
+}
+
+#[wasm_bindgen]
 pub fn verify(
     signature: &[u8],
     public_key: &[u8],
@@ -74,11 +91,18 @@ pub fn verify(
     std_signature::verify(signature, public_key, message, context)
 }
 
+// A macro to provide `println!(..)`-style syntax for `console.log` logging.
+macro_rules! log {
+    ( $( $t:tt )* ) => {
+        web_sys::console::log_1(&format!( $( $t )* ).into());
+    }
+}
 
 #[cfg(test)]
 mod tests {
     use super::*;
     use wasm_bindgen_test::*;
+    use protobuf::RepeatedField;
 
     #[wasm_bindgen_test]
     fn can_access_signature_error_value() {
@@ -86,8 +110,11 @@ mod tests {
     }
 
     #[wasm_bindgen_test]
-    fn can_generate_random_number() {
-        rand::thread_rng();
+    fn can_generate_random_private_key() {
+        let mut private_key = [0u8; constants::PRIVATE_KEY_LENGTH];
+        log!("{:?}",private_key);
+        generate_private_key(&mut private_key);
+        log!("{:?}",private_key);
     }
 
     #[wasm_bindgen_test]
@@ -127,6 +154,192 @@ mod tests {
 		sign(&mut sig, &mut public_key, &private_key, message, context, context.len());
 		let result = verify(&sig, &mut public_key,message, context2, context2.len());
         assert_eq!(result, ErrorCode::SIGNATURE_VERIFICATION_FAILURE.value());
+    }
+
+    #[wasm_bindgen_test]
+    fn batch_verify_validates_multiple_correct_signatures() {
+        let mut sigs : std::vec::Vec<Vec<u8>> = Vec::new();
+        let mut public_keys : std::vec::Vec<Vec<u8>> = Vec::new();
+        let mut messages = Vec::new();
+        
+        messages.push(b"'Twas brillig, and the slithy toves".to_vec());
+        messages.push(b"Did gyre and gimble in the wabe:".to_vec());
+        messages.push(b"All mimsy were the borogoves,".to_vec());
+        messages.push(b"And the mome raths outgrabe.".to_vec());
+        messages.push(b"'Beware the Jabberwock, my son!".to_vec());
+        let context = b"context";
+
+        for i in 0..messages.len() {
+            let mut sig = [0u8; constants::SIGNATURE_LENGTH];
+            let mut public_key = [0u8; constants::PUBLIC_KEY_LENGTH];           
+            let mut private_key = [0u8; constants::PRIVATE_KEY_LENGTH];
+            generate_private_key(&mut private_key);
+
+            sign(&mut sig, &mut public_key, &private_key, &messages[i], context, context.len());
+            sigs.push(sig.to_vec());
+            public_keys.push(public_key.to_vec());
+        }
+
+        let mut batch_sigs = SignatureBatch::new();       
+        batch_sigs.set_context(b"context".to_vec());
+        batch_sigs.set_messages(RepeatedField::from_vec(messages));  
+        batch_sigs.set_signatures(RepeatedField::from_vec(sigs));
+        batch_sigs.set_public_keys(RepeatedField::from_vec(public_keys));
+        let mut batch = batch_sigs.write_to_bytes().unwrap();
+
+        let result = verify_batch(&mut batch);
+
+        assert_eq!(result, ErrorCode::NO_ERROR.value());
+    }
+
+    #[wasm_bindgen_test]
+    fn batch_verify_fails_on_single_incorrect_message() {
+        let mut sigs : std::vec::Vec<Vec<u8>> = Vec::new();
+        let mut public_keys : std::vec::Vec<Vec<u8>> = Vec::new();
+        let mut messages = Vec::new();
+        
+        messages.push(b"'Twas brillig, and the slithy toves".to_vec());
+        messages.push(b"Did gyre and gimble in the wabe:".to_vec());
+        messages.push(b"All mimsy were the borogoves,".to_vec());
+        messages.push(b"And the mome raths outgrabe.".to_vec());
+        messages.push(b"'Beware the Jabberwock, my son!".to_vec());
+        let context = b"context";
+
+        for i in 0..messages.len() {
+            let mut sig = [0u8; constants::SIGNATURE_LENGTH];
+            let mut public_key = [0u8; constants::PUBLIC_KEY_LENGTH];           
+            let mut private_key = [0u8; constants::PRIVATE_KEY_LENGTH];
+            generate_private_key(&mut private_key);
+
+            sign(&mut sig, &mut public_key, &private_key, &messages[i], context, context.len());
+            sigs.push(sig.to_vec());
+            public_keys.push(public_key.to_vec());
+        }
+        //alter a message before batch verification
+        messages[4] = b"The jaws that bite, the claws that catch!".to_vec();
+
+        let mut batch_sigs = SignatureBatch::new();       
+        batch_sigs.set_context(b"context".to_vec());
+        batch_sigs.set_messages(RepeatedField::from_vec(messages));  
+        batch_sigs.set_signatures(RepeatedField::from_vec(sigs));
+        batch_sigs.set_public_keys(RepeatedField::from_vec(public_keys));
+        let mut batch = batch_sigs.write_to_bytes().unwrap();
+
+        let result = verify_batch(&mut batch);
+
+        assert_eq!(result, ErrorCode::BATCH_VERIFICATION_FAILURE.value());
+    }
+
+    #[wasm_bindgen_test]
+    fn batch_verify_fails_on_single_incorrect_public_key() {
+        let mut sigs : std::vec::Vec<Vec<u8>> = Vec::new();
+        let mut public_keys : std::vec::Vec<Vec<u8>> = Vec::new();
+        let mut messages = Vec::new();
+        
+        messages.push(b"'Twas brillig, and the slithy toves".to_vec());
+        messages.push(b"Did gyre and gimble in the wabe:".to_vec());
+        messages.push(b"All mimsy were the borogoves,".to_vec());
+        messages.push(b"And the mome raths outgrabe.".to_vec());
+        messages.push(b"'Beware the Jabberwock, my son!".to_vec());
+        let context = b"context";
+
+        for i in 0..messages.len() {
+            let mut sig = [0u8; constants::SIGNATURE_LENGTH];
+            let mut public_key = [0u8; constants::PUBLIC_KEY_LENGTH];           
+            let mut private_key = [0u8; constants::PRIVATE_KEY_LENGTH];
+            generate_private_key(&mut private_key);
+
+            sign(&mut sig, &mut public_key, &private_key, &messages[i], context, context.len());
+            sigs.push(sig.to_vec());
+            public_keys.push(public_key.to_vec());
+        }
+        //alter a message before batch verification
+        public_keys[4] = public_keys[3].to_owned();
+
+        let mut batch_sigs = SignatureBatch::new();       
+        batch_sigs.set_context(b"context".to_vec());
+        batch_sigs.set_messages(RepeatedField::from_vec(messages));  
+        batch_sigs.set_signatures(RepeatedField::from_vec(sigs));
+        batch_sigs.set_public_keys(RepeatedField::from_vec(public_keys));
+        let mut batch = batch_sigs.write_to_bytes().unwrap();
+
+        let result = verify_batch(&mut batch);
+
+        assert_eq!(result, ErrorCode::BATCH_VERIFICATION_FAILURE.value());
+    }
+
+    #[wasm_bindgen_test]
+    fn batch_verify_fails_on_single_incorrect_signature() {
+        let mut sigs : std::vec::Vec<Vec<u8>> = Vec::new();
+        let mut public_keys : std::vec::Vec<Vec<u8>> = Vec::new();
+        let mut messages = Vec::new();
+        
+        messages.push(b"'Twas brillig, and the slithy toves".to_vec());
+        messages.push(b"Did gyre and gimble in the wabe:".to_vec());
+        messages.push(b"All mimsy were the borogoves,".to_vec());
+        messages.push(b"And the mome raths outgrabe.".to_vec());
+        messages.push(b"'Beware the Jabberwock, my son!".to_vec());
+        let context = b"context";
+
+        for i in 0..messages.len() {
+            let mut sig = [0u8; constants::SIGNATURE_LENGTH];
+            let mut public_key = [0u8; constants::PUBLIC_KEY_LENGTH];           
+            let mut private_key = [0u8; constants::PRIVATE_KEY_LENGTH];
+            generate_private_key(&mut private_key);
+
+            sign(&mut sig, &mut public_key, &private_key, &messages[i], context, context.len());
+            sigs.push(sig.to_vec());
+            public_keys.push(public_key.to_vec());
+        }
+        //alter a signature before batch verification
+        sigs[3] = sigs[4].to_owned();
+
+        let mut batch_sigs = SignatureBatch::new();       
+        batch_sigs.set_context(b"context".to_vec());
+        batch_sigs.set_messages(RepeatedField::from_vec(messages));  
+        batch_sigs.set_signatures(RepeatedField::from_vec(sigs));
+        batch_sigs.set_public_keys(RepeatedField::from_vec(public_keys));
+        let mut batch = batch_sigs.write_to_bytes().unwrap();
+
+        let result = verify_batch(&mut batch);
+
+        assert_eq!(result, ErrorCode::BATCH_VERIFICATION_FAILURE.value());
+    }
+
+    #[wasm_bindgen_test]
+    fn batch_verify_fails_on_incorrect_context() {
+        let mut sigs : std::vec::Vec<Vec<u8>> = Vec::new();
+        let mut public_keys : std::vec::Vec<Vec<u8>> = Vec::new();
+        let mut messages = Vec::new();
+        
+        messages.push(b"'Twas brillig, and the slithy toves".to_vec());
+        messages.push(b"Did gyre and gimble in the wabe:".to_vec());
+        messages.push(b"All mimsy were the borogoves,".to_vec());
+        messages.push(b"And the mome raths outgrabe.".to_vec());
+        messages.push(b"'Beware the Jabberwock, my son!".to_vec());
+        let context = b"context";
+
+        for i in 0..messages.len() {
+            let mut sig = [0u8; constants::SIGNATURE_LENGTH];
+            let mut public_key = [0u8; constants::PUBLIC_KEY_LENGTH];           
+            let mut private_key = [0u8; constants::PRIVATE_KEY_LENGTH];
+            generate_private_key(&mut private_key);
+
+            sign(&mut sig, &mut public_key, &private_key, &messages[i], context, context.len());
+            sigs.push(sig.to_vec());
+            public_keys.push(public_key.to_vec());
+        }
+
+        let mut batch_sigs = SignatureBatch::new();       
+        batch_sigs.set_context(b"context2".to_vec());
+        batch_sigs.set_messages(RepeatedField::from_vec(messages));  
+        batch_sigs.set_signatures(RepeatedField::from_vec(sigs));
+        batch_sigs.set_public_keys(RepeatedField::from_vec(public_keys));
+        let mut batch = batch_sigs.write_to_bytes().unwrap();
+
+        let result = verify_batch(&mut batch);
+
+        assert_eq!(result, ErrorCode::BATCH_VERIFICATION_FAILURE.value());
     }
     
 }
