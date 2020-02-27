@@ -7,17 +7,41 @@ use std::convert::TryInto;
 use std::slice;
 use wasm_bindgen::prelude::*;
 
+use rand::rngs::OsRng;
+use getrandom::getrandom;
+//use rand_core::{RngCore, OsRng};
+//use rand::Rng;
+
 // Use `wee_alloc` as the global allocator.
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
+// A macro to provide `println!(..)`-style syntax for `console.log` logging.
+macro_rules! log {
+    ( $( $t:tt )* ) => {
+        web_sys::console::log_1(&format!( $( $t )* ).into());
+    }
+}
+
+#[wasm_bindgen]
+pub fn generate_rand() -> i32 {
+    log!("Generating rand");
+    let mut v1 = [0u8; 100];
+    match getrandom(&mut v1){
+        Ok(()) => ErrorCode::NO_ERROR.value(),
+        Err(err) => ErrorCode::INVALID_PRIVATE_KEY.value()
+    }
+}
+
 #[wasm_bindgen]
 pub fn generate_private_key(private_key: &mut [u8]) -> i32 {
-    let private_key = match private_key.try_into(){
+    log!("Generating private key");
+    //let mut osRand = OsRng::new().unwrap();
+    let mut private_key : &mut [u8;32] = match private_key.try_into(){
         Ok(private_key) => private_key,
         Err(_) => return ErrorCode::INVALID_PRIVATE_KEY.value()
     };
-    keys::generate_private_key(private_key, &mut rand::thread_rng())
+    keys::generate_private_key(&mut private_key, &mut OsRng)
 }
 
 #[wasm_bindgen]
@@ -91,13 +115,6 @@ pub fn verify(
     std_signature::verify(signature, public_key, message, context)
 }
 
-// A macro to provide `println!(..)`-style syntax for `console.log` logging.
-macro_rules! log {
-    ( $( $t:tt )* ) => {
-        web_sys::console::log_1(&format!( $( $t )* ).into());
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -112,9 +129,9 @@ mod tests {
     #[wasm_bindgen_test]
     fn can_generate_random_private_key() {
         let mut private_key = [0u8; constants::PRIVATE_KEY_LENGTH];
-        log!("{:?}",private_key);
+        //log!("{:?}",private_key);
         generate_private_key(&mut private_key);
-        log!("{:?}",private_key);
+        //log!("{:?}",private_key);
     }
 
     #[wasm_bindgen_test]

@@ -1,6 +1,8 @@
 import {
     sign,
+    generate_private_key,
     verify,
+    generate_rand,
     verify_batch,
 } from '../pkg/index';
 import { bytesFromHexString, bytesFromString } from './utils.js';
@@ -179,9 +181,18 @@ describe('the library can produce and validate signatures', function() {
         );
         assert(verified==protos.ErrorCode.NO_ERROR, "failed to validate using a known test vector");
     });
+
+    it('should be able to generate a random number', function() {
+        generate_rand();
+    });
+
+    /*it('should be able to generate a random private key', function() {
+        const private_key = new Uint8Array(32);
+        generate_private_key(private_key);
+    });*/
 });
 
-describe('the library can batch verify signatures', function() {
+/*describe('the library can batch verify signatures', function() {
     it('batch_verify_validates_multiple_correct_signatures', function() {
         const signature = new Uint8Array(64);
         const public_key = new Uint8Array(32);
@@ -196,3 +207,4 @@ describe('the library can batch verify signatures', function() {
         assert(verified==protos.ErrorCode.NO_ERROR, "failed to validate using a known test vector");
     });
 });
+*/
