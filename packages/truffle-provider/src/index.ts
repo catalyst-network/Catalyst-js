@@ -122,8 +122,7 @@ export class HDWalletProvider {
         const data = derivePath(`${this.walletHdpath + i}'`, seed);
         const wallet = Wallet.generateFromSeed(data.key);
 
-        const address = EthUtil.keccak(Buffer.from(wallet.getPublicKey())).slice(-20);
-        const addr = EthUtil.bufferToHex(address);
+        const addr = wallet.getAddressString();
         this.addresses.push(addr);
         this.wallets[addr] = wallet;
       }
@@ -136,8 +135,7 @@ export class HDWalletProvider {
         const key = fromHexString(privateKeys[i]);
         const wallet = Wallet.generateFromPrivateKey(key);
 
-        const address = EthUtil.keccak(Buffer.from(wallet.getPublicKey())).slice(-20);
-        const addr = EthUtil.bufferToHex(address);
+        const addr = wallet.getAddressString();
         this.addresses.push(addr);
         this.wallets[addr] = wallet;
       }
