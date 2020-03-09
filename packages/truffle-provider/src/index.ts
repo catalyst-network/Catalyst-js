@@ -84,10 +84,10 @@ export class HDWalletProvider {
       const ctx = context.serializeBinary();
       const contextLength = ctx.length;
       const signature = new Uint8Array(64);
-      const public_key = new Uint8Array(64);
+      const publicKey = new Uint8Array(64);
       const result = signatureLib.sign(
         signature,
-        public_key,
+        publicKey,
         pKey,
         message,
         ctx,
