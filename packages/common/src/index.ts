@@ -47,7 +47,7 @@ export function bytesFromHexString(str: string): Uint8Array {
   return new Uint8Array(a);
 }
 
-export function HexStringFromBytes(byteArray: Uint8Array) {
+export function hexStringFromBytes(byteArray: Uint8Array) {
   // eslint-disable-next-line no-bitwise
   return Array.prototype.map.call(byteArray, (byte: any) => (`0${(byte & 0xFF).toString(16)}`).slice(-2)).join('');
 }
