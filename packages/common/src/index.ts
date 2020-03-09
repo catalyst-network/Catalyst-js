@@ -82,8 +82,8 @@ export function getPublicKeyFromPrivate(privateKey: Uint8Array): Uint8Array {
  * returns the address of a public key
  * @param pubKey ed25519 public key
  */
-export function addressFromPublicKey(pubKey: Uint8Array) {
-  return EthUtil.keccak(Buffer.from(pubKey)).slice(-20);
+export function addressFromPublicKey(pubKey: Uint8Array): Uint8Array {
+  return new Uint8Array(EthUtil.keccak(Buffer.from(pubKey)).slice(-20));
 }
 
 /**

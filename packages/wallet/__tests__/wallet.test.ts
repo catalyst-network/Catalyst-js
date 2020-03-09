@@ -26,7 +26,7 @@ describe('wallet', () => {
     expect(JSON.stringify(wallet.getPrivateKey())).toBe(JSON.stringify(privateKey));
     expect(wallet.getPrivateKeyString()).toBe('NJH2IHODBQHLJDKOQUTXROLNM3G2E3QUNIPYY4XUNK4WTEPNVYXWWACEJXCV3XVU6H56RQTR35RWEI5HX23YZHY2OVFSVCS2BDMGWJY');
     expect(wallet.getPublicKeyString()).toBe('NMAEITOFLXPLJ4P35DBHDX3DMIR2PPVXRSPRU5KLFKFFUCGYNMTQ');
-    expect(wallet.getAddressString()).toBe('0x6b00444dc55ddeb4f1fbe8c271df636223a7beb78c9f1a754b2a8a5a08d86b27');
+    expect(wallet.getAddressString()).toBe('0x3b7dd9aa1884b2a70d39dda14428e8cbc80428ec');
   });
 
   it('generate a wallet from a seed', () => {
@@ -36,7 +36,7 @@ describe('wallet', () => {
     const wallet = Wallet.generateFromSeed(new Uint8Array(data.key));
     expect(wallet.getPrivateKeyString()).toBe('CVXWTP2YZJKUP7HROU6YCBPSR7HJGBBZVYE5PXDNY2GAVFWKFDQUFALZ7FU5RCKCPOEZASHV7VWPEQ3IWYDIMW5NJMCGPBMSDUWCGPA');
     expect(wallet.getPublicKeyString()).toBe('IKAXT6LJ3CEUE64JSBEPL7LM6JBWRNQGQZN22SYEM6CZEHJMEM6A');
-    expect(wallet.getAddressString()).toBe('0x428179f969d889427b899048f5fd6cf24368b606865bad4b046785921d2c233c');
+    expect(wallet.getAddressString()).toBe('0xd1ff442e2421de40575979990bf2cdb74b67a0b7');
   });
 
   it('throws an error for invalid private Key', () => {

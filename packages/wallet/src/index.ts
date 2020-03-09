@@ -4,6 +4,7 @@ import {
   getPublicKeyFromPrivate,
   isValidPrivate,
   isValidPublic,
+  addressFromPublicKey,
 } from '@catalyst-net-js/common';
 
 export default class Wallet {
@@ -74,7 +75,7 @@ export default class Wallet {
   }
 
   public getAddress(): Uint8Array {
-    return this.pubKey;
+    return addressFromPublicKey(this.pubKey);
   }
 
   public getAddressString(): string {
