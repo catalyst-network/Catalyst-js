@@ -1,6 +1,7 @@
 import encode from 'base32-encode';
 import decode from 'base32-decode';
 import * as nacl from 'tweetnacl';
+import * as EthUtil from 'ethereumjs-util';
 
 const ethjsUtil = require('ethjs-util');
 
@@ -46,6 +47,12 @@ export function bytesFromHexString(str: string): Uint8Array {
   return new Uint8Array(a);
 }
 
+export function hexStringFromBytes(byteArray: Uint8Array) {
+  // eslint-disable-next-line no-bitwise
+  return Array.prototype.map.call(byteArray, (byte: any) => (`0${(byte & 0xFF).toString(16)}`).slice(-2)).join('');
+}
+
+
 /**
  * converts a base32 encoded string to bytes
  * @param str base32 string
@@ -69,6 +76,14 @@ export function base32StringFromBytes(bytes: Uint8Array) : string {
 export function getPublicKeyFromPrivate(privateKey: Uint8Array): Uint8Array {
   const keypair = nacl.sign.keyPair.fromSecretKey(privateKey);
   return keypair.publicKey;
+}
+
+/**
+ * returns the address of a public key
+ * @param pubKey ed25519 public key
+ */
+export function addressFromPublicKey(pubKey: Uint8Array): Uint8Array {
+  return new Uint8Array(EthUtil.keccak(Buffer.from(pubKey)).slice(-20));
 }
 
 /**

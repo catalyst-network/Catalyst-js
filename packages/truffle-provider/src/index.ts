@@ -84,10 +84,10 @@ export class HDWalletProvider {
       const ctx = context.serializeBinary();
       const contextLength = ctx.length;
       const signature = new Uint8Array(64);
-      const public_key = new Uint8Array(64);
+      const publicKey = new Uint8Array(64);
       const result = signatureLib.sign(
         signature,
-        public_key,
+        publicKey,
         pKey,
         message,
         ctx,
@@ -122,8 +122,7 @@ export class HDWalletProvider {
         const data = derivePath(`${this.walletHdpath + i}'`, seed);
         const wallet = Wallet.generateFromSeed(data.key);
 
-        const address = EthUtil.keccak(Buffer.from(wallet.getPublicKey())).slice(-20);
-        const addr = EthUtil.bufferToHex(address);
+        const addr = wallet.getAddressString();
         this.addresses.push(addr);
         this.wallets[addr] = wallet;
       }
@@ -136,8 +135,7 @@ export class HDWalletProvider {
         const key = fromHexString(privateKeys[i]);
         const wallet = Wallet.generateFromPrivateKey(key);
 
-        const address = EthUtil.keccak(Buffer.from(wallet.getPublicKey())).slice(-20);
-        const addr = EthUtil.bufferToHex(address);
+        const addr = wallet.getAddressString();
         this.addresses.push(addr);
         this.wallets[addr] = wallet;
       }
