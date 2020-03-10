@@ -2,14 +2,22 @@ import {
     sign,
     generate_private_key,
     verify,
-    generate_rand,
     verify_batch,
 } from '../pkg/index';
 import { bytesFromHexString, bytesFromString } from './utils.js';
 import * as protos from '@catalystnetwork/protocol-sdk';
 var assert = require('assert');
 
+// set up the crypto property globally
+var crypto = require('crypto');
+Object.defineProperty(global.self, 'crypto', {
+  value: {
+    getRandomValues: arr => crypto.randomBytes(arr.length),
+  },
+});
+
 describe('the library can produce and validate signatures', function() {
+    
     it('should produce a valid signature when signing a message', function() {
         const signature = new Uint8Array(64);
         const public_key = new Uint8Array(32);
@@ -182,29 +190,67 @@ describe('the library can produce and validate signatures', function() {
         assert(verified==protos.ErrorCode.NO_ERROR, "failed to validate using a known test vector");
     });
 
-    it('should be able to generate a random number', function() {
-        generate_rand();
-    });
-
-    /*it('should be able to generate a random private key', function() {
+    it('should be able to generate a random private key', function() {
         const private_key = new Uint8Array(32);
         generate_private_key(private_key);
-    });*/
+    });
+    
 });
 
-/*describe('the library can batch verify signatures', function() {
+describe('the library can batch verify signatures', function() {
     it('batch_verify_validates_multiple_correct_signatures', function() {
-        const signature = new Uint8Array(64);
-        const public_key = new Uint8Array(32);
-        const private_key = new Uint8Array(32);
-        const message = bytesFromString('hello');
+        var signature = new Uint8Array(64);
+        var public_key = new Uint8Array(32);
+        var private_key = new Uint8Array(32);
+        
+        var messages = [bytesFromString("m1"), bytesFromString("m2"), bytesFromString("m3")]
+        const context = bytesFromString("context");
 
         const batch = new protos.SignatureBatch();
-        batch.setContext("context");
-        batch.addMessages("flaaah");
+
+        for (let i = 0; i < messages.length; i++) {
+            var message = messages[i];
+            console.log(message);
+            generate_private_key(private_key);
+            sign(
+                signature,
+                public_key,
+                private_key,
+                message,
+                context,
+                context.length,
+            );
+            batch.addMessages(message);
+            batch.addPublicKeys(public_key);
+            batch.addSignatures(signature);
+        }
+        
+        batch.setContext(context);
 
         const verified = verify_batch(batch.serializeBinary());
-        assert(verified==protos.ErrorCode.NO_ERROR, "failed to validate using a known test vector");
+        console.log(verified);
+        assert(verified==protos.ErrorCode.NO_ERROR, "failed to batch verify");
     });
+
+    it('batch verify validates single correct signature', function() {
+        const signature = bytesFromHexString(
+            '98a70222f0b8121aa9d30f813d683f809e462b469c7ff87639499bb94e6dae4131f85042463c2a355a2003d062adf5aaa10b8c61e636062aaad11c2a26083406',
+        );
+        const public_key = bytesFromHexString(
+            'ec172b93ad5e563bf4932c70e1245034c35467ef2efd4d64ebf819683467e2bf',
+        );
+        const message = bytesFromHexString('616263');
+        
+        const context1 = bytesFromString('');
+        
+        const batch = new protos.SignatureBatch();      
+        batch.addMessages(message);
+        batch.addPublicKeys(public_key);
+        batch.addSignatures(signature);
+        batch.setContext(context1);
+
+        const verified = verify_batch(batch.serializeBinary());
+        assert(verified==protos.ErrorCode.NO_ERROR, "failed to batch verify");
+    });
+
 });
-*/

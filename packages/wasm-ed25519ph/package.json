@@ -40,7 +40,10 @@
         "build:node": "rimraf dist pkg && webpack -p --progress --config build/webpack.node.babel.js",
         "build:bundler": "rimraf dist pkg && webpack -p --progress --config build/webpack.bundler.babel.js",
         "build:nomodule": "rimraf dist pkg && webpack -p --progress --config build/webpack.nomodule.babel.js",
-        "start:Dev": "rimraf dist pkg && webpack-dev-server --open -d --progress --color --config build/webpack.dev.js"
+        "start:Dev": "rimraf dist pkg && webpack-dev-server --open -d --progress --color --config build/webpack.dev.babel.js",
+        "start:node": "rimraf dist pkg && webpack-dev-server --open -d --progress --color --config build/webpack.node.babel.js",
+        "start:node_alt": "rimraf dist pkg && webpack-dev-server --open -d --progress --color --config build/webpack.node_alternate.babel.js",
+        "start:other": "rimraf dist pkg && webpack-dev-server --open -d"
     },
     "husky": {
         "hooks": {}

@@ -1,29 +1,29 @@
-const path = require('path');
-const WasmPackPlugin = require('@wasm-tool/wasm-pack-plugin');
+const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
+const WasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
+
+const dist = path.resolve(__dirname, "dist");
 
 module.exports = {
-    mode: 'production',
-    entry: './js/index.ts',
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'index.js',
-    },
-    plugins: [
-        new WasmPackPlugin({
-            crateDirectory: path.resolve(__dirname, '.'),
-            withTypeScript: true, // this is new
-            extraArgs: '--scope catalyst --target nodejs',
-        }),
-    ],
-    resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.wasm'],
-    },
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                loader: 'ts-loader',
-            },
-        ],
-    },
+  mode: "production",
+  entry: {
+    index: "./js/index.js"
+  },
+  output: {
+    path: dist,
+    filename: "[name].js"
+  },
+  devServer: {
+    contentBase: dist,
+  },
+  plugins: [
+    new CopyPlugin([
+      path.resolve(__dirname, "static")
+    ]),
+
+    new WasmPackPlugin({
+      crateDirectory: __dirname,
+      extraArgs: "--out-name index"
+    }),
+  ]
 };
