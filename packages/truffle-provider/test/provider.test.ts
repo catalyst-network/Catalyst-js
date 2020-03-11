@@ -70,13 +70,13 @@ describe("HD Wallet Provider", function() {
     }
   });
 
-  it("provides for a private key", function(done) {
+  it("provides for a private key", async function() {
     const privateKey =
       "30329f1622aacd6093753a2b6d07e7d95f67bc511a2245008447772ba8b9c7225830bc0b616672c48077fc4e144b6c5700c66e8a15019da4d4ea74ccaeea5c1f"; //random valid private key generated with ethkey
     provider = new WalletProvider(privateKey, `http://localhost:${port}`);
     web3.setProvider(provider);
 
-    const addresses = provider.getAddresses();
+    const addresses = await provider.getAddresses();
     assert.equal(addresses[0], "0xeba062075dfc52393253e6a9df7a5da220d512da");
     addresses.forEach(address => {
       assert(EthUtil.isValidAddress(address), "invalid address");
@@ -84,11 +84,10 @@ describe("HD Wallet Provider", function() {
 
     web3.eth.getBlockNumber((err: Error, number: number) => {
       assert(number === 0);
-      done();
     });
   });
 
-  it("provides for an array of private keys", function(done) {
+  it("provides for an array of private keys", async function() {
     function generateKeyFromPrivateKey(key: Uint8Array): nacl.SignKeyPair {
       return nacl.sign.keyPair.fromSecretKey(key)
     };
@@ -111,7 +110,7 @@ describe("HD Wallet Provider", function() {
     provider = new WalletProvider(privateKeys, `http://localhost:${port}`);
     web3.setProvider(provider);
 
-    const addresses = provider.getAddresses();
+    const addresses = await provider.getAddresses();
     assert.equal(
       addresses.length,
       privateKeys.length,
@@ -129,7 +128,6 @@ describe("HD Wallet Provider", function() {
 
     web3.eth.getBlockNumber((err: Error, number: number) => {
       assert(number === 0);
-      done();
     });
   });
 });

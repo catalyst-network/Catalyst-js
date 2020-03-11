@@ -149,7 +149,13 @@ export class HDWalletProvider {
     const privateKeys = normalizePrivateKeys(mnemonic);
 
     if (!privateKeys) generateFromMnemonic(mnemonic as string);
-    else generateFromKeys(privateKeys);
+    else {
+      (async () => {
+        await generateFromKeys(privateKeys);
+      })().catch((e) => {
+        throw new Error(e);
+      });
+    }
 
     const tmpAccounts = this.addresses;
     const tmpWallets = this.wallets;
