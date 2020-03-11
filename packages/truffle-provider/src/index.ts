@@ -110,7 +110,7 @@ export class HDWalletProvider {
     };
 
     // private helper to check if given mnemonic uses BIP39 passphrase protection
-    const checkBIP39Mnemonic = (seedPhrase: string) => {
+    const generateFromMnemonic = (seedPhrase: string) => {
       if (!bip39.validateMnemonic(seedPhrase)) {
         throw new Error('Mnemonic invalid or undefined');
       }
@@ -129,22 +129,27 @@ export class HDWalletProvider {
     };
 
     // private helper leveraging ethUtils to populate wallets/addresses
-    const ethUtilValidation = (privateKeys: string[]) => {
+    const generateFromKeys = async (privateKeys: string[]) => {
       // crank the addresses out
-      for (let i = addressIndex; i < privateKeys.length; i += 1) {
-        const key = fromHexString(privateKeys[i]);
-        const wallet = Wallet.generateFromPrivateKey(key);
-
+      const addWallet = async (key: Uint8Array) => {
+        const wallet = await Wallet.generateFromPrivateKey(key);
         const addr = wallet.getAddressString();
         this.addresses.push(addr);
         this.wallets[addr] = wallet;
+      };
+
+      const wallets: Promise<void>[] = [];
+      for (let i = addressIndex; i < privateKeys.length; i += 1) {
+        const key = fromHexString(privateKeys[i]);
+        wallets.push(addWallet(key));
       }
+      await Promise.all(wallets);
     };
 
     const privateKeys = normalizePrivateKeys(mnemonic);
 
-    if (!privateKeys) checkBIP39Mnemonic(mnemonic as string);
-    else ethUtilValidation(privateKeys);
+    if (!privateKeys) generateFromMnemonic(mnemonic as string);
+    else generateFromKeys(privateKeys);
 
     const tmpAccounts = this.addresses;
     const tmpWallets = this.wallets;
