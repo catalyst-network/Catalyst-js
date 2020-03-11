@@ -11,7 +11,7 @@ describe('wallet', () => {
     expect(wallet.getPrivateKey().length).toBe(64);
   });
 
-  it('generate a wallet from a private key', () => {
+  it('generate a wallet from a private key', async () => {
     const privateKey = new Uint8Array([
       106, 79, 164, 29, 195, 12, 14, 180, 141, 78, 133,
       39, 120, 185, 109, 102, 205, 162, 110, 20, 106, 31,
@@ -21,7 +21,7 @@ describe('wallet', () => {
       117, 75, 42, 138, 90, 8, 216, 107, 39,
     ]);
 
-    const wallet = Wallet.generateFromPrivateKey(privateKey);
+    const wallet = await Wallet.generateFromPrivateKey(privateKey);
 
     expect(JSON.stringify(wallet.getPrivateKey())).toBe(JSON.stringify(privateKey));
     expect(wallet.getPrivateKeyString()).toBe('NJH2IHODBQHLJDKOQUTXROLNM3G2E3QUNIPYY4XUNK4WTEPNVYXWWACEJXCV3XVU6H56RQTR35RWEI5HX23YZHY2OVFSVCS2BDMGWJY');
