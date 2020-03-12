@@ -61,9 +61,9 @@ describe('wallet', () => {
     const wallet = await Wallet.generateFromPrivateKey(privateKey);
 
     expect(JSON.stringify(wallet.getPrivateKey())).toBe(JSON.stringify(extendedPrivateKey));
-    expect(wallet.getPrivateKeyString()).toBe('NJH2IHODBQHLJDKOQUTXROLNM3G2E3QUNIPYY4XUNK4WTEPNVYXWWACEJXCV3XVU6H56RQTR35RWEI5HX23YZHY2OVFSVCS2BDMGWJY');
-    expect(wallet.getPublicKeyString()).toBe('NMAEITOFLXPLJ4P35DBHDX3DMIR2PPVXRSPRU5KLFKFFUCGYNMTQ');
-    expect(wallet.getAddressString()).toBe('0x3b7dd9aa1884b2a70d39dda14428e8cbc80428ec');
+    expect(wallet.getPrivateKeyString()).toBe('P4YCENLDXF42IJDJMO24PVTEK3UFN7A3TXL4TV3HV4EXLWR5YYMOO2NLZ26YUHWL6CJXZETPH4INXY7LJ2GHATSTVVSFUXUO7C56DYQ');
+    expect(wallet.getPublicKeyString()).toBe('45U2XTV5RIPMX4ETPSJG6PYQ3PR6WTUMOBHFHLLELJPI56F34HRA');
+    expect(wallet.getAddressString()).toBe('0x9ab25e1388bd336080667d5c4c8342c34474ec9a');
   });
 
   it('generate a wallet from a seed', () => {
