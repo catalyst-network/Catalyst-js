@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@catalyst-net-js/common": "^0.0.9",
+    "@catalyst-net-js/wasm-ed25519ph": "^0.0.9",
     "bip39": "^3.0.2",
     "ed25519-hd-key": "^1.1.0",
     "@catalystnetwork/protocol-sdk": "^0.0.3",

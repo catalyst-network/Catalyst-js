@@ -1,5 +1,5 @@
-import * as nacl from 'tweetnacl';
 import * as protos from '@catalystnetwork/protocol-sdk';
+import Wallet from '@catalyst-net-js/wallet';
 import { bytesFromHexString, bytesFromBase32String, validateProperties } from '@catalyst-net-js/common';
 import { TxData, numOrString, txEntry } from './types';
 
@@ -45,7 +45,7 @@ export class Transaction {
 
     const errors = validateProperties(this.tx, this.schema);
 
-    errors.forEach(({ message }) => { throw new Error(message); });
+    errors.forEach(({ message }: {message: string}) => { throw new Error(message); });
 
     this.entry = new protos.PublicEntry();
     this.entry.setReceiverAddress(bytesFromHexString(tx.to));
@@ -56,24 +56,20 @@ export class Transaction {
     this.entry.setNonce(Number(tx.nonce));
   }
 
-  private static _getPublicKey(privateKey: Uint8Array): Uint8Array {
-    const keypair = nacl.sign.keyPair.fromSecretKey(privateKey);
-    return keypair.publicKey;
-  }
-
-  private static _getKeypair(privateKey : Uint8Array | string) : any {
+  private static async _getKeypair(privateKey : Uint8Array | string) : Promise<any> {
     const secret = typeof privateKey === 'string' ? bytesFromBase32String(privateKey) : privateKey;
+    const wallet = await Wallet.generateFromPrivateKey(secret);
     return {
-      publicKey: Transaction._getPublicKey(secret),
+      publicKey: wallet.getPublicKey(),
       secretKey: secret.slice(0, 32),
     };
   }
 
   async sign(privateKey: Uint8Array | string) {
     const { entry } = this;
-    const keypair = Transaction._getKeypair(privateKey);
-    entry.setSenderAddress(keypair.publicKey);
     const wasm = await loadWasm();
+    const keypair = await Transaction._getKeypair(privateKey);
+    entry.setSenderAddress(keypair.publicKey);
     const context = new protos.SigningContext();
     context.setNetworkType(protos.NetworkType.TESTNET);
     context.setSignatureType(protos.SignatureType.TRANSACTION_PUBLIC);
