@@ -4,7 +4,7 @@
   "license": "MIT",
   "homepage": "https://github.com/catalyst-network/Catalyst-js/tree/master/packages/truffle-provider#readme",
   "repository": "https://github.com/catalyst-network/Catalyst-js",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
@@ -14,9 +14,10 @@
   },
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@catalyst-net-js/tx": "^0.0.9",
-    "@catalyst-net-js/wallet": "^0.0.9",
-    "@catalyst-net-js/wasm-ed25519ph": "^0.0.9",
+    "@catalyst-net-js/tx": "^0.1.0",
+    "@catalyst-net-js/wallet": "^0.1.0",
+    "@catalyst-net-js/wasm-ed25519ph": "^0.1.0",
+    "@catalystnetwork/protocol-sdk": "^0.0.4",
     "@truffle/provider": "^0.2.3",
     "@types/google-protobuf": "^3.7.2",
     "@types/web3": "^1.2.2",
@@ -36,8 +37,7 @@
     "tweetnacl": "^1.0.1",
     "web3": "1.2.1",
     "web3-provider-engine": "https://github.com/trufflesuite/provider-engine#web3-one",
-    "xtend": "^4.0.2",
-    "@catalystnetwork/protocol-sdk": "^0.0.4"
+    "xtend": "^4.0.2"
   },
   "devDependencies": {
     "@types/bip39": "^2.4.2",
