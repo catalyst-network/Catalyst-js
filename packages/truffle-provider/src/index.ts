@@ -109,7 +109,7 @@ export class HDWalletProvider {
       return false; // neither an array nor valid value passed;
     };
 
-    // private helper to check if given mnemonic uses BIP39 passphrase protection
+
     const checkBIP39Mnemonic = (seedPhrase: string) => {
       if (!bip39.validateMnemonic(seedPhrase)) {
         throw new Error('Mnemonic invalid or undefined');
@@ -128,7 +128,7 @@ export class HDWalletProvider {
       }
     };
 
-    // private helper leveraging ethUtils to populate wallets/addresses
+
     const ethUtilValidation = (privateKeys: string[]) => {
       // crank the addresses out
       for (let i = addressIndex; i < privateKeys.length; i += 1) {
