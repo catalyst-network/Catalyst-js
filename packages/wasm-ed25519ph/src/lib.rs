@@ -31,6 +31,7 @@ pub fn generate_private_key(private_key: &mut [u8]) -> i32 {
         Err(_) => return ErrorCode::INVALID_PRIVATE_KEY.value()
     };
     keys::generate_private_key(&mut private_key, &mut OsRng)
+
 }
 
 #[wasm_bindgen]
@@ -78,11 +79,13 @@ pub fn sign(
 
 #[wasm_bindgen]
 #[allow(unused_must_use)]
-pub fn verify_batch(bytes: &[u8]) -> i32{
+pub fn verify_batch(bytes: &[u8]) -> i32 {
     let mut batch_sigs = SignatureBatch::new();
     batch_sigs.merge_from_bytes(bytes);
-    batch::verify_batch(&mut batch_sigs, &mut rand::thread_rng())
+    batch::verify_batch(&mut batch_sigs, &mut OsRng{})
 }
+
+    
 
 #[wasm_bindgen]
 pub fn verify(
@@ -106,12 +109,14 @@ pub fn verify(
 
 #[cfg(test)]
 #[wasm_bindgen]
+#[allow(non_snake_case)]
 pub fn fill_bytes_OSRng(dest: &mut [u8]) -> i32 {
     try_fill(dest, &mut OsRng)
 }
 
 #[cfg(test)]
 #[wasm_bindgen]
+#[allow(non_snake_case)]
 pub fn use_OSRng() -> i32 {
     OsRng.gen()
 }
@@ -138,6 +143,7 @@ mod tests {
     use protobuf::RepeatedField;
     
     #[wasm_bindgen_test]
+    #[allow(non_snake_case)]
     fn can_use_OSRng() {
         use_OSRng();
     }
@@ -158,6 +164,7 @@ mod tests {
     fn can_generate_random_private_key() {
         let mut private_key = [0u8; constants::PRIVATE_KEY_LENGTH];
         generate_private_key(&mut private_key);
+        assert_ne!(private_key, [0u8; constants::PRIVATE_KEY_LENGTH]);
     }
 
     #[wasm_bindgen_test]

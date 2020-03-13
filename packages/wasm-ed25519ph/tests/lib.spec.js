@@ -9,15 +9,19 @@ import * as protos from '@catalystnetwork/protocol-sdk';
 var assert = require('assert');
 
 // set up the crypto property globally
-var crypto = require('crypto');
-Object.defineProperty(global.self, 'crypto', {
-  value: {
-    getRandomValues: arr => crypto.randomBytes(arr.length),
-  },
-});
+var nodeCrypto = require('crypto');
+global.crypto = {
+    getRandomValues: function(buffer) { return nodeCrypto.randomFillSync(buffer);}
+};
 
 describe('the library can produce and validate signatures', function() {
     
+    it('should be able to generate a random private key', function() {
+        const private_key = new Uint8Array(32);
+        var result = generate_private_key(private_key);
+        assert(result==protos.ErrorCode.NO_ERROR, "failed to generate random key");
+    });
+
     it('should produce a valid signature when signing a message', function() {
         const signature = new Uint8Array(64);
         const public_key = new Uint8Array(32);
@@ -57,6 +61,7 @@ describe('the library can produce and validate signatures', function() {
             context1,
             context1_length,
         );
+        
         const verified = verify(
             signature,
             public_key,
@@ -189,11 +194,6 @@ describe('the library can produce and validate signatures', function() {
         );
         assert(verified==protos.ErrorCode.NO_ERROR, "failed to validate using a known test vector");
     });
-
-    it('should be able to generate a random private key', function() {
-        const private_key = new Uint8Array(32);
-        generate_private_key(private_key);
-    });
     
 });
 
@@ -203,35 +203,42 @@ describe('the library can batch verify signatures', function() {
         var public_key = new Uint8Array(32);
         var private_key = new Uint8Array(32);
         
-        var messages = [bytesFromString("m1"), bytesFromString("m2"), bytesFromString("m3")]
+        var messages = [bytesFromString('Twas brillig, and the slithy toves'), 
+                        bytesFromString('Did gyre and gimble in the wabe:'), 
+                        bytesFromString('All mimsy were the borogoves,'),
+                        bytesFromString('And the mome raths outgrabe.'),
+                        bytesFromString('Beware the Jabberwock, my son!'),
+                    ];
         const context = bytesFromString("context");
 
         const batch = new protos.SignatureBatch();
+        var pks = [];
+        var sigs = [];
 
         for (let i = 0; i < messages.length; i++) {
-            var message = messages[i];
-            console.log(message);
             generate_private_key(private_key);
             sign(
                 signature,
                 public_key,
                 private_key,
-                message,
+                messages[i],
                 context,
                 context.length,
             );
-            batch.addMessages(message);
-            batch.addPublicKeys(public_key);
-            batch.addSignatures(signature);
+            pks.push(new Uint8Array(public_key));
+            sigs.push(new Uint8Array(signature));
         }
-        
-        batch.setContext(context);
 
+        batch.setContext(context);
+        batch.setMessagesList(messages);
+        batch.setPublicKeysList(pks);
+        batch.setSignaturesList(sigs);
+        
         const verified = verify_batch(batch.serializeBinary());
-        console.log(verified);
+
         assert(verified==protos.ErrorCode.NO_ERROR, "failed to batch verify");
     });
-
+    
     it('batch verify validates single correct signature', function() {
         const signature = bytesFromHexString(
             '98a70222f0b8121aa9d30f813d683f809e462b469c7ff87639499bb94e6dae4131f85042463c2a355a2003d062adf5aaa10b8c61e636062aaad11c2a26083406',
@@ -252,5 +259,172 @@ describe('the library can batch verify signatures', function() {
         const verified = verify_batch(batch.serializeBinary());
         assert(verified==protos.ErrorCode.NO_ERROR, "failed to batch verify");
     });
+    
+    it('batch verify fails on single incorrect message', function() {
+        var signature = new Uint8Array(64);
+        var public_key = new Uint8Array(32);
+        var private_key = new Uint8Array(32);
+        
+        var messages = [bytesFromString('Twas brillig, and the slithy toves'), 
+                        bytesFromString('Did gyre and gimble in the wabe:'), 
+                        bytesFromString('All mimsy were the borogoves,'),
+                        bytesFromString('And the mome raths outgrabe.'),
+                        bytesFromString('Beware the Jabberwock, my son!'),
+                    ];
+        const context = bytesFromString("context");
 
+        const batch = new protos.SignatureBatch();
+        var pks = [];
+        var sigs = [];
+
+        for (let i = 0; i < messages.length; i++) {
+            generate_private_key(private_key);
+            sign(
+                signature,
+                public_key,
+                private_key,
+                messages[i],
+                context,
+                context.length,
+            );
+            pks.push(new Uint8Array(public_key));
+            sigs.push(new Uint8Array(signature));
+        }
+        messages[messages.length - 1] = bytesFromString('changing a single message');
+        
+        batch.setContext(context);
+        batch.setMessagesList(messages);
+        batch.setPublicKeysList(pks);
+        batch.setSignaturesList(sigs);
+        
+        const verified = verify_batch(batch.serializeBinary());
+
+        assert(verified==protos.ErrorCode.BATCH_VERIFICATION_FAILURE, "batch verification should have failed");
+    });
+
+    it('batch verify fails on single incorrect public key', function() {
+        var signature = new Uint8Array(64);
+        var public_key = new Uint8Array(32);
+        var private_key = new Uint8Array(32);
+        
+        var messages = [bytesFromString('Twas brillig, and the slithy toves'), 
+                        bytesFromString('Did gyre and gimble in the wabe:'), 
+                        bytesFromString('All mimsy were the borogoves,'),
+                        bytesFromString('And the mome raths outgrabe.'),
+                        bytesFromString('Beware the Jabberwock, my son!'),
+                    ];
+        const context = bytesFromString("context");
+
+        const batch = new protos.SignatureBatch();
+        var pks = [];
+        var sigs = [];
+
+        for (let i = 0; i < messages.length; i++) {
+            generate_private_key(private_key);
+            sign(
+                signature,
+                public_key,
+                private_key,
+                messages[i],
+                context,
+                context.length,
+            );
+            pks.push(new Uint8Array(public_key));
+            sigs.push(new Uint8Array(signature));
+        }
+        pks[pks.length - 1] = new Uint8Array(pks[pks.length - 2]);
+
+        batch.setContext(context);
+        batch.setMessagesList(messages);
+        batch.setPublicKeysList(pks);
+        batch.setSignaturesList(sigs);
+        
+        const verified = verify_batch(batch.serializeBinary());
+
+        assert(verified==protos.ErrorCode.BATCH_VERIFICATION_FAILURE, "failed to batch verify");
+    });
+
+    it('batch verify fails on single incorrect signature', function() {
+        var signature = new Uint8Array(64);
+        var public_key = new Uint8Array(32);
+        var private_key = new Uint8Array(32);
+        
+        var messages = [bytesFromString('Twas brillig, and the slithy toves'), 
+                        bytesFromString('Did gyre and gimble in the wabe:'), 
+                        bytesFromString('All mimsy were the borogoves,'),
+                        bytesFromString('And the mome raths outgrabe.'),
+                        bytesFromString('Beware the Jabberwock, my son!'),
+                    ];
+        const context = bytesFromString("context");
+
+        const batch = new protos.SignatureBatch();
+        var pks = [];
+        var sigs = [];
+
+        for (let i = 0; i < messages.length; i++) {
+            generate_private_key(private_key);
+            sign(
+                signature,
+                public_key,
+                private_key,
+                messages[i],
+                context,
+                context.length,
+            );
+            pks.push(new Uint8Array(public_key));
+            sigs.push(new Uint8Array(signature));
+        }
+        sigs[sigs.length - 1] = new Uint8Array(sigs[sigs.length - 2]);
+
+        batch.setContext(context);
+        batch.setMessagesList(messages);
+        batch.setPublicKeysList(pks);
+        batch.setSignaturesList(sigs);
+        
+        const verified = verify_batch(batch.serializeBinary());
+
+        assert(verified==protos.ErrorCode.BATCH_VERIFICATION_FAILURE, "failed to batch verify");
+    });
+
+    it('batch verify fails on incorrect context', function() {
+        var signature = new Uint8Array(64);
+        var public_key = new Uint8Array(32);
+        var private_key = new Uint8Array(32);
+        
+        var messages = [bytesFromString('Twas brillig, and the slithy toves'), 
+                        bytesFromString('Did gyre and gimble in the wabe:'), 
+                        bytesFromString('All mimsy were the borogoves,'),
+                        bytesFromString('And the mome raths outgrabe.'),
+                        bytesFromString('Beware the Jabberwock, my son!'),
+                    ];
+        const context = bytesFromString("context");
+
+        const batch = new protos.SignatureBatch();
+        var pks = [];
+        var sigs = [];
+
+        for (let i = 0; i < messages.length; i++) {
+            generate_private_key(private_key);
+            sign(
+                signature,
+                public_key,
+                private_key,
+                messages[i],
+                context,
+                context.length,
+            );
+            pks.push(new Uint8Array(public_key));
+            sigs.push(new Uint8Array(signature));
+        }
+        
+
+        batch.setContext(bytesFromString("a change of context"));
+        batch.setMessagesList(messages);
+        batch.setPublicKeysList(pks);
+        batch.setSignaturesList(sigs);
+        
+        const verified = verify_batch(batch.serializeBinary());
+
+        assert(verified==protos.ErrorCode.BATCH_VERIFICATION_FAILURE, "failed to batch verify");
+    });
 });
