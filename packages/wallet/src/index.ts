@@ -4,7 +4,13 @@ import {
   getPublicKeyFromPrivate,
   isValidPrivate,
   isValidPublic,
+  addressFromPublicKey,
 } from '@catalyst-net-js/common';
+
+
+async function loadWasm() {
+  return import('@catalyst-net-js/wasm-ed25519ph');
+}
 
 export default class Wallet {
   constructor(
@@ -31,8 +37,16 @@ export default class Wallet {
     return new Wallet(keypair.secretKey);
   }
 
-  public static generateFromPrivateKey(pkey: Uint8Array): Wallet {
-    const keypair = nacl.sign.keyPair.fromSecretKey(pkey);
+  public static async generateFromPrivateKey(pKey: Uint8Array): Promise<Wallet> {
+    let secretKey = pKey;
+    if (pKey.length !== 64) {
+      const publicKey = await this._publicKeyFor32BytePrivateKey(pKey);
+      secretKey = new Uint8Array(64);
+      secretKey.set(pKey);
+      secretKey.set(publicKey, pKey.length);
+    }
+
+    const keypair = nacl.sign.keyPair.fromSecretKey(secretKey);
     return new Wallet(keypair.secretKey);
   }
 
@@ -74,11 +88,18 @@ export default class Wallet {
   }
 
   public getAddress(): Uint8Array {
-    return this.pubKey;
+    return addressFromPublicKey(this.pubKey);
   }
 
   public getAddressString(): string {
     return `0x${Wallet._toHexString(this.getAddress())}`;
+  }
+
+  private static async _publicKeyFor32BytePrivateKey(privateKey: Uint8Array) : Promise<Uint8Array> {
+    const wasmLib = await loadWasm();
+    const publicKey = new Uint8Array(32);
+    wasmLib.public_key_from_private(publicKey, privateKey);
+    return publicKey;
   }
 
   private static _toHexString(byteArray: Uint8Array) {

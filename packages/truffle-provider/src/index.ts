@@ -84,10 +84,10 @@ export class HDWalletProvider {
       const ctx = context.serializeBinary();
       const contextLength = ctx.length;
       const signature = new Uint8Array(64);
-      const public_key = new Uint8Array(64);
+      const publicKey = new Uint8Array(64);
       const result = signatureLib.sign(
         signature,
-        public_key,
+        publicKey,
         pKey,
         message,
         ctx,
@@ -109,8 +109,7 @@ export class HDWalletProvider {
       return false; // neither an array nor valid value passed;
     };
 
-    // private helper to check if given mnemonic uses BIP39 passphrase protection
-    const checkBIP39Mnemonic = (seedPhrase: string) => {
+    const generateFromMnemonic = (seedPhrase: string) => {
       if (!bip39.validateMnemonic(seedPhrase)) {
         throw new Error('Mnemonic invalid or undefined');
       }
@@ -122,31 +121,39 @@ export class HDWalletProvider {
         const data = derivePath(`${this.walletHdpath + i}'`, seed);
         const wallet = Wallet.generateFromSeed(data.key);
 
-        const address = EthUtil.keccak(Buffer.from(wallet.getPublicKey())).slice(-20);
-        const addr = EthUtil.bufferToHex(address);
+        const addr = wallet.getAddressString();
         this.addresses.push(addr);
         this.wallets[addr] = wallet;
       }
     };
 
-    // private helper leveraging ethUtils to populate wallets/addresses
-    const ethUtilValidation = (privateKeys: string[]) => {
+    const generateFromKeys = async (privateKeys: string[]) => {
       // crank the addresses out
-      for (let i = addressIndex; i < privateKeys.length; i += 1) {
-        const key = fromHexString(privateKeys[i]);
-        const wallet = Wallet.generateFromPrivateKey(key);
-
-        const address = EthUtil.keccak(Buffer.from(wallet.getPublicKey())).slice(-20);
-        const addr = EthUtil.bufferToHex(address);
+      const addWallet = async (key: Uint8Array) => {
+        const wallet = await Wallet.generateFromPrivateKey(key);
+        const addr = wallet.getAddressString();
         this.addresses.push(addr);
         this.wallets[addr] = wallet;
+      };
+
+      const wallets: Promise<void>[] = [];
+      for (let i = addressIndex; i < privateKeys.length; i += 1) {
+        const key = fromHexString(privateKeys[i]);
+        wallets.push(addWallet(key));
       }
+      await Promise.all(wallets);
     };
 
     const privateKeys = normalizePrivateKeys(mnemonic);
 
-    if (!privateKeys) checkBIP39Mnemonic(mnemonic as string);
-    else ethUtilValidation(privateKeys);
+    if (!privateKeys) generateFromMnemonic(mnemonic as string);
+    else {
+      (async () => {
+        await generateFromKeys(privateKeys);
+      })().catch((e) => {
+        throw new Error(e);
+      });
+    }
 
     const tmpAccounts = this.addresses;
     const tmpWallets = this.wallets;
