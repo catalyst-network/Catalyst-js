@@ -42,7 +42,7 @@ checksum = "08c48aae112d48ed9f069b33538ea9e3e90aa263cfa3d1c24309612b1f7472de"
 [[package]]
 name = "catalyst-common"
 version = "0.1.0"
-source = "git+https://github.com/catalyst-network/Catalyst-rs?branch=batch-verification#5cd7e43203a68eaafa5a118b90bf0b4364608fdd"
+source = "git+https://github.com/catalyst-network/Catalyst-rs?branch=develop#73bad941a59fac841baf3f6b3dd049bccf88e4f7"
 dependencies = [
  "catalyst-protocol-sdk-rust",
  "curve25519-dalek",
