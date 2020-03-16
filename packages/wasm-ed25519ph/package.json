@@ -40,7 +40,10 @@
         "build:node": "rimraf dist pkg && webpack -p --progress --config build/webpack.node.babel.js",
         "build:bundler": "rimraf dist pkg && webpack -p --progress --config build/webpack.bundler.babel.js",
         "build:nomodule": "rimraf dist pkg && webpack -p --progress --config build/webpack.nomodule.babel.js",
-        "start:Dev": "rimraf dist pkg && webpack-dev-server --open -d --progress --color --config build/webpack.dev.js"
+        "start:Dev": "rimraf dist pkg && webpack-dev-server --open -d --progress --color --config build/webpack.dev.babel.js",
+        "start:node": "rimraf dist pkg && webpack-dev-server --open -d --progress --color --config build/webpack.node.babel.js",
+        "start:node_alt": "rimraf dist pkg && webpack-dev-server --open -d --progress --color --config build/webpack.node_alternate.babel.js",
+        "start:other": "rimraf dist pkg && webpack-dev-server --open -d"
     },
     "husky": {
         "hooks": {}
@@ -84,7 +87,8 @@
         "webpack": "^4.35.0",
         "webpack-cli": "^3.3.4",
         "webpack-dev-server": "^3.7.2",
-        "webpack-merge": "^4.2.1"
+        "webpack-merge": "^4.2.1",
+        "@catalystnetwork/protocol-sdk": "^0.0.4"
     },
     "gitHead": "738a9f7c72ee92d37d741a4c99c2f1003b2a2254"
 }
