@@ -18,7 +18,7 @@
     ],
     "license": "MIT",
     "name": "@catalyst-net-js/wasm-ed25519ph",
-    "main": "pkg/index",
+    "main": "pkg/index.js",
     "version": "0.1.0",
     "publishConfig": {
         "access": "public"
@@ -36,6 +36,7 @@
         "lint:js": "eslint --ignore-path .gitignore pkg/**/*.js",
         "lint:fix": "eslint --cache --color --ext .jsx,.js tests --fix",
         "nuke:fosho": "rimraf pkg dist node_modules submodules package-lock.json",
+        "build:webpack": "rimraf pkg dist && webpack",
         "build:web": "rimraf dist pkg && webpack -p --progress --config build/webpack.web.babel.js",
         "build:node": "rimraf dist pkg && webpack -p --progress --config build/webpack.node.babel.js",
         "build:bundler": "rimraf dist pkg && webpack -p --progress --config build/webpack.bundler.babel.js",
