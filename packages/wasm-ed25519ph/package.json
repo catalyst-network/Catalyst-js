@@ -18,15 +18,23 @@
     ],
     "license": "MIT",
     "name": "@catalyst-net-js/wasm-ed25519ph",
-    "main": "pkg/index",
+    "main": "pkg/node/index.js",
+    "browser": "pkg/bundler/index.js",
     "version": "0.1.0",
     "publishConfig": {
         "access": "public"
     },
+    "files": [
+        "pkg/bundler/index_bg.wasm",
+        "pkg/bundler/index.js",
+        "pkg/bundler/index.d.ts"
+      ],
     "scripts": {
         "test": "jest",
         "clean": "rimraf pkg dist",
-        "build": "rustup run nightly-2020-01-30 wasm-pack build --out-name index --target nodejs",
+        "build": "rimraf pkg && npm run build:bundler && npm run build:node",
+        "build:bundler": "rustup run nightly-2020-01-30 wasm-pack build --out-dir pkg/bundler --out-name index",
+        "build:node": "rustup run nightly-2020-01-30 wasm-pack build --out-dir pkg/node --out-name index --target nodejs",
         "build:publish": "wasm-pack publish",
         "clean:target": "rimraf pkg dist target",
         "test:cargo:node": "wasm-pack test --node",
@@ -36,9 +44,10 @@
         "lint:js": "eslint --ignore-path .gitignore pkg/**/*.js",
         "lint:fix": "eslint --cache --color --ext .jsx,.js tests --fix",
         "nuke:fosho": "rimraf pkg dist node_modules submodules package-lock.json",
+        "build:webpack": "webpack",
         "build:web": "rimraf dist pkg && webpack -p --progress --config build/webpack.web.babel.js",
-        "build:node": "rimraf dist pkg && webpack -p --progress --config build/webpack.node.babel.js",
-        "build:bundler": "rimraf dist pkg && webpack -p --progress --config build/webpack.bundler.babel.js",
+        "build:node2": "rimraf dist pkg && webpack -p --progress --config build/webpack.node.babel.js",
+        "build:bundler2": "rimraf dist pkg && webpack -p --progress --config build/webpack.bundler.babel.js",
         "build:nomodule": "rimraf dist pkg && webpack -p --progress --config build/webpack.nomodule.babel.js",
         "start:Dev": "rimraf dist pkg && webpack-dev-server --open -d --progress --color --config build/webpack.dev.babel.js",
         "start:node": "rimraf dist pkg && webpack-dev-server --open -d --progress --color --config build/webpack.node.babel.js",
