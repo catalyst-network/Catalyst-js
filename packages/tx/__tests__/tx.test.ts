@@ -3,11 +3,11 @@ import { base32StringFromBytes } from '@catalyst-net-js/common';
 import Transaction from '../src';
 
 const txData: any = {
-  nonce: '0x00',
+  nonce: '0x0',
   gasPrice: '0x09184e72a000',
   gasLimit: '0x2710',
   to: '0x0000000000000000000000000000000000000000',
-  value: '0x00',
+  value: '0x0',
   data: '0x7f7465737432000000000000000000000000000000000000000000000000000000600057',
 };
 const tx = new Transaction(txData);
@@ -24,8 +24,8 @@ describe('tx', () => {
 
     expect(gasLimit).toBe(10000);
     expect(nonce).toBe(0);
-    expect(JSON.stringify(amount)).toBe(JSON.stringify(new Uint8Array([0])));
-    expect(JSON.stringify(gasPrice)).toBe(JSON.stringify(new Uint8Array([9, 24, 78, 114, 160, 0])));
+    expect(amount.toString()).toBe('0,0,0,0,0,0,0,0');
+    expect(gasPrice.toString()).toBe('0,160,114,78,24,9,0,0');
     expect(JSON.stringify(receiver)).toBe(JSON.stringify(new Uint8Array(
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     )));
@@ -60,7 +60,7 @@ describe('tx', () => {
     expect(signatureContext.getNetworkType()).toBe(3);
     expect(signatureContext.getSignatureType()).toBe(1);
     expect(signature.getRawBytes_asB64()).toBe(
-      'dmaaRrVYj8HfpG3/UJWiEkMTj23yJZS12TWLcisYj5mybTP/FQOIVcxhg5zHAILi+bGpCBlwwvLXZvnSUBMVBQ==',
+      'HplUzawqO5Nkqtzy43y2cx+dJX9oVM0PvkZhjBMf5xve+WoJaJXg17a7U2PBD0kl/NEVsrbRTdw9VZp8/WRfDA==',
     );
     done();
   });
@@ -68,7 +68,7 @@ describe('tx', () => {
   it('serializes a tx', () => {
     const serializedTx = tx.serialize();
     expect(base32StringFromBytes(serializedTx)).toBe(
-      'BK3ACCQUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIQMINPQLEDNQ42YDAF3IHCXOVFHWC7KZY6MQ4TW4Y7JQJDWQWR7VCA2AEACEJD7ORSXG5BSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAACXGIDASGCOOKQAAOEQJZJEQCQEBABRAAISIB3GNGSGWVMI7QO7URW76UEVUIJEGE4PNXZCLFFV3E2YW4RLDCHZTMTNGP7RKA4IKXGGDA44Y4AIFYXZWGUQQGLQYLZNOZXZ2JIBGFIF',
+      'BK7QCCQUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIQMINPQLEDNQ42YDAF3IHCXOVFHWC7KZY6MQ4TW4Y7JQJDWQWR7VCA2BAAAAAAAAAAAAABCER7XIZLTOQZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAABLTECAAUBZE4GAJAAADRECOKJEAUBAIAMIACESAD2MVJTNMFI5ZGZFK3TZOG7FWOMPZ2JL7NBKM2D56IZQYYEY744N556LKBFUJLYGXW25VGY6BB5ESL7GRCWZLNUKN3Q6VLGT47VSF6DA',
     );
   });
 
@@ -85,8 +85,8 @@ describe('tx', () => {
 
     expect(gasLimit).toBe(10000);
     expect(nonce).toBe(0);
-    expect(JSON.stringify(amount)).toBe(JSON.stringify(new Uint8Array([0])));
-    expect(JSON.stringify(gasPrice)).toBe(JSON.stringify(new Uint8Array([9, 24, 78, 114, 160, 0])));
+    expect(amount.toString()).toBe('0,0,0,0,0,0,0,0');
+    expect(gasPrice.toString()).toBe('0,160,114,78,24,9,0,0');
     expect(JSON.stringify(receiver)).toBe(JSON.stringify(new Uint8Array(
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     )));
