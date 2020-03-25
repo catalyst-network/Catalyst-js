@@ -1,6 +1,8 @@
 import * as protos from '@catalystnetwork/protocol-sdk';
 import Wallet from '@catalyst-net-js/wallet';
-import { bytesFromHexString, bytesFromBase32String, validateProperties } from '@catalyst-net-js/common';
+import {
+  bytesFromHexString, bytesFromNumber, numberFromBytes, bytesFromBase32String, validateProperties,
+} from '@catalyst-net-js/common';
 import { TxData, numOrString, txEntry } from './types';
 
 async function loadWasm() {
@@ -44,14 +46,13 @@ export class Transaction {
     if (!tx.value) tx.value = '0x';
 
     const errors = validateProperties(this.tx, this.schema);
-
     errors.forEach(({ message }: {message: string}) => { throw new Error(message); });
 
     this.entry = new protos.PublicEntry();
     this.entry.setReceiverAddress(bytesFromHexString(tx.to));
-    this.entry.setAmount(bytesFromHexString(tx.value));
+    this.entry.setAmount(bytesFromNumber(tx.value));
     this.entry.setData(bytesFromHexString(tx.data));
-    this.entry.setGasPrice(bytesFromHexString(tx.gasPrice.toString()));
+    this.entry.setGasPrice(bytesFromNumber(tx.gasPrice.toString()));
     this.entry.setGasLimit(Number(tx.gasLimit));
     this.entry.setNonce(Number(tx.nonce));
   }

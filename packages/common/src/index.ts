@@ -32,6 +32,37 @@ export function removeHexPrefix(str: string): string {
 }
 
 /**
+ * converts a number to bytes
+ * @param number integer
+ */
+export function bytesFromNumber(number : number | string): Uint8Array {
+  let long = (typeof number === 'string') ? parseInt(number, 16) : number;
+  const byteArray = [0, 0, 0, 0, 0, 0, 0, 0];
+
+  for (let index = 0; index < byteArray.length; index += 1) {
+    // eslint-disable-next-line no-bitwise
+    const byte = long & 0xff;
+    byteArray[index] = byte;
+    long = (long - byte) / 256;
+  }
+
+  return new Uint8Array(byteArray);
+}
+
+/**
+ * converts a bytes to a number
+ * @param bytes uint8array to convert
+ */
+export function numberFromBytes(bytes: Uint8Array): number {
+  const byteArray = [].slice.call(bytes);
+  let value = 0;
+  for (let i = byteArray.length - 1; i >= 0; i -= 1) {
+    value = (value * 256) + byteArray[i];
+  }
+  return value;
+}
+
+/**
  * converts hex string to bytes
  * @param str hex string
  */
