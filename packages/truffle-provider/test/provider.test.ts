@@ -72,7 +72,7 @@ describe("HD Wallet Provider", function() {
 
   it("provides for a private key", async function() {
     const privateKey =
-      "30329f1622aacd6093753a2b6d07e7d95f67bc511a2245008447772ba8b9c7225830bc0b616672c48077fc4e144b6c5700c66e8a15019da4d4ea74ccaeea5c1f"; //random valid private key generated with ethkey
+      "0x30329f1622aacd6093753a2b6d07e7d95f67bc511a2245008447772ba8b9c7225830bc0b616672c48077fc4e144b6c5700c66e8a15019da4d4ea74ccaeea5c1f"; //random valid private key generated with ethkey
     provider = new WalletProvider(privateKey, `http://localhost:${port}`);
     web3.setProvider(provider);
 
@@ -96,8 +96,8 @@ describe("HD Wallet Provider", function() {
       return new Uint8Array(hexString.match(/.{1,2}/g).map((byte: any) => parseInt(byte, 16)));
     };
     const privateKeys = [
-      "ccfd141c3a94d3142acc64f5da01a2518e7c9fd56b9443f3098181217c049ab04091f8a67905f4c98550d2b8d406efd949787571c09578726ef2a1f6af21461d",
-      "3fd0f533db7abcd571af9bf80e884ec5693ac4ba3d70da468ba752c723aa2f1bcf4b0ef0205b3f2388dda975d69f7ec66e407ccf4f7bb2a6de712f5861374db2"
+      "0xccfd141c3a94d3142acc64f5da01a2518e7c9fd56b9443f3098181217c049ab04091f8a67905f4c98550d2b8d406efd949787571c09578726ef2a1f6af21461d",
+      "0x3fd0f533db7abcd571af9bf80e884ec5693ac4ba3d70da468ba752c723aa2f1bcf4b0ef0205b3f2388dda975d69f7ec66e407ccf4f7bb2a6de712f5861374db2"
     ];
 
     const privateKeysByAddress: { [address: string]: string } = {
