@@ -1,5 +1,6 @@
 import Transaction from '@catalyst-net-js/tx';
 import Wallet from '@catalyst-net-js/wallet';
+import { bytesFromBase32String, bytesFromHexString } from '@catalyst-net-js/common';
 import * as protos from '@catalystnetwork/protocol-sdk';
 import * as bip39 from 'bip39';
 import * as EthUtil from 'ethereumjs-util';
@@ -72,10 +73,6 @@ export class HDWalletProvider {
       return Array.prototype.map.call(byteArray, (byte) => (`0${(byte & 0xFF).toString(16)}`).slice(-2)).join('');
     }
 
-    function fromHexString(hexString: any): Uint8Array {
-      return new Uint8Array(hexString.match(/.{1,2}/g).map((byte: any) => parseInt(byte, 16)));
-    }
-
     async function signMessage(message: any, pKey: any): Promise<Uint8Array> {
       const signatureLib = await loadWasm();
       const context = new protos.SigningContext();
@@ -138,7 +135,9 @@ export class HDWalletProvider {
 
       const wallets: Promise<void>[] = [];
       for (let i = addressIndex; i < privateKeys.length; i += 1) {
-        const key = fromHexString(privateKeys[i]);
+        const isHex = (value: any) => /0[xX][0-9a-fA-F]+/.test(value.toString());
+        console.log(isHex(privateKeys[i]));
+        const key = isHex(privateKeys[i]) ? bytesFromHexString(privateKeys[i]) : bytesFromBase32String(privateKeys[i]);
         wallets.push(addWallet(key));
       }
       await Promise.all(wallets);
