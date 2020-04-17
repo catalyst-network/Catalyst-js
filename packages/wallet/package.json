@@ -37,7 +37,7 @@
   "dependencies": {
     "@catalyst-net-js/common": "^0.3.0",
     "@catalyst-net-js/wasm-ed25519ph": "^0.3.1",
-    "@catalystnetwork/protocol-sdk": "^0.0.6",
+    "@catalystnetwork/protocol-sdk": "^0.0.7",
     "bip39": "^3.0.2",
     "ed25519-hd-key": "^1.1.0",
     "tweetnacl": "^1.0.1"
