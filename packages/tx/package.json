@@ -1,6 +1,6 @@
 {
   "name": "@catalyst-net-js/tx",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A simple module for creating, manipulating and signing Catalyst transactions",
   "author": "Stephen Horsfall <stephen.horsfall@atlascity.io>",
   "homepage": "https://github.com/catalyst-network/Catalyst-js/tree/master/packages/txr#readme",
@@ -40,8 +40,8 @@
   },
   "dependencies": {
     "@catalyst-net-js/common": "^0.3.0",
-    "@catalyst-net-js/wallet": "^0.3.0",
-    "@catalyst-net-js/wasm-ed25519ph": "^0.3.0",
+    "@catalyst-net-js/wallet": "^0.3.1",
+    "@catalyst-net-js/wasm-ed25519ph": "^0.3.1",
     "@catalystnetwork/protocol-sdk": "^0.0.6",
     "base32-decode": "^1.0.0",
     "base32-encode": "^1.1.1",
