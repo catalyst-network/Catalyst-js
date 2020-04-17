@@ -20,7 +20,7 @@
     "name": "@catalyst-net-js/wasm-ed25519ph",
     "main": "pkg/node/index.js",
     "browser": "pkg/bundler/index.js",
-    "version": "0.2.1",
+    "version": "0.3.2",
     "publishConfig": {
         "access": "public"
     },
@@ -69,7 +69,7 @@
         "@babel/register": "^7.4.4",
         "@babel/runtime": "^7.4.5",
         "@babel/types": "^7.8.3",
-        "@catalystnetwork/protocol-sdk": "^0.0.4",
+        "@catalystnetwork/protocol-sdk": "^0.0.7",
         "@wasm-tool/wasm-pack-plugin": "1.0.0",
         "babel-eslint": "^10.0.2",
         "babel-jest": "^24.8.0",
