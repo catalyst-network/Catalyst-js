@@ -1,5 +1,5 @@
 
-import { base32StringFromBytes } from '@catalyst-net-js/common';
+import { base32StringFromBytes, hexStringFromBytes } from '@catalyst-net-js/common';
 import Transaction from '../src';
 
 const txData: any = {
@@ -60,7 +60,7 @@ describe('tx', () => {
     expect(signatureContext.getNetworkType()).toBe(3);
     expect(signatureContext.getSignatureType()).toBe(1);
     expect(signature.getRawBytes_asB64()).toBe(
-      'HplUzawqO5Nkqtzy43y2cx+dJX9oVM0PvkZhjBMf5xve+WoJaJXg17a7U2PBD0kl/NEVsrbRTdw9VZp8/WRfDA==',
+      'oa1qedmaMvdoMtk8udBKVa/oTmt6tHBKvW3pFEOIPsJYWJ13D5JqJNLQwVDMhuyPhAr6C1W3aenG63rjJ28RAA==',
     );
     done();
   });
@@ -68,7 +68,7 @@ describe('tx', () => {
   it('serializes a tx', () => {
     const serializedTx = tx.serialize();
     expect(base32StringFromBytes(serializedTx)).toBe(
-      'BK7QCCQUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIQMINPQLEDNQ42YDAF3IHCXOVFHWC7KZY6MQ4TW4Y7JQJDWQWR7VCA2BAAAAAAAAAAAAABCER7XIZLTOQZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAABLTECAAUBZE4GAJAAADRECOKJEAUBAIAMIACESAD2MVJTNMFI5ZGZFK3TZOG7FWOMPZ2JL7NBKM2D56IZQYYEY744N556LKBFUJLYGXW25VGY6BB5ESL7GRCWZLNUKN3Q6VLGT47VSF6DA',
+      'BK7QCCQUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIQMINPQLEDNQ42YDAF3IHCXOVFHWC7KZY6MQ4TW4Y7JQJDWQWR7VCA2BAAAAAAAAAAAAABCER7XIZLTOQZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAABLSUCAAUBZE4GAJAAADBECOIJEAUBAIAMIACESAUGWWU6OZTIZPO2BS3E6LTUCKKWX6QTTLPK2HASV5NXURIQ4IH3BFQWE5O4HZE2RE2LIMCUGMQ3WI7BAK7IFVLN3J5HDOW6XDE5XRCAA',
     );
   });
 
@@ -93,19 +93,20 @@ describe('tx', () => {
   });
 
   it('deserializes a hex tx', () => {
-    const serializedTx = new Transaction('0aa2070a01001220d6fc371d1b6d97cc47a1125c13aa0ed6ae5c8e818e14dbff0dbf1de28580753f1a0100229706608060405234801561001057600080fd5b50336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506102b7806100606000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c80630900f01014610051578063445df0ac146100955780638da5cb5b146100b3578063fdacd576146100fd575b600080fd5b6100936004803603602081101561006757600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061012b565b005b61009d6101f7565b6040518082815260200191505060405180910390f35b6100bb6101fd565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6101296004803603602081101561011357600080fd5b8101908080359060200190929190505050610222565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614156101f45760008190508073ffffffffffffffffffffffffffffffffffffffff1663fdacd5766001546040518263ffffffff1660e01b815260040180828152602001915050600060405180830381600087803b1580156101da57600080fd5b505af11580156101ee573d6000803e3d6000fd5b50505050505b50565b60015481565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141561027f57806001819055505b5056fea265627a7a72315820b32effa2a1b47d95006f6b6221a722dc4427dfb227537d8f6ad7bf016db9082664736f6c634300050c003232054a817c800038b7a39a034208000000000000000052480a040803100112402831e8031bd7d2c29574836d4e84e8b05d7a849feb36a908d77ebedf9b51c1aab58eaebec26020fe287af0ba2a2d149eb960b168bbee5c6b273ba01681890c06');
+    const serialized = tx.serialize();
+    const serializedTx = new Transaction(hexStringFromBytes(serialized));
     const deserialized = serializedTx.deserialize();
     const amount = deserialized.getAmount();
     const gasPrice = deserialized.getGasPrice();
     const gasLimit = deserialized.getGasLimit();
     const receiver = deserialized.getReceiverAddress();
     const nonce = deserialized.getNonce();
-    expect(gasLimit).toBe(6721975);
+    expect(gasLimit).toBe(10000);
     expect(nonce).toBe(0);
-    expect(JSON.stringify(amount)).toBe(JSON.stringify(new Uint8Array([0])));
-    expect(JSON.stringify(gasPrice)).toBe(JSON.stringify(new Uint8Array([74, 129, 124, 128, 0])));
+    expect(JSON.stringify(amount)).toBe(JSON.stringify(new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0])));
+    expect(JSON.stringify(gasPrice)).toBe(JSON.stringify(new Uint8Array([0, 160, 114, 78, 24, 9, 0, 0])));
     expect(JSON.stringify(receiver)).toBe(JSON.stringify(new Uint8Array(
-      [0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     )));
   });
 
