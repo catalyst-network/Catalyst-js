@@ -66,6 +66,11 @@ describe('wallet', () => {
     expect(wallet.getAddressString()).toBe('0x1ba6a7dc8a769ccc89796d397fdd253aa0c6cf14');
   });
 
+  it('throws an error for an invalid mnemonic', () => {
+    const seedPhrase = 'fee talk ride output ignore turkey social label owner twist disagree';
+    expect(() => Wallet.generateFromMnemonic(seedPhrase, 0)).toThrowError(new Error('Mnemonic invalid or undefined'));
+  });
+
   it('throws an error for invalid private Key', () => {
     const privateKey = new Uint8Array([
       79, 164, 29, 195, 12, 14, 180, 141, 78, 133,
