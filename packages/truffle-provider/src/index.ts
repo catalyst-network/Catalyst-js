@@ -2,7 +2,6 @@ import Transaction from '@catalyst-net-js/tx';
 import Wallet from '@catalyst-net-js/wallet';
 import { bytesFromBase32String, bytesFromHexString } from '@catalyst-net-js/common';
 import * as protos from '@catalystnetwork/protocol-sdk';
-import * as bip39 from 'bip39';
 import * as EthUtil from 'ethereumjs-util';
 import ProviderEngine from 'web3-provider-engine';
 import FiltersSubprovider from 'web3-provider-engine/subproviders/filters';
@@ -107,16 +106,9 @@ export class HDWalletProvider {
     };
 
     const generateFromMnemonic = (seedPhrase: string) => {
-      if (!bip39.validateMnemonic(seedPhrase)) {
-        throw new Error('Mnemonic invalid or undefined');
-      }
-
-      const seed = bip39.mnemonicToSeedHex(seedPhrase);
-
       // crank the addresses out
       for (let i = addressIndex; i < addressIndex + numAddresses; i += 1) {
-        const data = derivePath(`${this.walletHdpath + i}'`, seed);
-        const wallet = Wallet.generateFromSeed(data.key);
+        const wallet = Wallet.generateFromMnemonic(seedPhrase);
 
         const addr = wallet.getAddressString();
         this.addresses.push(addr);
@@ -136,7 +128,6 @@ export class HDWalletProvider {
       const wallets: Promise<void>[] = [];
       for (let i = addressIndex; i < privateKeys.length; i += 1) {
         const isHex = (value: any) => /0[xX][0-9a-fA-F]+/.test(value.toString());
-        console.log(isHex(privateKeys[i]));
         const key = isHex(privateKeys[i]) ? bytesFromHexString(privateKeys[i]) : bytesFromBase32String(privateKeys[i]);
         wallets.push(addWallet(key));
       }

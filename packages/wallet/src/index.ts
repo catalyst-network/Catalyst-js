@@ -3,7 +3,6 @@ import * as bip39 from 'bip39';
 import { derivePath } from 'ed25519-hd-key';
 import {
   base32StringFromBytes,
-  hexStringFromBytes,
   getPublicKeyFromPrivate,
   isValidPrivate,
   isValidPublic,
