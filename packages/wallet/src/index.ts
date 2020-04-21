@@ -3,6 +3,7 @@ import * as bip39 from 'bip39';
 import { derivePath } from 'ed25519-hd-key';
 import {
   base32StringFromBytes,
+  hexStringFromBytes,
   getPublicKeyFromPrivate,
   isValidPrivate,
   isValidPublic,
@@ -15,6 +16,8 @@ async function loadWasm() {
 }
 
 export default class Wallet {
+  walletHDPath: string = 'm/44\'/42069\'/';
+
   constructor(
       private readonly privateKey?: Uint8Array | undefined,
       private publicKey: Uint8Array | undefined = undefined,
@@ -57,14 +60,16 @@ export default class Wallet {
     return new Wallet(keypair.secretKey);
   }
 
-  public static generateFromMnemonic(mnemonic: string): Wallet {
+  public static generateFromMnemonic(mnemonic: string, index: number = 0, walletHdPath: string = 'm/44\'/42069\'/'): Wallet {
     if (!bip39.validateMnemonic(mnemonic)) {
       throw new Error('Mnemonic invalid or undefined');
     }
 
-    const seed = bip39.mnemonicToSeed(mnemonic);
-    const data = derivePath(`${this.walletHdpath + i}'`, seed);
-    return Wallet.generateFromSeed(data.key);
+    const masterSeed = bip39.mnemonicToSeedSync(mnemonic);
+    const masterSeedHex = hexStringFromBytes(masterSeed);
+
+    const { key } = derivePath(`${walletHdPath + index}'`, masterSeedHex);
+    return Wallet.generateFromSeed(key);
   }
 
   // private getters
@@ -80,6 +85,10 @@ export default class Wallet {
       throw new Error('This is a public key only wallet');
     }
     return this.privateKey;
+  }
+
+  private get hdPath(): string {
+    return this.walletHDPath;
   }
 
   // public getters
