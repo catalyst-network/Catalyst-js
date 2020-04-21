@@ -15,8 +15,6 @@ async function loadWasm() {
 }
 
 export default class Wallet {
-  walletHDPath: string = 'm/44\'/42069\'/';
-
   constructor(
       private readonly privateKey?: Uint8Array | undefined,
       private publicKey: Uint8Array | undefined = undefined,
@@ -82,10 +80,6 @@ export default class Wallet {
       throw new Error('This is a public key only wallet');
     }
     return this.privateKey;
-  }
-
-  private get hdPath(): string {
-    return this.walletHDPath;
   }
 
   // public getters

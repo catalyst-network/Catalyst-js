@@ -108,7 +108,7 @@ export class HDWalletProvider {
     const generateFromMnemonic = (seedPhrase: string) => {
       // crank the addresses out
       for (let i = addressIndex; i < addressIndex + numAddresses; i += 1) {
-        const wallet = Wallet.generateFromMnemonic(seedPhrase);
+        const wallet = Wallet.generateFromMnemonic(seedPhrase, i);
 
         const addr = wallet.getAddressString();
         this.addresses.push(addr);
