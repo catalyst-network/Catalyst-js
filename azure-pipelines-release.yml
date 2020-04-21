@@ -30,6 +30,6 @@ steps:
 - script: |
     git checkout master  
     echo "//registry.npmjs.org/:_authToken=$(NPM_TOKEN)" > ~/.npmrc
-    lerna version patch --yes
+    lerna version patch --no-push --yes
     lerna publish from-git --yes
   displayName: 'Run lerna publish'
