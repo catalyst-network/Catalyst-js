@@ -1,4 +1,6 @@
 import * as nacl from 'tweetnacl';
+import * as bip39 from 'bip39';
+import { derivePath } from 'ed25519-hd-key';
 import {
   base32StringFromBytes,
   getPublicKeyFromPrivate,
@@ -53,6 +55,16 @@ export default class Wallet {
   public static generateFromSeed(seed: Uint8Array): Wallet {
     const keypair = nacl.sign.keyPair.fromSeed(seed);
     return new Wallet(keypair.secretKey);
+  }
+
+  public static generateFromMnemonic(mnemonic: string): Wallet {
+    if (!bip39.validateMnemonic(mnemonic)) {
+      throw new Error('Mnemonic invalid or undefined');
+    }
+
+    const seed = bip39.mnemonicToSeed(mnemonic);
+    const data = derivePath(`${this.walletHdpath + i}'`, seed);
+    return Wallet.generateFromSeed(data.key);
   }
 
   // private getters
