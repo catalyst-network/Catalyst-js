@@ -65,11 +65,9 @@ export default class Wallet {
       throw new Error('Mnemonic invalid or undefined');
     }
 
-    const masterSeed = bip39.mnemonicToSeedSync(mnemonic);
-    const masterSeedHex = hexStringFromBytes(masterSeed);
-
-    const { key } = derivePath(`${walletHdPath + index}'`, masterSeedHex);
-    return Wallet.generateFromSeed(key);
+    const masterSeed = bip39.mnemonicToSeedSync(mnemonic).toString('hex');
+    const { key } = derivePath(`${walletHdPath + index}'`, masterSeed);
+    return Wallet.generateFromSeed(new Uint8Array(key));
   }
 
   // private getters

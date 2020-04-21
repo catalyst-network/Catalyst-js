@@ -58,6 +58,14 @@ describe('wallet', () => {
     expect(wallet.getAddressString()).toBe('0xd1ff442e2421de40575979990bf2cdb74b67a0b7');
   });
 
+  it('generate a wallet from a mnemonic', () => {
+    const seedPhrase = 'fee talk ride output ignore turkey social label owner twist disagree shallow';
+    const wallet = Wallet.generateFromMnemonic(seedPhrase, 0);
+    expect(wallet.getPrivateKeyString()).toBe('QP4QF4WRAIC3INTHOTVD5VQ7X6MTFF3JOVYWXYCE555O7KETOSQSUUICW7HCG75DKEOZQYFZM5WV46MA3BLFHKZ3PTCHYBVNYBJK4ZI');
+    expect(wallet.getPublicKeyString()).toBe('FJIQFN6OEN72GUI5TBQLSZ3NLZ4YBWCWKOVTW7GEPQDK3QCSVZSQ');
+    expect(wallet.getAddressString()).toBe('0x1ba6a7dc8a769ccc89796d397fdd253aa0c6cf14');
+  });
+
   it('throws an error for invalid private Key', () => {
     const privateKey = new Uint8Array([
       79, 164, 29, 195, 12, 14, 180, 141, 78, 133,
