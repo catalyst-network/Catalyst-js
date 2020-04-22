@@ -73,6 +73,15 @@ describe('wallet', () => {
     expect(wallet.getAddressString()).toBe('0x530f2f299fade8454856f12be695bbff145e5f23');
   });
 
+  it('generate a keystore for a wallet', async () => {
+    const wallet = await Wallet.generateFromKeystore(keystore, 'test');
+    const keyObject = wallet.createKeystore('test');
+    expect(keyObject.crypto.cipher).toBe('aes-128-ctr');
+    // expect(wallet.getPrivateKeyString()).toBe('KP3CHDCUDPSZ3SU5QB7FOFB5G26AFROJFERDWDJPML5YSAG74DRJEFBRJ4QASC4RDVXBDDO5NCLQRAVT5SZNJGVHIIG6Z6OJVALOALY');
+    // expect(wallet.getPublicKeyString()).toBe('SIKDCTZABEFZCHLOCGG522EXBCBLH3FS2SNKOQQN5T44TKAW4AXQ');
+    // expect(wallet.getAddressString()).toBe('0x530f2f299fade8454856f12be695bbff145e5f23');
+  });
+
   it('throws an error for an invalid mnemonic', () => {
     const seedPhrase = 'fee talk ride output ignore turkey social label owner twist disagree';
     expect(() => Wallet.generateFromMnemonic(seedPhrase, 0)).toThrowError(new Error('Mnemonic invalid or undefined'));

@@ -1,6 +1,7 @@
 import * as nacl from 'tweetnacl';
 import * as peerId from 'peer-id';
 import crypto from 'libp2p-crypto';
+import randomBytes from 'randombytes';
 import * as bip39 from 'bip39';
 import { derivePath } from 'ed25519-hd-key';
 import * as keythereum from 'keythereum-pure-js';
@@ -122,6 +123,25 @@ export default class Wallet {
     const protobuff = key.bytes;
     const peerID = await peerId.createFromPrivKey(protobuff);
     return peerID.toB58String();
+  }
+
+  public createKeystore(password: string, keyLength: number = 32, ivLength: number = 16) {
+    const random = randomBytes(keyLength + ivLength + keyLength);
+    const iv = random.slice(keyLength, keyLength + ivLength);
+    const salt = random.slice(keyLength + ivLength);
+    const options = {
+      kdf: 'scrypt',
+      cipher: 'aes-128-ctr',
+      kdfparams: {
+        n: 262144,
+        r: 1,
+        p: 8,
+        dklen: 32,
+        prf: 'hmac-sha256',
+      },
+    };
+    const secret = Buffer.from(this.privKey.slice(0, 32));
+    return keythereum.dump(password, secret, salt, iv, options, null);
   }
 
   private static async _publicKeyFor32BytePrivateKey(privateKey: Uint8Array) : Promise<Uint8Array> {
