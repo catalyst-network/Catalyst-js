@@ -74,12 +74,10 @@ describe('wallet', () => {
   });
 
   it('generate a keystore for a wallet', async () => {
-    const wallet = await Wallet.generateFromKeystore(keystore, 'test');
+    const wallet = Wallet.generate();
     const keyObject = wallet.createKeystore('test');
     expect(keyObject.crypto.cipher).toBe('aes-128-ctr');
-    // expect(wallet.getPrivateKeyString()).toBe('KP3CHDCUDPSZ3SU5QB7FOFB5G26AFROJFERDWDJPML5YSAG74DRJEFBRJ4QASC4RDVXBDDO5NCLQRAVT5SZNJGVHIIG6Z6OJVALOALY');
-    // expect(wallet.getPublicKeyString()).toBe('SIKDCTZABEFZCHLOCGG522EXBCBLH3FS2SNKOQQN5T44TKAW4AXQ');
-    // expect(wallet.getAddressString()).toBe('0x530f2f299fade8454856f12be695bbff145e5f23');
+    expect(keyObject.crypto.kdf).toBe('scrypt');
   });
 
   it('throws an error for an invalid mnemonic', () => {
