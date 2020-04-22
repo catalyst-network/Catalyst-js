@@ -2,11 +2,11 @@ import nacl from 'tweetnacl';
 import * as bip39 from 'bip39';
 import { derivePath } from 'ed25519-hd-key';
 import Wallet from '../src';
+import * as keystore from './keystores/testSigningKey.json';
 
 describe('wallet', () => {
-  it('generate a wallet', () => {
+  it('generate a wallet', async () => {
     const wallet = Wallet.generate();
-
     expect(wallet.getPublicKey().length).toBe(32);
     expect(wallet.getPrivateKey().length).toBe(64);
   });
@@ -64,6 +64,13 @@ describe('wallet', () => {
     expect(wallet.getPrivateKeyString()).toBe('QP4QF4WRAIC3INTHOTVD5VQ7X6MTFF3JOVYWXYCE555O7KETOSQSUUICW7HCG75DKEOZQYFZM5WV46MA3BLFHKZ3PTCHYBVNYBJK4ZI');
     expect(wallet.getPublicKeyString()).toBe('FJIQFN6OEN72GUI5TBQLSZ3NLZ4YBWCWKOVTW7GEPQDK3QCSVZSQ');
     expect(wallet.getAddressString()).toBe('0x1ba6a7dc8a769ccc89796d397fdd253aa0c6cf14');
+  });
+
+  it('generate a wallet from a keystore', async () => {
+    const wallet = await Wallet.generateFromKeystore(keystore, 'test');
+    expect(wallet.getPrivateKeyString()).toBe('KP3CHDCUDPSZ3SU5QB7FOFB5G26AFROJFERDWDJPML5YSAG74DRJEFBRJ4QASC4RDVXBDDO5NCLQRAVT5SZNJGVHIIG6Z6OJVALOALY');
+    expect(wallet.getPublicKeyString()).toBe('SIKDCTZABEFZCHLOCGG522EXBCBLH3FS2SNKOQQN5T44TKAW4AXQ');
+    expect(wallet.getAddressString()).toBe('0x530f2f299fade8454856f12be695bbff145e5f23');
   });
 
   it('throws an error for an invalid mnemonic', () => {

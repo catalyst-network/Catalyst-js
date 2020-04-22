@@ -13,6 +13,7 @@
     "typescript": "^3.7.4"
   },
   "dependencies": {
+    "keythereum": "^1.0.4",
     "xtend": "^4.0.2"
   }
 }
