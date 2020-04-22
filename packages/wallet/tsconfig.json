@@ -4,6 +4,7 @@
       "outDir": "./dist",
       "rootDir": "./",
       "typeRoots": [ "./types", "./node_modules/@types"],
+      "resolveJsonModule": true
     },
     // "references": [
     //   { "path": "../wasm-ed25519ph" }
@@ -11,6 +12,7 @@
     "exclude": [
       "node_modules",
       "dist",
-      "types"
+      "types",
+      "_tests_"
     ]
   }

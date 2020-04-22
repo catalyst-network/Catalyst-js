@@ -70,9 +70,9 @@ export default class Wallet {
     return Wallet.generateFromSeed(new Uint8Array(key));
   }
 
-  public static generateFromKeystore(key: any, password: string): Wallet {
+  public static async generateFromKeystore(key: any, password: string): Promise<Wallet> {
     const privateKey = keythereum.recover(password, key);
-    return new Wallet(privateKey);
+    return Wallet.generateFromPrivateKey(new Uint8Array(privateKey));
   }
 
   // private getters
