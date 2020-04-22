@@ -4,9 +4,9 @@ import { derivePath } from 'ed25519-hd-key';
 import Wallet from '../src';
 
 describe('wallet', () => {
-  it('generate a wallet', () => {
+  it('generate a wallet', async () => {
     const wallet = Wallet.generate();
-
+    console.log(await wallet.getPeerId());
     expect(wallet.getPublicKey().length).toBe(32);
     expect(wallet.getPrivateKey().length).toBe(64);
   });

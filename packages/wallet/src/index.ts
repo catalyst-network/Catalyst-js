@@ -1,6 +1,9 @@
 import * as nacl from 'tweetnacl';
+import * as peerId from 'peer-id';
+import crypto from 'libp2p-crypto';
 import * as bip39 from 'bip39';
 import { derivePath } from 'ed25519-hd-key';
+import * as keythereum from 'keythereum-pure-js';
 import {
   base32StringFromBytes,
   getPublicKeyFromPrivate,
@@ -105,6 +108,15 @@ export default class Wallet {
 
   public getAddressString(): string {
     return `0x${Wallet._toHexString(this.getAddress())}`;
+  }
+
+  public async getPeerId(): Promise<string> {
+    const privateKeyBuffer = Buffer.from(this.privKey);
+    const publicKeyBuffer = Buffer.from(this.pubKey);
+    const key = new crypto.keys.supportedKeys.ed25519.Ed25519PrivateKey(privateKeyBuffer, publicKeyBuffer);
+    const protobuff = key.bytes;
+    const peerID = await peerId.createFromPrivKey(protobuff);
+    return peerID.toB58String();
   }
 
   private static async _publicKeyFor32BytePrivateKey(privateKey: Uint8Array) : Promise<Uint8Array> {
