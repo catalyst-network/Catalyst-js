@@ -3,12 +3,14 @@
     "compilerOptions": {
       "outDir": "./dist",
       "rootDir": "./",
+      "typeRoots": [ "./types", "./node_modules/@types"],
     },
     // "references": [
     //   { "path": "../wasm-ed25519ph" }
     // ],
     "exclude": [
       "node_modules",
-      "dist"
+      "dist",
+      "types"
     ]
   }

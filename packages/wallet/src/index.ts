@@ -70,6 +70,11 @@ export default class Wallet {
     return Wallet.generateFromSeed(new Uint8Array(key));
   }
 
+  public static generateFromKeystore(key: any, password: string): Wallet {
+    const privateKey = keythereum.recover(password, key);
+    return new Wallet(privateKey);
+  }
+
   // private getters
   private get pubKey(): Uint8Array {
     if (!this.publicKey) {
