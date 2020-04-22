@@ -73,6 +73,13 @@ describe('wallet', () => {
     expect(wallet.getAddressString()).toBe('0x530f2f299fade8454856f12be695bbff145e5f23');
   });
 
+  it('generate a keystore for a wallet', async () => {
+    const wallet = Wallet.generate();
+    const keyObject = wallet.createKeystore('test');
+    expect(keyObject.crypto.cipher).toBe('aes-128-ctr');
+    expect(keyObject.crypto.kdf).toBe('scrypt');
+  });
+
   it('throws an error for an invalid mnemonic', () => {
     const seedPhrase = 'fee talk ride output ignore turkey social label owner twist disagree';
     expect(() => Wallet.generateFromMnemonic(seedPhrase, 0)).toThrowError(new Error('Mnemonic invalid or undefined'));

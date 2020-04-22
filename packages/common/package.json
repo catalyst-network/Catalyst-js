@@ -1,6 +1,6 @@
 {
   "name": "@catalyst-net-js/common",
-  "version": "0.3.3",
+  "version": "0.3.5",
   "description": "> A collection of utility functions for Catalyst",
   "author": "Stephen Horsfall <stephen.horsfall@atlascity.io>",
   "homepage": "https://github.com/catalyst-network/Catalyst-js/tree/master/packages/common#readme",
