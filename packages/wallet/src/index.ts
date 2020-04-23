@@ -116,13 +116,12 @@ export default class Wallet {
     return `0x${Wallet._toHexString(this.getAddress())}`;
   }
 
-  public async getPeerId(): Promise<string> {
-    const privateKeyBuffer = Buffer.from(this.privKey);
+  public async getPeerId(): Promise<Buffer> {
     const publicKeyBuffer = Buffer.from(this.pubKey);
-    const key = new crypto.keys.supportedKeys.ed25519.Ed25519PrivateKey(privateKeyBuffer, publicKeyBuffer);
+    const key = new crypto.keys.supportedKeys.ed25519.Ed25519PublicKey(publicKeyBuffer);
     const protobuff = key.bytes;
-    const peerID = await peerId.createFromPrivKey(protobuff);
-    return peerID.toB58String();
+    const peerID = await peerId.createFromPubKey(protobuff);
+    return peerID.toBytes();
   }
 
   public createKeystore(password: string, keyLength: number = 32, ivLength: number = 16) {

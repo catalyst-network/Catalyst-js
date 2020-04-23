@@ -7,6 +7,7 @@ import * as keystore from './keystores/testSigningKey.json';
 describe('wallet', () => {
   it('generate a wallet', async () => {
     const wallet = Wallet.generate();
+    const peerId = await wallet.getPeerId();
     expect(wallet.getPublicKey().length).toBe(32);
     expect(wallet.getPrivateKey().length).toBe(64);
   });
