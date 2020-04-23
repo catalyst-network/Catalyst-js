@@ -1,5 +1,5 @@
 {
-  "name": "keystore",
+  "name": "@catalyst-net-js/keystore",
   "version": "0.3.5",
   "description": "Catalyst network keystores",
   "author": "stxphxn <stephen.horsfall@atlascity.io>",
