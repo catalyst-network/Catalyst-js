@@ -1,0 +1,47 @@
+{
+  "name": "keystore",
+  "version": "0.3.5",
+  "description": "Catalyst network keystores",
+  "author": "stxphxn <stephen.horsfall@atlascity.io>",
+  "homepage": "https://github.com/catalyst-network/catalyst-js#readme",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/catalyst-network/catalyst-js.git"
+  },
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
+    "compile": "tsc -b tsconfig.json",
+    "test": "jest --coverage"
+  },
+  "bugs": {
+    "url": "https://github.com/catalyst-network/catalyst-js/issues"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@babel/types": "^7.8.3",
+    "@types/jest": "^24.9.0",
+    "@types/node": "^13.1.8",
+    "eslint": "^6.8.0",
+    "jest": "^24.9.0",
+    "typescript": "^3.7.4"
+  },
+  "dependencies": {
+    "@catalyst-net-js/wallet": "^0.3.5",
+    "crypto-key-composer": "^0.1.3",
+    "libp2p-crypto": "^0.17.6",
+    "libp2p-keychain": "^0.5.5",
+    "peer-id": "^0.13.12"
+  }
+}
