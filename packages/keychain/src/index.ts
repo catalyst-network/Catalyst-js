@@ -1,43 +1,57 @@
-import KeychainLib from 'libp2p-keychain';
 import crypto from 'libp2p-crypto';
 import * as peerId from 'peer-id';
 import { composePrivateKey, decomposePrivateKey } from 'crypto-key-composer';
 import Wallet from '@catalyst-net-js/wallet';
 
-export default class Keychain {
-    _keychain: KeychainLib;
 
-    constructor(store: any, password: any) {
-      this._keychain = new KeychainLib(store, { passPhrase: password });
+interface KeystoreObject {
+    Name: string;
+    Id: string;
+    Pem: string;
+}
+export default class Keystore extends Wallet {
+    _keystore: KeystoreObject;
+
+    constructor(key: KeystoreObject, password?: string, wallet? : Wallet) {
+      if (!wallet) {
+        const data: any = decomposePrivateKey(key.Pem, { format: 'pkcs8-pem', password });
+        super(data.keyData.seed);
+      } else {
+        super(wallet.getPrivateKey());
+      }
+      this._keystore = key;
     }
 
-    /**
-     * Import a  catalys-js wallet to your keychain
-     * @param {string} name
-     * @param {Wallet} wallet
-     * @returns {KeychainLib.KeyInfo}
-     */
-    async importWallet(name: string, wallet: Wallet): Promise<KeychainLib.KeyInfo> {
+    public static async generateFromWallet(wallet: Wallet, password: string, name: string = 'self'): Promise<Keystore> {
       const privateKey = wallet.getPrivateKey();
-      const privateKeyBuffer = Buffer.from(privateKey);
-      const key = new crypto.keys.supportedKeys.ed25519.Ed25519PublicKey(privateKeyBuffer);
-      const protobuff = key.bytes;
-      const peer = await peerId.createFromPrivKey(protobuff);
-
-      return this._keychain.importPeer(name, peer);
+      const pem: any = composePrivateKey({
+        format: 'pkcs8-pem',
+        keyAlgorithm: {
+          id: 'ed25519',
+        },
+        keyData: {
+          seed: privateKey.slice(0, 32),
+        },
+      }, { password });
+      const keystore = {
+        Name: name,
+        Id: (await Keystore._getPeerIdFromPubKey(wallet.getPublicKey())).toB58String(),
+        Pem: pem,
+      };
+      return new Keystore(keystore, password);
     }
 
-    async exportWallet(name: string, password: string) {
-      const pem = this.exportKeystore(name, password);
-      const data = decomposePrivateKey(pem, { password });
-      console.log(data);
+    public getPeerId(): string {
+      return this._keystore.Id;
     }
 
-    async importKeystore(name: string, pem: string, password: string): Promise<KeychainLib.KeyInfo> {
-      return this._keychain.importKey(name, pem, password);
+    public getKeystore(): KeystoreObject {
+      return this._keystore;
     }
 
-    async exportKeystore(name: string, password: string): Promise<string> {
-      return this._keychain.exportKey(name, password);
+    private static async _getPeerIdFromPubKey(publicKey : Uint8Array) {
+      const { bytes } = new crypto.keys.supportedKeys.ed25519.Ed25519PublicKey(Buffer.from(publicKey));
+      const peerID = await peerId.createFromPubKey(bytes);
+      return peerID;
     }
 }
