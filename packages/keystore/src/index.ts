@@ -15,6 +15,7 @@ export default class Keystore extends Wallet {
     constructor(key: KeystoreObject, password?: string, wallet? : Wallet) {
       if (!wallet) {
         const data: any = decomposePrivateKey(key.Pem, { format: 'pkcs8-pem', password });
+        console.log(data);
         super(data.keyData.seed);
       } else {
         super(wallet.getPrivateKey());
@@ -30,7 +31,7 @@ export default class Keystore extends Wallet {
           id: 'ed25519',
         },
         keyData: {
-          seed: privateKey.slice(0, 32),
+          seed: privateKey,
         },
       }, { password });
       const keystore = {
