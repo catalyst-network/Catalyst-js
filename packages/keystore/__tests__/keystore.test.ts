@@ -37,4 +37,18 @@ describe('Keystore', () => {
     expect(keystore.getPublicKeyString()).toBe('NMAEITOFLXPLJ4P35DBHDX3DMIR2PPVXRSPRU5KLFKFFUCGYNMTQ');
     expect(keystore.getAddressString()).toBe('0x3b7dd9aa1884b2a70d39dda14428e8cbc80428ec');
   });
+
+  it('generate a wallet from a  keythereum keystore', async () => {
+    const wallet = await Wallet.generateFromKeystore(keystore, 'test');
+    expect(wallet.getPrivateKeyString()).toBe('KP3CHDCUDPSZ3SU5QB7FOFB5G26AFROJFERDWDJPML5YSAG74DRJEFBRJ4QASC4RDVXBDDO5NCLQRAVT5SZNJGVHIIG6Z6OJVALOALY');
+    expect(wallet.getPublicKeyString()).toBe('SIKDCTZABEFZCHLOCGG522EXBCBLH3FS2SNKOQQN5T44TKAW4AXQ');
+    expect(wallet.getAddressString()).toBe('0x530f2f299fade8454856f12be695bbff145e5f23');
+  });
+
+  it('generate a keystore for a wallet', async () => {
+    const wallet = Wallet.generate();
+    const keyObject = wallet.createKeystore('test');
+    expect(keyObject.crypto.cipher).toBe('aes-128-ctr');
+    expect(keyObject.crypto.kdf).toBe('scrypt');
+  });
 });
