@@ -1,10 +1,6 @@
 import * as nacl from 'tweetnacl';
-import * as peerId from 'peer-id';
-import crypto from 'libp2p-crypto';
-import randomBytes from 'randombytes';
 import * as bip39 from 'bip39';
 import { derivePath } from 'ed25519-hd-key';
-import * as keythereum from 'keythereum-pure-js';
 import {
   base32StringFromBytes,
   getPublicKeyFromPrivate,
@@ -71,11 +67,6 @@ export default class Wallet {
     return Wallet.generateFromSeed(new Uint8Array(key));
   }
 
-  public static async generateFromKeystore(key: any, password: string): Promise<Wallet> {
-    const privateKey = keythereum.recover(password, key);
-    return Wallet.generateFromPrivateKey(new Uint8Array(privateKey));
-  }
-
   // private getters
   private get pubKey(): Uint8Array {
     if (!this.publicKey) {
@@ -114,34 +105,6 @@ export default class Wallet {
 
   public getAddressString(): string {
     return `0x${Wallet._toHexString(this.getAddress())}`;
-  }
-
-  public async getPeerId(): Promise<string> {
-    const privateKeyBuffer = Buffer.from(this.privKey);
-    const publicKeyBuffer = Buffer.from(this.pubKey);
-    const key = new crypto.keys.supportedKeys.ed25519.Ed25519PrivateKey(privateKeyBuffer, publicKeyBuffer);
-    const protobuff = key.bytes;
-    const peerID = await peerId.createFromPrivKey(protobuff);
-    return peerID.toB58String();
-  }
-
-  public createKeystore(password: string, keyLength: number = 32, ivLength: number = 16) {
-    const random = randomBytes(keyLength + ivLength + keyLength);
-    const iv = random.slice(keyLength, keyLength + ivLength);
-    const salt = random.slice(keyLength + ivLength);
-    const options = {
-      kdf: 'scrypt',
-      cipher: 'aes-128-ctr',
-      kdfparams: {
-        n: 262144,
-        r: 1,
-        p: 8,
-        dklen: 32,
-        prf: 'hmac-sha256',
-      },
-    };
-    const secret = Buffer.from(this.privKey.slice(0, 32));
-    return keythereum.dump(password, secret, salt, iv, options, null);
   }
 
   private static async _publicKeyFor32BytePrivateKey(privateKey: Uint8Array) : Promise<Uint8Array> {

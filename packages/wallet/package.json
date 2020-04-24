@@ -1,6 +1,6 @@
 {
   "name": "@catalyst-net-js/wallet",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "Utilities for handling Catalyst keys",
   "author": "Stephen Horsfall <stephen.horsfall@atlascity.io>",
   "homepage": "https://github.com/catalyst-network/Catalyst-js/tree/master/packages/wallet#readme",
@@ -40,10 +40,6 @@
     "@catalystnetwork/protocol-sdk": "^0.0.7",
     "bip39": "^3.0.2",
     "ed25519-hd-key": "^1.1.0",
-    "keythereum-pure-js": "^1.1.7",
-    "libp2p-crypto": "^0.17.6",
-    "peer-id": "^0.13.11",
-    "randombytes": "^2.1.0",
     "tweetnacl": "^1.0.1"
   },
   "gitHead": "738a9f7c72ee92d37d741a4c99c2f1003b2a2254"

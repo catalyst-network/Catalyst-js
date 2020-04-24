@@ -3,14 +3,16 @@
     "compilerOptions": {
       "outDir": "./dist",
       "rootDir": "./",
+      "skipLibCheck": true,
       "typeRoots": [ "./types", "./node_modules/@types"],
+      "esModuleInterop": true
     },
     // "references": [
     //   { "path": "../wasm-ed25519ph" }
     // ],
+
     "exclude": [
       "node_modules",
-      "dist",
-      "types",
+      "dist"
     ]
   }
