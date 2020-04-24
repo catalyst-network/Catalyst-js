@@ -2,6 +2,7 @@
 import Wallet from '@catalyst-net-js/wallet';
 import Keystore from '../src';
 
+
 describe('Keystore', () => {
   it('generate a keystore from a wallet', async () => {
     const privateKey = new Uint8Array([
@@ -38,16 +39,33 @@ describe('Keystore', () => {
     expect(keystore.getAddressString()).toBe('0x3b7dd9aa1884b2a70d39dda14428e8cbc80428ec');
   });
 
-  it('generate a wallet from a  keythereum keystore', async () => {
-    const wallet = await Wallet.generateFromKeystore(keystore, 'test');
-    expect(wallet.getPrivateKeyString()).toBe('KP3CHDCUDPSZ3SU5QB7FOFB5G26AFROJFERDWDJPML5YSAG74DRJEFBRJ4QASC4RDVXBDDO5NCLQRAVT5SZNJGVHIIG6Z6OJVALOALY');
-    expect(wallet.getPublicKeyString()).toBe('SIKDCTZABEFZCHLOCGG522EXBCBLH3FS2SNKOQQN5T44TKAW4AXQ');
-    expect(wallet.getAddressString()).toBe('0x530f2f299fade8454856f12be695bbff145e5f23');
+  it('generate a wallet from a keythereum keystore', async () => {
+    const key = {
+      crypto: {
+        cipher: 'aes-128-ctr',
+        ciphertext: 'df9e84895861152913428945aa462773ad00130d2ee142d9161d5ce034c861b8',
+        cipherparams: { iv: '2bc7d83faae523e67529e75f3f50d38f' },
+        kdf: 'scrypt',
+        mac: '195084fa75ee645d6466de0a981276c29cab651165737e40e0b4ea6d6aacb6bb',
+        kdfparams: {
+          n: 262144, r: 1, p: 8, dklen: 32, salt: '65e1640e989c6377c15ff1e9c83fb4e9f970169ccd3387b8f16f3c0ea800c1c2',
+        },
+      },
+      id: '2aa1d5d3-e784-43b6-9357-19e433ef2c0c',
+      address: 'binsbwdr5cqcvrftf2ivp6mpkmhs6km7vxuekscw6ev6nfn374kf4xzd',
+      version: 3,
+    };
+
+    const keystore = await Keystore.generateFromKeythereumKeystore(key, 'test');
+    expect(keystore.getPrivateKeyString()).toBe('KP3CHDCUDPSZ3SU5QB7FOFB5G26AFROJFERDWDJPML5YSAG74DRJEFBRJ4QASC4RDVXBDDO5NCLQRAVT5SZNJGVHIIG6Z6OJVALOALY');
+    expect(keystore.getPublicKeyString()).toBe('SIKDCTZABEFZCHLOCGG522EXBCBLH3FS2SNKOQQN5T44TKAW4AXQ');
+    expect(keystore.getAddressString()).toBe('0x530f2f299fade8454856f12be695bbff145e5f23');
   });
 
-  it('generate a keystore for a wallet', async () => {
+  it('generate a keythereum keystore for a wallet', async () => {
     const wallet = Wallet.generate();
-    const keyObject = wallet.createKeystore('test');
+    const keystore = await Keystore.generateFromWallet(wallet, 'test');
+    const keyObject = keystore.getKeythereumKeystore('test');
     expect(keyObject.crypto.cipher).toBe('aes-128-ctr');
     expect(keyObject.crypto.kdf).toBe('scrypt');
   });

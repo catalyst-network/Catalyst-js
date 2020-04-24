@@ -44,7 +44,7 @@ export default class Keystore extends Wallet {
       return new Keystore(keystore, password, wallet);
     }
 
-    public static async generateFromKeythereumKeystore(key: any, password: string, name: string): Promise<Keystore> {
+    public static async generateFromKeythereumKeystore(key: any, password: string, name: string = 'self'): Promise<Keystore> {
       const privateKey = keythereum.recover(password, key);
       const wallet = await Wallet.generateFromPrivateKey(new Uint8Array(privateKey));
       return Keystore.generateFromWallet(wallet, password, name);
