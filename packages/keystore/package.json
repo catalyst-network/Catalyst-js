@@ -27,16 +27,16 @@
     "url": "https://github.com/catalyst-network/catalyst-js/issues"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
-    "@babel/preset-typescript": "^7.8.3",
-    "@babel/types": "^7.8.3",
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/preset-typescript": "^7.10.1",
+    "@babel/types": "^7.10.2",
     "@types/interface-datastore": "^0.8.0",
     "@types/jest": "^24.9.0",
-    "@types/node": "^13.1.8",
+    "@types/node": "^13.13.10",
     "eslint": "^6.8.0",
     "jest": "^24.9.0",
-    "typescript": "^3.7.4"
+    "typescript": "^3.9.5"
   },
   "dependencies": {
     "@catalyst-net-js/wallet": "^0.3.7",

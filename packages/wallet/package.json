@@ -25,22 +25,22 @@
     "test": "jest --coverage"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
-    "@babel/preset-typescript": "^7.8.3",
-    "@babel/types": "^7.8.3",
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/preset-typescript": "^7.10.1",
+    "@babel/types": "^7.10.2",
     "@types/jest": "^24.9.1",
     "eslint": "^6.8.0",
     "jest": "^24.9.0",
-    "typescript": "^3.7.4"
+    "typescript": "^3.9.5"
   },
   "dependencies": {
     "@catalyst-net-js/common": "^0.3.7",
     "@catalyst-net-js/wasm-ed25519ph": "^0.3.7",
     "@catalystnetwork/protocol-sdk": "^0.0.7",
     "bip39": "^3.0.2",
-    "ed25519-hd-key": "^1.1.0",
-    "tweetnacl": "^1.0.1"
+    "ed25519-hd-key": "^1.1.2",
+    "tweetnacl": "^1.0.3"
   },
   "gitHead": "738a9f7c72ee92d37d741a4c99c2f1003b2a2254"
 }
