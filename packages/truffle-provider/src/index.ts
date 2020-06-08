@@ -32,7 +32,7 @@ async function loadWasm() {
 // function, resetting nonce from tx to tx. An instance can opt out
 // of this behavior by passing `shareNonce=false` to the constructor.
 // See issue #65 for more
-const singletonNonceSubProvider = new NonceSubProvider();
+const singletonNonceSubProvider = new NonceSubProvider({});
 
 
 export class HDWalletProvider {
@@ -194,7 +194,7 @@ export class HDWalletProvider {
     );
 
     if (!shareNonce) {
-      this.engine.addProvider(new NonceSubProvider());
+      this.engine.addProvider(new NonceSubProvider({}));
     } else {
       this.engine.addProvider(singletonNonceSubProvider);
     }
