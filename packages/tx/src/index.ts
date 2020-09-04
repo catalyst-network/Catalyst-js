@@ -43,7 +43,7 @@ export class Transaction {
     const { tx } = this;
     if (!tx.gasLimit) tx.gasLimit = tx.gas;
     if (!tx.to) tx.to = '0x0';
-    if (!tx.value) tx.value = '0x';
+    if (!tx.value) tx.value = '0x0';
 
     const errors = validateProperties(this.tx, this.schema);
     errors.forEach(({ message }: {message: string}) => { throw new Error(message); });
